@@ -19,7 +19,7 @@ export function PostCard({ post }: PostCardProps) {
   };
 
   return (
-    <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer" onClick={handleViewDetails}>
+    <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer">
       <div className="flex justify-between items-start mb-4">
         <div className="flex-1">
           <h3 className="text-lg font-bold text-gray-800 hover:text-blue-600 transition-colors">
