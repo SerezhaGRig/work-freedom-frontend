@@ -1,0 +1,20 @@
+{
+  "name": "ChatBot Platform",
+  "short_name": "ChatBot",
+  "description": "Create, configure, and deploy intelligent chatbots",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/favico.svg",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favico.ico"
+    }
+  ]
+}
