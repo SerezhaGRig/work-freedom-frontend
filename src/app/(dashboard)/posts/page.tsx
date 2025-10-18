@@ -1,17 +1,54 @@
 'use client';
 
-import { useEffect } from 'react';
-import { Search } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Search, TrendingUp, Target } from 'lucide-react';
 import { usePosts } from '@/lib/hooks/usePosts';
 import { PostList } from '@/components/posts/PostList';
 import { Input } from '@/components/ui/Input';
+import { Button } from '@/components/ui/Button';
 
 export default function PostsPage() {
-  const { posts, loadPosts, isLoading } = usePosts();
+  const { posts, loadPosts, searchPosts, isLoading } = usePosts();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchMode, setIsSearchMode] = useState(false);
+  const [sortMode, setSortMode] = useState<'recent' | 'match'>('recent');
 
   useEffect(() => {
+    // Load all posts on initial mount
     loadPosts();
   }, []);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (searchQuery.trim()) {
+      setIsSearchMode(true);
+      setSortMode('match'); // Default to best match when searching
+      searchPosts(searchQuery.trim());
+    } else {
+      // If search is empty, go back to listing all posts
+      setIsSearchMode(false);
+      setSortMode('recent'); // Default to recent when browsing
+      loadPosts();
+    }
+  };
+
+  const handleClearSearch = () => {
+    setSearchQuery('');
+    setIsSearchMode(false);
+    setSortMode('recent'); // Reset to recent
+    loadPosts();
+  };
+
+  const handleSortChange = (newSortMode: 'recent' | 'match') => {
+    setSortMode(newSortMode);
+    // Re-trigger the appropriate call based on current mode
+    if (isSearchMode && searchQuery.trim()) {
+      searchPosts(searchQuery.trim());
+    } else {
+      loadPosts();
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -22,25 +59,65 @@ export default function PostsPage() {
         </p>
       </div>
 
-      {/* Search Bar - Optional for future implementation */}
-      <div className="mb-6">
-        <Input
-          placeholder="Search jobs by title, skills, or keywords..."
-          icon={<Search className="w-5 h-5" />} value={''} onChange={function (e: React.ChangeEvent<HTMLInputElement>): void {
-            throw new Error('Function not implemented.');
-          } }        />
+      {/* Search Bar */}
+      <form onSubmit={handleSearch} className="mb-6">
+        <div className="flex gap-3">
+          <div className="flex-1">
+            <Input
+              placeholder="Search jobs by title, skills, or keywords..."
+              icon={<Search className="w-5 h-5" />}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+          <Button disabled={isLoading}>
+            Search
+          </Button>
+        </div>
+      </form>
+
+      {/* Sort/Filter Info */}
+      <div className="mb-4 flex items-center justify-between gap-4">
+        {sortMode === 'recent' ? (
+          <div className="flex items-center gap-2 text-sm text-gray-700 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
+            <TrendingUp className="w-4 h-4" />
+            <span>
+              Showing <span className="font-semibold">most recent</span> job postings
+            </span>
+          </div>
+        ) : (
+          <>
+            <div className="flex items-center gap-2 text-sm text-blue-700 bg-blue-50 px-4 py-2 rounded-lg border border-blue-200">
+              <Target className="w-4 h-4" />
+              <span>
+                Showing <span className="font-semibold">best matches</span>
+                {isSearchMode && searchQuery && ` for: "${searchQuery}"`}
+              </span>
+            </div>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={handleClearSearch}
+            >
+              <TrendingUp className="w-4 h-4" />
+              Back to Most Recent
+            </Button>
+          </>
+        )}
       </div>
 
       {isLoading ? (
         <div className="text-center py-12">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
-          <p className="text-gray-600 mt-4">Loading jobs...</p>
+          <p className="text-gray-600 mt-4">
+            {isSearchMode ? 'Searching...' : 'Loading jobs...'}
+          </p>
         </div>
       ) : (
         <div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold text-gray-700">
-              Available Jobs ({posts?.length || 0})
+              {isSearchMode ? 'Search Results' : 'Available Jobs'} ({posts?.length || 0})
             </h2>
           </div>
           <PostList posts={posts || []} />

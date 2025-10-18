@@ -106,7 +106,8 @@
 //     return response.data.posts;
 //   }
 
-//   async searchPosts(limit = 20, nextToken?: string): Promise<{
+//   // GET /posts/list - List all posts with pagination
+//   async listPosts(limit = 20, nextToken?: string): Promise<{
 //     posts: WorkPost[];
 //     nextToken?: string;
 //   }> {
@@ -114,7 +115,18 @@
 //     params.append('limit', limit.toString());
 //     if (nextToken) params.append('nextToken', nextToken);
     
-//     const response = await this.client.get(`/posts/search?${params}`);
+//     const response = await this.client.get(`/posts/list?${params}`);
+//     return response.data;
+//   }
+
+//   // GET /posts/search - Search posts by query
+//   async searchPosts(query: string): Promise<{
+//     posts: WorkPost[];
+//     nextToken?: string;
+//   }> {
+//     const response = await this.client.get('/posts/search', {
+//       data: { query }
+//     });
 //     return response.data;
 //   }
 
@@ -193,16 +205,7 @@
 //     const response = await this.client.get(`/chat/messages/${proposalId}?${params}`);
 //     return response.data;
 //   }
-// async getPost(postId: string): Promise<WorkPost> {
-//   await this.delay();
 
-//   const post = store.getPosts().get(postId);
-//   if (!post) {
-//     throw new Error('Post not found');
-//   }
-
-//   return post;
-// }
 //   async getDiscussion(proposalId: string) {
 //     const response = await this.client.get(`/chat/discussion/${proposalId}`);
 //     return response.data.discussion;

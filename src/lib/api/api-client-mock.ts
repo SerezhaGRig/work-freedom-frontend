@@ -301,7 +301,6 @@ export class ApiServiceMock {
   }) {
     await this.delay();
 
-    // Check if user already exists
     const existingUser = Array.from(store.getUsers().values()).find(
       u => u.email === data.email
     );
@@ -506,7 +505,8 @@ export class ApiServiceMock {
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
 
-  async searchPosts(limit = 20, nextToken?: string): Promise<{
+  // GET /posts/list - List all posts with pagination
+  async listPosts(limit = 20, nextToken?: string): Promise<{
     posts: WorkPost[];
     nextToken?: string;
   }> {
@@ -524,6 +524,38 @@ export class ApiServiceMock {
 
     return {
       posts: allPosts.slice(0, limit),
+      nextToken: undefined, // No pagination in mock
+    };
+  }
+
+  // GET /posts/search - Search posts by query
+  async searchPosts(query: string): Promise<{
+    posts: WorkPost[];
+    nextToken?: string;
+  }> {
+    await this.delay();
+
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) {
+      throw new Error('Not authenticated');
+    }
+
+    // Get posts from other users (not current user's posts)
+    const allPosts = Array.from(store.getPosts().values())
+      .filter(post => post.userId !== currentUser.id);
+
+    // Simple search implementation - search in title, description, and skills
+    const searchLower = query.toLowerCase();
+    const filteredPosts = allPosts.filter(post => {
+      return (
+        post.title.toLowerCase().includes(searchLower) ||
+        post.description.toLowerCase().includes(searchLower) ||
+        post.skills.some(skill => skill.toLowerCase().includes(searchLower))
+      );
+    });
+
+    return {
+      posts: filteredPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
       nextToken: undefined, // No pagination in mock
     };
   }
@@ -694,37 +726,37 @@ export class ApiServiceMock {
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
 
-async getProposalDetails(proposalId: string, postId: string) {
-  await this.delay();
+  async getProposalDetails(proposalId: string, postId: string) {
+    await this.delay();
 
-  const currentUser = this.getCurrentUser();
-  if (!currentUser) {
-    throw new Error('Not authenticated');
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) {
+      throw new Error('Not authenticated');
+    }
+
+    const proposal = store.getProposals().get(proposalId);
+    if (!proposal) {
+      throw new Error('Proposal not found');
+    }
+
+    // Check if user is authorized (either proposal sender or post owner)
+    const post = store.getPosts().get(proposal.postId);
+    if (!post) {
+      throw new Error('Post not found');
+    }
+
+    if (proposal.userId !== currentUser.id && post.userId !== currentUser.id) {
+      throw new Error('Not authorized to view this proposal');
+    }
+
+    const discussion = store.getDiscussions().get(proposalId);
+
+    return {
+      proposal,
+      discussion: discussion || null,
+      post: post,
+    };
   }
-
-  const proposal = store.getProposals().get(proposalId);
-  if (!proposal) {
-    throw new Error('Proposal not found');
-  }
-
-  // Check if user is authorized (either proposal sender or post owner)
-  const post = store.getPosts().get(proposal.postId);
-  if (!post) {
-    throw new Error('Post not found');
-  }
-
-  if (proposal.userId !== currentUser.id && post.userId !== currentUser.id) {
-    throw new Error('Not authorized to view this proposal');
-  }
-
-  const discussion = store.getDiscussions().get(proposalId);
-
-  return {
-    proposal,
-    discussion: discussion || null,
-    post: post, // Include post details
-  };
-}
 
   async updateProposalStatus(
     proposalId: string,
@@ -823,7 +855,7 @@ async getProposalDetails(proposalId: string, postId: string) {
 
     return {
       messages: messages.slice(0, limit),
-      nextToken: undefined, // No pagination in mock
+      nextToken: undefined,
     };
   }
 

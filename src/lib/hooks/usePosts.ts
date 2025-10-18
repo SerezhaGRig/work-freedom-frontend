@@ -11,23 +11,41 @@ export function usePosts() {
   const [nextToken, setNextToken] = useState<string | undefined>();
   const [error, setError] = useState<string | null>(null);
 
+  // List posts with pagination (browse all posts)
   const loadPosts = async (loadMore = false) => {
     setIsLoading(true);
     setError(null);
     try {
-      const result = await apiService.searchPosts(20, loadMore ? nextToken : undefined);
+      const result = await apiService.listPosts(20, loadMore ? nextToken : undefined);
       
       if (loadMore) {
         setPosts([...posts, ...result.posts]);
       } else {
-        setPosts(result.posts || []); // Ensure it's always an array
+        setPosts(result.posts || []);
       }
       
       setNextToken(result.nextToken);
     } catch (error) {
       console.error('Failed to load posts:', error);
       setError('Failed to load posts');
-      setPosts([]); // Set to empty array on error
+      setPosts([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // Search posts by query
+  const searchPosts = async (query: string) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const result = await apiService.searchPosts(query);
+      setPosts(result.posts || []);
+      setNextToken(result.nextToken);
+    } catch (error) {
+      console.error('Failed to search posts:', error);
+      setError('Failed to search posts');
+      setPosts([]);
     } finally {
       setIsLoading(false);
     }
@@ -38,11 +56,11 @@ export function usePosts() {
     setError(null);
     try {
       const userPosts = await apiService.getMyPosts();
-      setMyPosts(userPosts || []); // Ensure it's always an array
+      setMyPosts(userPosts || []);
     } catch (error) {
       console.error('Failed to load my posts:', error);
       setError('Failed to load my posts');
-      setMyPosts([]); // Set to empty array on error
+      setMyPosts([]);
     } finally {
       setIsLoading(false);
     }
@@ -83,6 +101,7 @@ export function usePosts() {
     error,
     hasMore: !!nextToken,
     loadPosts,
+    searchPosts,
     loadMyPosts,
     createPost,
     deletePost,
