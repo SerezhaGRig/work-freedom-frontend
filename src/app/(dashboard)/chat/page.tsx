@@ -25,6 +25,7 @@ export default function ChatPage() {
     loadMessages,
     loadProposalDetails,
     sendMessage,
+    stopPolling,
     isLoading
   } = useChat();
   
@@ -34,6 +35,11 @@ export default function ChatPage() {
     if (proposalId) {
       loadChatData();
     }
+
+    // Cleanup: stop polling when component unmounts
+    return () => {
+      stopPolling();
+    };
   }, [proposalId]);
 
   const loadChatData = async () => {
@@ -41,7 +47,7 @@ export default function ChatPage() {
     
     try {
       await loadProposalDetails(proposalId);
-      await loadMessages(proposalId);
+      await loadMessages(proposalId); // This will start auto-polling
     } catch (error) {
       console.error('Failed to load chat data:', error);
     }
@@ -59,6 +65,7 @@ export default function ChatPage() {
   };
 
   const handleBack = () => {
+    stopPolling(); // Stop polling before navigation
     if (proposal?.userId === user?.id) {
       // Sender - go back to proposals
       router.push('/proposals');
@@ -119,7 +126,10 @@ export default function ChatPage() {
                   </p>
                 </div>
               </div>
-              <Badge variant="success">Active</Badge>
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                <Badge variant="success">Live</Badge>
+              </div>
             </div>
             
             <ChatContainer

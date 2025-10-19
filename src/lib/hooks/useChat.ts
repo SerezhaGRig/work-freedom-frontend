@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Message, ProposalDiscussion, WorkPost, Proposal } from '@/types';
 import { apiService } from '../api/api-client-mock';
+
+const POLLING_INTERVAL = 3000; // 3 seconds
 
 export function useChat() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -12,10 +14,51 @@ export function useChat() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [nextToken, setNextToken] = useState<string | undefined>();
+  const [activeProposalId, setActiveProposalId] = useState<string | null>(null);
+  const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Auto-refresh messages when activeProposalId is set
+  useEffect(() => {
+    if (!activeProposalId) {
+      // Clear polling when no active proposal
+      if (pollingIntervalRef.current) {
+        clearInterval(pollingIntervalRef.current);
+        pollingIntervalRef.current = null;
+      }
+      return;
+    }
+
+    // Set up polling
+    pollingIntervalRef.current = setInterval(() => {
+      refreshMessages(activeProposalId);
+    }, POLLING_INTERVAL);
+
+    // Cleanup on unmount or when activeProposalId changes
+    return () => {
+      if (pollingIntervalRef.current) {
+        clearInterval(pollingIntervalRef.current);
+        pollingIntervalRef.current = null;
+      }
+    };
+  }, [activeProposalId]);
+
+  // Silent refresh - doesn't trigger loading state
+  const refreshMessages = async (proposalId: string) => {
+    try {
+      const result = await apiService.getMessages(proposalId, 50);
+      setMessages(result.messages || []);
+      setNextToken(result.nextToken);
+    } catch (error) {
+      console.error('Failed to refresh messages:', error);
+      // Don't set error state for silent refresh failures
+    }
+  };
 
   const loadMessages = async (proposalId: string, loadMore = false) => {
     setIsLoading(true);
     setError(null);
+    setActiveProposalId(proposalId);
+    
     try {
       const result = await apiService.getMessages(
         proposalId,
@@ -77,6 +120,11 @@ export function useChat() {
     return message;
   };
 
+  // Stop polling (useful when navigating away)
+  const stopPolling = () => {
+    setActiveProposalId(null);
+  };
+
   return {
     messages,
     discussion,
@@ -89,5 +137,6 @@ export function useChat() {
     loadDiscussion,
     loadProposalDetails,
     sendMessage,
+    stopPolling,
   };
 }
