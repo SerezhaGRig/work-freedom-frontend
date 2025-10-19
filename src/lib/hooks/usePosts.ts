@@ -89,7 +89,7 @@ export function usePosts() {
     description: string;
     skills: string[];
     region?: string;
-    budget?: { type: 'hourly' | 'fixed'; value: number };
+    budget?: { type: 'hourly' | 'fixed' | 'monthly'; value: number };
   }) => {
     const newPost = await apiService.createPost(data);
     setMyPosts([newPost, ...myPosts]);

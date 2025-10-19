@@ -8,6 +8,12 @@ export interface User {
   status?: 'pending' | 'confirmed' | 'recover';
 }
 
+export interface EditUser {
+  name: string;
+  surname?: string;
+  contacts: Contact[];
+}
+
 export interface Contact {
   type: 'phone' | 'whatsapp' | 'viber' | 'web' | 'email';
   value: string;
@@ -25,7 +31,7 @@ export interface WorkPost {
   publicationDate: string;
   region?: string; // Added region field
   budget?: {
-    type: 'hourly' | 'fixed';
+    type: 'hourly' | 'fixed' | 'monthly';
     value: number;
   };
 }
@@ -72,7 +78,7 @@ export interface ProposalDetailsResponse {
 }
 
 export interface SearchFilters {
-  budgetType?: 'hourly' | 'fixed';
+  budgetType?: 'hourly' | 'fixed' | 'monthly';
   minBudget?: number;
   maxBudget?: number;
   region?: string;
@@ -84,7 +90,7 @@ export interface SearchPostsResponse {
   nextToken?: string;
   availableFilters?: {
     regions?: string[];
-    budgetTypes?: ('hourly' | 'fixed')[];
+    budgetTypes?: ('hourly' | 'fixed' | 'monthly')[];
     minBudget?: number;
     maxBudget?: number;
   };

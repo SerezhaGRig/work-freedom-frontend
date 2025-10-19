@@ -1,8 +1,8 @@
-import { User, Contact, WorkPost, Proposal, Message, ProposalDiscussion } from '@/types';
+import { User, Contact, WorkPost, Proposal, Message, ProposalDiscussion, EditUser } from '@/types';
 
 // Search filters interface
 export interface SearchFilters {
-  budgetType?: 'hourly' | 'fixed';
+  budgetType?: 'hourly' | 'fixed' | 'monthly';
   minBudget?: number;
   maxBudget?: number;
   region?: string;
@@ -10,7 +10,7 @@ export interface SearchFilters {
 
 export interface AvailableFilters {
   regions?: string[];
-  budgetTypes?: ('hourly' | 'fixed')[];
+  budgetTypes?: ('hourly' | 'fixed' | 'monthly')[];
   minBudget?: number;
   maxBudget?: number;
 }
@@ -488,7 +488,7 @@ async createPost(data: {
   description: string;
   skills: string[];
   region?: string; // Added region parameter
-  budget?: { type: 'hourly' | 'fixed'; value: number };
+  budget?: { type: 'hourly' | 'fixed' | 'monthly'; value: number };
 }) {
   await this.delay();
 
@@ -564,7 +564,7 @@ async searchPosts(
   // In real API, this comes directly from the response, not calculated from posts
   const apiFilters: AvailableFilters = {
     regions: ['North America', 'Europe', 'Asia', 'South America'],
-    budgetTypes: ['hourly', 'fixed'],
+    budgetTypes: ['hourly', 'fixed', 'monthly'],
     minBudget: 100,
     maxBudget: 10000,
   };
@@ -800,6 +800,15 @@ async searchPosts(
       .filter(p => p.userId === currentUser.id)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
+
+  async updatePost(postId: string, body: Partial<WorkPost>) {
+    return
+  }
+
+  async editUserProfile(body: Partial<EditUser>) {
+    return
+  }
+
 
   async getProposalDetails(proposalId: string, postId: string) {
     await this.delay();

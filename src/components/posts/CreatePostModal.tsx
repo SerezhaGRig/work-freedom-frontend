@@ -20,7 +20,7 @@ export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalP
   const [description, setDescription] = useState('');
   const [skills, setSkills] = useState('');
   const [region, setRegion] = useState('');
-  const [budgetType, setBudgetType] = useState<'hourly' | 'fixed'>('hourly');
+  const [budgetType, setBudgetType] = useState<'hourly' | 'fixed' | 'monthly'>('hourly');
   const [budgetValue, setBudgetValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -114,11 +114,12 @@ export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalP
             </label>
             <select
               value={budgetType}
-              onChange={(e) => setBudgetType(e.target.value as 'hourly' | 'fixed')}
+              onChange={(e) => setBudgetType(e.target.value as 'hourly' | 'fixed' | 'monthly')}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             >
               <option value="hourly">Hourly Rate</option>
               <option value="fixed">Fixed Price</option>
+              <option value="monthly">Monthly Price</option>
             </select>
           </div>
           

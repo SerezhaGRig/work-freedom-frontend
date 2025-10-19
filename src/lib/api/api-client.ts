@@ -1,13 +1,13 @@
 // // api-client.ts - Updated with dynamic filters
 
 // import axios, { AxiosInstance } from 'axios';
-// import { User, Contact, WorkPost, Proposal, Message } from '@/types';
+// import { User, Contact, WorkPost, Proposal, Message, EditUser } from '@/types';
 
 // const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
 
 // // Simplified SearchFilters interface
 // export interface SearchFilters {
-//   budgetType?: 'hourly' | 'fixed';
+//   budgetType?: 'hourly' | 'fixed' | 'monthly';
 //   minBudget?: number;
 //   maxBudget?: number;
 //   region?: string;
@@ -15,7 +15,7 @@
 
 // export interface AvailableFilters {
 //   regions?: string[];
-//   budgetTypes?: ('hourly' | 'fixed')[];
+//   budgetTypes?: ('hourly' | 'fixed' | 'monthly' | 'monthly')[];
 //   minBudget?: number;
 //   maxBudget?: number;
 // }
@@ -119,7 +119,7 @@
 //     description: string;
 //     skills: string[];
 //     region?: string;
-//     budget?: { type: 'hourly' | 'fixed'; value: number };
+//     budget?: { type: 'hourly' | 'fixed' | 'monthly'; value: number };
 //   }) {
 //     const response = await this.client.post('/posts', data);
 //     return response.data.post;
@@ -185,10 +185,20 @@
 //     return response.data.post;
 //   }
 
-//   async deletePost(postId: string) {
+// async deletePost(postId: string) {
 //     const response = await this.client.delete(`/posts/${postId}`);
 //     return response.data;
 //   }
+//     async updatePost(postId: string, body: Partial<WorkPost>) {
+    
+//         const response = await this.client.patch(`/posts/${postId}`, body);
+//       return response;
+//     }
+  
+// async editUserProfile(body: Partial<EditUser>) {
+//     const response = await this.client.patch(`/user/profile`, body);
+//     return response
+//     }
 
 //   async updatePostStatus(postId: string, status: 'published' | 'disabled' | 'outdated' | 'blocked') {
 //     const response = await this.client.patch(`/posts/${postId}/status`, { status });
@@ -219,6 +229,7 @@
 //     const response = await this.client.get(`/proposals/${proposalId}/post/${postId}/details`);
 //     return response.data;
 //   }
+
 
 //   async updateProposalStatus(
 //     proposalId: string,

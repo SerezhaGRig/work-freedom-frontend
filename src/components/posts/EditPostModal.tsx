@@ -6,6 +6,7 @@ import { Modal } from '@/components/ui/Modal';
 import { Input } from '@/components/ui/Input';
 import { Button } from '../ui/Button';
 import { TextArea } from '../ui/TextArea';
+import { apiService } from '@/lib/api/api-client-mock';
 
 interface EditPostModalProps {
   isOpen: boolean;
@@ -37,7 +38,7 @@ export function EditPostModal({
   const [description, setDescription] = useState('');
   const [skills, setSkills] = useState('');
   const [region, setRegion] = useState('');
-  const [budgetType, setBudgetType] = useState<'hourly' | 'fixed'>('hourly');
+  const [budgetType, setBudgetType] = useState<'hourly' | 'fixed' | 'monthly'>('hourly');
   const [budgetValue, setBudgetValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -60,18 +61,17 @@ export function EditPostModal({
 
     setIsLoading(true);
     try {
-      // TODO: Implement API call to update post
-      // const skillsArray = skills.split(',').map(s => s.trim()).filter(s => s);
-      // await apiService.updatePost(post.postId, {
-      //   title,
-      //   description,
-      //   skills: skillsArray,
-      //   region: region || undefined,
-      //   budget: budgetValue ? {
-      //     type: budgetType,
-      //     value: parseFloat(budgetValue)
-      //   } : undefined,
-      // });
+      const skillsArray = skills.split(',').map(s => s.trim()).filter(s => s);
+      await apiService.updatePost(post.postId, {
+        title,
+        description,
+        skills: skillsArray,
+        region: region || undefined,
+        budget: budgetValue ? {
+          type: budgetType,
+          value: parseFloat(budgetValue)
+        } : undefined,
+      });
       
       await new Promise(resolve => setTimeout(resolve, 1000));
       alert('Post updated successfully!');
@@ -140,11 +140,12 @@ export function EditPostModal({
             </label>
             <select
               value={budgetType}
-              onChange={(e) => setBudgetType(e.target.value as 'hourly' | 'fixed')}
+              onChange={(e) => setBudgetType(e.target.value as 'hourly' | 'fixed' | 'monthly')}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             >
               <option value="hourly">Hourly Rate</option>
               <option value="fixed">Fixed Price</option>
+              <option value="monthly">Monthly Price</option>
             </select>
           </div>
           

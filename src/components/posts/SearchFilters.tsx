@@ -171,6 +171,18 @@ export function SearchFilters({
                           Fixed
                         </Button>
                       )}
+                      {availableFilters.budgetTypes.includes('monthly') && (
+                        <Button
+                          variant={localFilters.budgetType === 'monthly' ? 'primary' : 'secondary'}
+                          size="sm"
+                          onClick={() => setLocalFilters({
+                            ...localFilters,
+                            budgetType: localFilters.budgetType === 'monthly' ? undefined : 'monthly'
+                          })}
+                        >
+                          Monthly
+                        </Button>
+                      )}
                     </div>
                   </div>
                 )}

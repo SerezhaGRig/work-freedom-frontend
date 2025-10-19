@@ -1,13 +1,14 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Plus, X } from 'lucide-react';
+import { Plus, UserRoundIcon, X } from 'lucide-react';
 import { User, Contact } from '@/types';
 import { Modal } from '@/components/ui/Modal';
 import { Input } from '@/components/ui/Input';
 import { useAuthStore } from '@/lib/store/authStore';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
+import { apiService } from '@/lib/api/api-client-mock';
 
 interface EditProfileModalProps {
   isOpen: boolean;
@@ -62,7 +63,6 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
   const handleSubmit = async () => {
     setIsLoading(true);
     try {
-      // TODO: Implement API call to update user profile
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       const updatedUser: User = {
@@ -71,6 +71,12 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
         surname,
         contacts,
       };
+      await apiService.editUserProfile({
+        name,
+        surname,
+        contacts,
+      })
+
       
       setUser(updatedUser);
       alert('Profile updated successfully!');
