@@ -1,7 +1,30 @@
+// // api-client.ts - Updated with dynamic filters
+
 // import axios, { AxiosInstance } from 'axios';
 // import { User, Contact, WorkPost, Proposal, Message } from '@/types';
 
 // const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+
+// // Simplified SearchFilters interface
+// export interface SearchFilters {
+//   budgetType?: 'hourly' | 'fixed';
+//   minBudget?: number;
+//   maxBudget?: number;
+//   region?: string;
+// }
+
+// export interface AvailableFilters {
+//   regions?: string[];
+//   budgetTypes?: ('hourly' | 'fixed')[];
+//   minBudget?: number;
+//   maxBudget?: number;
+// }
+
+// export interface SearchPostsResponse {
+//   posts: WorkPost[];
+//   nextToken?: string;
+//   filters?: AvailableFilters; // Changed from availableFilters to filters
+// }
 
 // class ApiService {
 //   private client: AxiosInstance;
@@ -95,6 +118,7 @@
 //     title: string;
 //     description: string;
 //     skills: string[];
+//     region?: string;
 //     budget?: { type: 'hourly' | 'fixed'; value: number };
 //   }) {
 //     const response = await this.client.post('/posts', data);
@@ -106,7 +130,6 @@
 //     return response.data.posts;
 //   }
 
-//   // GET /posts/list - List all posts with pagination
 //   async listPosts(limit = 20, nextToken?: string): Promise<{
 //     posts: WorkPost[];
 //     nextToken?: string;
@@ -119,16 +142,43 @@
 //     return response.data;
 //   }
 
-//   // GET /posts/search - Search posts by query
-//   async searchPosts(query: string): Promise<{
-//     posts: WorkPost[];
-//     nextToken?: string;
-//   }> {
-//     const response = await this.client.get('/posts/search', {
-//       data: { query }
-//     });
-//     return response.data;
+//   // GET /posts/search - Search posts with dynamic filters
+// async searchPosts(
+//   query: string,
+//   filters?: SearchFilters,
+//   limit = 20,
+//   nextToken?: string
+// ): Promise<SearchPostsResponse> {
+//   const body: Record<string, unknown> = {
+//     query: query?.trim() || '',
+//     limit,
+//   };
+
+//   if (nextToken) {
+//     body.nextToken = nextToken;
 //   }
+
+//   if (filters) {
+//     if (filters.budgetType) {
+//       body.budgetType = filters.budgetType;
+//     }
+
+//     if (filters.minBudget !== undefined) {
+//       body.minBudget = filters.minBudget;
+//     }
+
+//     if (filters.maxBudget !== undefined) {
+//       body.maxBudget = filters.maxBudget;
+//     }
+
+//     if (filters.region) {
+//       body.region = filters.region;
+//     }
+//   }
+
+//   const response = await this.client.post('/posts/search', body);
+//   return response.data;
+// }
 
 //   async getPost(postId: string): Promise<WorkPost> {
 //     const response = await this.client.get(`/posts/${postId}`);

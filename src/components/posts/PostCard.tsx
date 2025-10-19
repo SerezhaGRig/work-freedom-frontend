@@ -1,7 +1,8 @@
+
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Eye } from 'lucide-react';
+import { Eye, MapPin } from 'lucide-react';
 import { WorkPost } from '@/types';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
@@ -25,6 +26,15 @@ export function PostCard({ post }: PostCardProps) {
           <h3 className="text-lg font-bold text-gray-800 hover:text-blue-600 transition-colors">
             {post.title}
           </h3>
+          
+          {/* Region Badge */}
+          {post.region && (
+            <div className="flex items-center text-sm text-gray-600 mt-1 mb-2">
+              <MapPin className="w-3.5 h-3.5 mr-1" />
+              <span>{post.region}</span>
+            </div>
+          )}
+          
           <p className="text-gray-600 mt-2 line-clamp-3">{post.description}</p>
         </div>
         {post.budget && (

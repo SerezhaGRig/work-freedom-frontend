@@ -14,6 +14,19 @@ interface EditPostModalProps {
   onSuccess: () => void;
 }
 
+// Common regions list
+const REGIONS = [
+  'Remote',
+  'North America',
+  'Europe',
+  'Asia',
+  'South America',
+  'Africa',
+  'Oceania',
+  'Middle East',
+  'Worldwide',
+];
+
 export function EditPostModal({
   isOpen,
   post,
@@ -23,6 +36,7 @@ export function EditPostModal({
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [skills, setSkills] = useState('');
+  const [region, setRegion] = useState('');
   const [budgetType, setBudgetType] = useState<'hourly' | 'fixed'>('hourly');
   const [budgetValue, setBudgetValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -32,15 +46,33 @@ export function EditPostModal({
       setTitle(post.title);
       setDescription(post.description);
       setSkills(post.skills.join(', '));
+      setRegion(post.region || '');
       setBudgetType(post.budget?.type || 'hourly');
       setBudgetValue(post.budget?.value.toString() || '');
     }
   }, [post]);
 
   const handleSubmit = async () => {
+    if (!title.trim() || !description.trim() || !skills.trim()) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
     setIsLoading(true);
     try {
       // TODO: Implement API call to update post
+      // const skillsArray = skills.split(',').map(s => s.trim()).filter(s => s);
+      // await apiService.updatePost(post.postId, {
+      //   title,
+      //   description,
+      //   skills: skillsArray,
+      //   region: region || undefined,
+      //   budget: budgetValue ? {
+      //     type: budgetType,
+      //     value: parseFloat(budgetValue)
+      //   } : undefined,
+      // });
+      
       await new Promise(resolve => setTimeout(resolve, 1000));
       alert('Post updated successfully!');
       onSuccess();
@@ -78,6 +110,28 @@ export function EditPostModal({
           placeholder="e.g. React, Node.js, TypeScript"
           required
         />
+        
+        {/* Region Selector */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Region
+          </label>
+          <select
+            value={region}
+            onChange={(e) => setRegion(e.target.value)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Select a region (optional)</option>
+            {REGIONS.map((r) => (
+              <option key={r} value={r}>
+                {r}
+              </option>
+            ))}
+          </select>
+          <p className="text-xs text-gray-500 mt-1">
+            Specify the work location or choose "Remote" for remote positions
+          </p>
+        </div>
         
         <div className="grid grid-cols-2 gap-4">
           <div>

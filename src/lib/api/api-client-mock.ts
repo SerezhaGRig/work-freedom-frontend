@@ -1,5 +1,26 @@
 import { User, Contact, WorkPost, Proposal, Message, ProposalDiscussion } from '@/types';
 
+// Search filters interface
+export interface SearchFilters {
+  budgetType?: 'hourly' | 'fixed';
+  minBudget?: number;
+  maxBudget?: number;
+  region?: string;
+}
+
+export interface AvailableFilters {
+  regions?: string[];
+  budgetTypes?: ('hourly' | 'fixed')[];
+  minBudget?: number;
+  maxBudget?: number;
+}
+
+export interface SearchPostsResponse {
+  posts: WorkPost[];
+  nextToken?: string;
+  filters?: AvailableFilters; // Changed from availableFilters to filters to match API
+}
+
 // Mock data storage
 class MockDataStore {
   private users: Map<string, User & { password: string; verificationCode?: string }> = new Map();
@@ -61,54 +82,57 @@ class MockDataStore {
     this.users.set(user2.id, user2);
     this.users.set(user3.id, user3);
 
-    // Seed some test posts
-    const post1: WorkPost = {
-      userId: 'user-2',
-      postId: 'post-1',
-      title: 'Senior Full Stack Developer',
-      description: 'We are looking for an experienced full stack developer to join our team. Must have 5+ years of experience with React, Node.js, and PostgreSQL.',
-      skills: ['React', 'Node.js', 'PostgreSQL', 'TypeScript', 'AWS'],
-      status: ['published'],
-      date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-      publicationDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-      budget: { type: 'hourly', value: 75 },
-    };
+  const post1: WorkPost = {
+    userId: 'user-2',
+    postId: 'post-1',
+    title: 'Senior Full Stack Developer',
+    description: 'We are looking for an experienced full stack developer to join our team. Must have 5+ years of experience with React, Node.js, and PostgreSQL.',
+    skills: ['React', 'Node.js', 'PostgreSQL', 'TypeScript', 'AWS'],
+    status: ['published'],
+    date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    publicationDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    region: 'North America', // Added region
+    budget: { type: 'hourly', value: 75 },
+  };
 
-    const post2: WorkPost = {
-      userId: 'user-2',
-      postId: 'post-2',
-      title: 'UI/UX Designer for Mobile App',
-      description: 'Looking for a talented UI/UX designer to redesign our mobile application. Experience with Figma required.',
-      skills: ['Figma', 'UI/UX Design', 'Mobile Design', 'Prototyping'],
-      status: ['published'],
-      date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-      publicationDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-      budget: { type: 'fixed', value: 3000 },
-    };
+  const post2: WorkPost = {
+    userId: 'user-2',
+    postId: 'post-2',
+    title: 'UI/UX Designer for Mobile App',
+    description: 'Looking for a talented UI/UX designer to redesign our mobile application. Experience with Figma required.',
+    skills: ['Figma', 'UI/UX Design', 'Mobile Design', 'Prototyping'],
+    status: ['published'],
+    date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    publicationDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+    region: 'Europe', // Added region
+    budget: { type: 'fixed', value: 3000 },
+  };
 
-    const post3: WorkPost = {
-      userId: 'user-3',
-      postId: 'post-3',
-      title: 'Backend Developer - Python/Django',
-      description: 'Need a backend developer experienced with Python and Django to build REST APIs for our platform.',
-      skills: ['Python', 'Django', 'REST API', 'PostgreSQL', 'Docker'],
-      status: ['published'],
-      date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-      publicationDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-      budget: { type: 'hourly', value: 60 },
-    };
+  const post3: WorkPost = {
+    userId: 'user-3',
+    postId: 'post-3',
+    title: 'Backend Developer - Python/Django',
+    description: 'Need a backend developer experienced with Python and Django to build REST APIs for our platform.',
+    skills: ['Python', 'Django', 'REST API', 'PostgreSQL', 'Docker'],
+    status: ['published'],
+    date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    publicationDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    region: 'Asia', // Added region
+    budget: { type: 'hourly', value: 60 },
+  };
 
-    const post4: WorkPost = {
-      userId: 'user-3',
-      postId: 'post-4',
-      title: 'DevOps Engineer',
-      description: 'Seeking a DevOps engineer to help set up CI/CD pipelines and manage our cloud infrastructure.',
-      skills: ['AWS', 'Docker', 'Kubernetes', 'Jenkins', 'Terraform'],
-      status: ['published'],
-      date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-      publicationDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-      budget: { type: 'hourly', value: 80 },
-    };
+  const post4: WorkPost = {
+    userId: 'user-3',
+    postId: 'post-4',
+    title: 'DevOps Engineer',
+    description: 'Seeking a DevOps engineer to help set up CI/CD pipelines and manage our cloud infrastructure.',
+    skills: ['AWS', 'Docker', 'Kubernetes', 'Jenkins', 'Terraform'],
+    status: ['published'],
+    date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    publicationDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    region: 'Remote', // Added region
+    budget: { type: 'hourly', value: 80 },
+  };
 
     this.posts.set(post1.postId, post1);
     this.posts.set(post2.postId, post2);
@@ -459,40 +483,41 @@ export class ApiServiceMock {
   }
 
   // Post endpoints
-  async createPost(data: {
-    title: string;
-    description: string;
-    skills: string[];
-    budget?: { type: 'hourly' | 'fixed'; value: number };
-  }) {
-    await this.delay();
+async createPost(data: {
+  title: string;
+  description: string;
+  skills: string[];
+  region?: string; // Added region parameter
+  budget?: { type: 'hourly' | 'fixed'; value: number };
+}) {
+  await this.delay();
 
-    const currentUser = this.getCurrentUser();
-    if (!currentUser) {
-      throw new Error('Not authenticated');
-    }
-
-    const postId = `post-${Date.now()}`;
-    const now = new Date().toISOString();
-
-    const newPost: WorkPost = {
-      userId: currentUser.id,
-      postId,
-      title: data.title,
-      description: data.description,
-      skills: data.skills,
-      status: ['published'],
-      date: now,
-      publicationDate: now,
-      budget: data.budget,
-    };
-
-    store.getPosts().set(postId, newPost);
-
-    return newPost;
+  const currentUser = this.getCurrentUser();
+  if (!currentUser) {
+    throw new Error('Not authenticated');
   }
 
-  async getMyPosts(): Promise<WorkPost[]> {
+  const postId = `post-${Date.now()}`;
+  const now = new Date().toISOString();
+
+  const newPost: WorkPost = {
+    userId: currentUser.id,
+    postId,
+    title: data.title,
+    description: data.description,
+    skills: data.skills,
+    status: ['published'],
+    date: now,
+    publicationDate: now,
+    region: data.region, // Added region field
+    budget: data.budget,
+  };
+
+  store.getPosts().set(postId, newPost);
+
+  return newPost;
+}
+async getMyPosts(): Promise<WorkPost[]> {
     await this.delay();
 
     const currentUser = this.getCurrentUser();
@@ -504,6 +529,88 @@ export class ApiServiceMock {
       .filter(post => post.userId === currentUser.id)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
+async searchPosts(
+  query: string,
+  filters?: SearchFilters,
+  limit = 20,
+  nextToken?: string
+): Promise<SearchPostsResponse> {
+  await this.delay();
+
+  const currentUser = this.getCurrentUser();
+  if (!currentUser) {
+    throw new Error('Not authenticated');
+  }
+
+  // Get posts from other users (not current user's posts)
+  let allPosts = Array.from(store.getPosts().values())
+    .filter(post => post.userId !== currentUser.id);
+
+  let filteredPosts = [...allPosts];
+
+  // Apply text search first
+  if (query && query.trim()) {
+    const searchLower = query.toLowerCase();
+    filteredPosts = filteredPosts.filter(post => {
+      return (
+        post.title.toLowerCase().includes(searchLower) ||
+        post.description.toLowerCase().includes(searchLower) ||
+        post.skills.some(skill => skill.toLowerCase().includes(searchLower))
+      );
+    });
+  }
+
+  // Mock: Generate filters object that would come from backend
+  // In real API, this comes directly from the response, not calculated from posts
+  const apiFilters: AvailableFilters = {
+    regions: ['North America', 'Europe', 'Asia', 'South America'],
+    budgetTypes: ['hourly', 'fixed'],
+    minBudget: 100,
+    maxBudget: 10000,
+  };
+
+  // Now apply user-selected filters to posts
+  if (filters) {
+    // Filter by budget type
+    if (filters.budgetType) {
+      filteredPosts = filteredPosts.filter(post =>
+        post.budget?.type === filters.budgetType
+      );
+    }
+
+    // Filter by minimum budget
+    if (filters.minBudget !== undefined) {
+      filteredPosts = filteredPosts.filter(post =>
+        post.budget && post.budget.value >= filters.minBudget!
+      );
+    }
+
+    // Filter by maximum budget
+    if (filters.maxBudget !== undefined) {
+      filteredPosts = filteredPosts.filter(post =>
+        post.budget && post.budget.value <= filters.maxBudget!
+      );
+    }
+
+    // Filter by region
+    if (filters.region) {
+      filteredPosts = filteredPosts.filter(post =>
+        post.region?.toLowerCase() === filters.region!.toLowerCase()
+      );
+    }
+  }
+
+  // Sort by date (most recent first)
+  const sortedPosts = filteredPosts.sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+
+  return {
+    posts: sortedPosts.slice(0, limit),
+    nextToken: undefined,
+    filters: apiFilters, 
+  };
+}
 
   // GET /posts/list - List all posts with pagination
   async listPosts(limit = 20, nextToken?: string): Promise<{
@@ -524,38 +631,6 @@ export class ApiServiceMock {
 
     return {
       posts: allPosts.slice(0, limit),
-      nextToken: undefined, // No pagination in mock
-    };
-  }
-
-  // GET /posts/search - Search posts by query
-  async searchPosts(query: string): Promise<{
-    posts: WorkPost[];
-    nextToken?: string;
-  }> {
-    await this.delay();
-
-    const currentUser = this.getCurrentUser();
-    if (!currentUser) {
-      throw new Error('Not authenticated');
-    }
-
-    // Get posts from other users (not current user's posts)
-    const allPosts = Array.from(store.getPosts().values())
-      .filter(post => post.userId !== currentUser.id);
-
-    // Simple search implementation - search in title, description, and skills
-    const searchLower = query.toLowerCase();
-    const filteredPosts = allPosts.filter(post => {
-      return (
-        post.title.toLowerCase().includes(searchLower) ||
-        post.description.toLowerCase().includes(searchLower) ||
-        post.skills.some(skill => skill.toLowerCase().includes(searchLower))
-      );
-    });
-
-    return {
-      posts: filteredPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()),
       nextToken: undefined, // No pagination in mock
     };
   }

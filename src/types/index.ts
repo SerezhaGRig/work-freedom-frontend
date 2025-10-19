@@ -23,6 +23,7 @@ export interface WorkPost {
   status: string[];
   date: string;
   publicationDate: string;
+  region?: string; // Added region field
   budget?: {
     type: 'hourly' | 'fixed';
     value: number;
@@ -68,4 +69,23 @@ export interface ProposalDetailsResponse {
   proposal: Proposal;
   discussion?: ProposalDiscussion;
   post?: WorkPost;
+}
+
+export interface SearchFilters {
+  budgetType?: 'hourly' | 'fixed';
+  minBudget?: number;
+  maxBudget?: number;
+  region?: string;
+}
+
+// API Response includes available filters
+export interface SearchPostsResponse {
+  posts: WorkPost[];
+  nextToken?: string;
+  availableFilters?: {
+    regions?: string[];
+    budgetTypes?: ('hourly' | 'fixed')[];
+    minBudget?: number;
+    maxBudget?: number;
+  };
 }

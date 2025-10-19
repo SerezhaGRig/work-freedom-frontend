@@ -28,9 +28,6 @@ export function MyPostsGrid({ posts, onUpdate }: MyPostsGridProps) {
           <p className="text-gray-600 mb-6">
             Create your first job post to start receiving proposals from talented professionals.
           </p>
-          <Button onClick={() => router.push('/my-posts')}>
-            <Plus className="w-5 h-5" /> Create Your First Post
-          </Button>
         </div>
       </Card>
     );

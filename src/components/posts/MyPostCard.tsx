@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Edit3, Trash2, Users, DollarSign, Calendar, ChevronDown, ChevronUp } from 'lucide-react';
+import { Edit3, Trash2, Users, DollarSign, Calendar, ChevronDown, ChevronUp, MapPin } from 'lucide-react';
 import { WorkPost } from '@/types';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
@@ -55,6 +55,15 @@ export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
             <h3 className="text-lg font-bold text-gray-800 mb-2">
               {post.title}
             </h3>
+            
+            {/* Region Display */}
+            {post.region && (
+              <div className="flex items-center text-sm text-gray-600 mb-2">
+                <MapPin className="w-3.5 h-3.5 mr-1" />
+                <span>{post.region}</span>
+              </div>
+            )}
+            
             <p className="text-sm text-gray-600 line-clamp-3">
               {post.description}
             </p>

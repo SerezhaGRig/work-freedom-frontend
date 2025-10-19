@@ -1,8 +1,10 @@
+// usePosts.ts - Updated with dynamic filters support
+
 'use client';
 
 import { useState } from 'react';
 import { WorkPost } from '@/types';
-import { apiService } from '../api/api-client-mock';
+import { apiService, SearchFilters, AvailableFilters } from '../api/api-client-mock';
 
 export function usePosts() {
   const [posts, setPosts] = useState<WorkPost[]>([]);
@@ -10,11 +12,14 @@ export function usePosts() {
   const [isLoading, setIsLoading] = useState(false);
   const [nextToken, setNextToken] = useState<string | undefined>();
   const [error, setError] = useState<string | null>(null);
+  const [activeFilters, setActiveFilters] = useState<SearchFilters>({});
+  const [availableFilters, setAvailableFilters] = useState<AvailableFilters | undefined>();
 
   // List posts with pagination (browse all posts)
   const loadPosts = async (loadMore = false) => {
     setIsLoading(true);
     setError(null);
+    setAvailableFilters(undefined); // Clear available filters when browsing
     try {
       const result = await apiService.listPosts(20, loadMore ? nextToken : undefined);
       
@@ -34,21 +39,34 @@ export function usePosts() {
     }
   };
 
-  // Search posts by query
-  const searchPosts = async (query: string) => {
+  // Search posts by query with filters - receives filters object from API
+  const searchPosts = async (query: string, filters?: SearchFilters) => {
     setIsLoading(true);
     setError(null);
     try {
-      const result = await apiService.searchPosts(query);
+      const result = await apiService.searchPosts(query, filters);
       setPosts(result.posts || []);
       setNextToken(result.nextToken);
+      
+      // Store filters object directly from API response
+      setAvailableFilters(result.filters);
+      
+      if (filters) {
+        setActiveFilters(filters);
+      }
     } catch (error) {
       console.error('Failed to search posts:', error);
       setError('Failed to search posts');
       setPosts([]);
+      setAvailableFilters(undefined);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  // Clear all filters and reload
+  const clearFilters = () => {
+    setActiveFilters({});
   };
 
   const loadMyPosts = async () => {
@@ -70,6 +88,7 @@ export function usePosts() {
     title: string;
     description: string;
     skills: string[];
+    region?: string;
     budget?: { type: 'hourly' | 'fixed'; value: number };
   }) => {
     const newPost = await apiService.createPost(data);
@@ -100,8 +119,11 @@ export function usePosts() {
     isLoading,
     error,
     hasMore: !!nextToken,
+    activeFilters,
+    availableFilters, // Expose available filters from API
     loadPosts,
     searchPosts,
+    clearFilters,
     loadMyPosts,
     createPost,
     deletePost,

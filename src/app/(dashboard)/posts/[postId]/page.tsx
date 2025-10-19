@@ -1,8 +1,10 @@
+// page(post).tsx - Updated to display region
+
 'use client';
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { ArrowLeft, DollarSign, Calendar, Briefcase, User, Send } from 'lucide-react';
+import { ArrowLeft, DollarSign, Calendar, Briefcase, User, Send, MapPin } from 'lucide-react';
 import { WorkPost } from '@/types';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
@@ -107,13 +109,22 @@ export default function JobDetailsPage() {
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">
                   {post.title}
                 </h1>
-                <div className="flex items-center space-x-4 text-sm text-gray-600">
+                
+                <div className="flex items-center flex-wrap gap-4 text-sm text-gray-600 mb-2">
                   <div className="flex items-center">
                     <Calendar className="w-4 h-4 mr-1" />
                     <span>Posted {new Date(post.date).toLocaleDateString()}</span>
                   </div>
                   <Badge variant="success">Active</Badge>
                 </div>
+                
+                {/* Region Display */}
+                {post.region && (
+                  <div className="flex items-center text-sm text-gray-700 bg-blue-50 px-3 py-1.5 rounded-full w-fit">
+                    <MapPin className="w-4 h-4 mr-1.5 text-blue-600" />
+                    <span className="font-medium">{post.region}</span>
+                  </div>
+                )}
               </div>
               
               {post.budget && (
@@ -214,6 +225,18 @@ export default function JobDetailsPage() {
             <h3 className="font-semibold text-gray-800 mb-4">Job Details</h3>
             
             <div className="space-y-4">
+              {post.region && (
+                <div>
+                  <p className="text-xs text-gray-500 mb-1">Region</p>
+                  <div className="flex items-center text-sm">
+                    <MapPin className="w-4 h-4 mr-2 text-gray-600" />
+                    <span className="font-medium text-gray-800">
+                      {post.region}
+                    </span>
+                  </div>
+                </div>
+              )}
+              
               <div>
                 <p className="text-xs text-gray-500 mb-1">Budget Type</p>
                 <div className="flex items-center text-sm">
