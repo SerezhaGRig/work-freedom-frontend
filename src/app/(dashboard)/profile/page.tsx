@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { ProfileHeader } from '@/components/profile/ProfileHeader';
 import { ProfileInfo } from '@/components/profile/ProfileInfo';
+import { AboutMeSection } from '@/components/profile/AboutMeSection';
 import { EditProfileModal } from '@/components/profile/EditProfileModal';
 import { useAuthStore } from '@/lib/store/authStore';
 import { ContactsList } from '@/components/profile/ContactList';
@@ -18,6 +19,11 @@ export default function ProfilePage() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
       <ProfileHeader user={user} onEdit={() => setShowEditModal(true)} />
+      
+      {/* About Me Section - Full width */}
+      <div className="mt-6">
+        <AboutMeSection aboutMe={user.aboutMe} />
+      </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
         <div className="lg:col-span-2">

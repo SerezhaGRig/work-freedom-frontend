@@ -63,6 +63,12 @@ export function useProposals() {
     return await apiService.getProposalDetails(proposalId, postId);
   };
 
+  // New method to get proposal with full user info including aboutMe
+  const getProposalWithUserInfo = async (proposalId: string, postId: string) => {
+    const details = await apiService.getProposalDetails(proposalId, postId);
+    return details.proposal;
+  };
+
   return {
     proposals,
     myProposals,
@@ -73,5 +79,6 @@ export function useProposals() {
     sendProposal,
     updateProposalStatus,
     getProposalDetails,
+    getProposalWithUserInfo,
   };
 }

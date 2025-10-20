@@ -18,7 +18,7 @@ export interface AvailableFilters {
 export interface SearchPostsResponse {
   posts: WorkPost[];
   nextToken?: string;
-  filters?: AvailableFilters; // Changed from availableFilters to filters to match API
+  filters?: AvailableFilters;
 }
 
 // Mock data storage
@@ -35,12 +35,13 @@ class MockDataStore {
   }
 
   private seedData() {
-    // Seed some test users
+    // Seed some test users with aboutMe field
     const user1: User & { password: string } = {
       id: 'user-1',
       email: 'john@example.com',
       name: 'John',
       surname: 'Doe',
+      aboutMe: 'Senior Full Stack Developer with 7+ years of experience in building scalable web applications. Passionate about React, Node.js, and cloud technologies. I love solving complex problems and mentoring junior developers.',
       verified: true,
       status: 'confirmed',
       password: 'password123',
@@ -55,6 +56,7 @@ class MockDataStore {
       email: 'jane@example.com',
       name: 'Jane',
       surname: 'Smith',
+      aboutMe: 'Product Manager and UX enthusiast with a background in software development. I bridge the gap between technical teams and business stakeholders to deliver user-centered solutions.',
       verified: true,
       status: 'confirmed',
       password: 'password123',
@@ -69,6 +71,7 @@ class MockDataStore {
       email: 'bob@example.com',
       name: 'Bob',
       surname: 'Johnson',
+      aboutMe: 'DevOps Engineer specializing in cloud infrastructure and CI/CD pipelines. AWS certified with expertise in Docker, Kubernetes, and Infrastructure as Code.',
       verified: true,
       status: 'confirmed',
       password: 'password123',
@@ -82,75 +85,74 @@ class MockDataStore {
     this.users.set(user2.id, user2);
     this.users.set(user3.id, user3);
 
-  const post1: WorkPost = {
-    userId: 'user-2',
-    postId: 'post-1',
-    title: 'Senior Full Stack Developer',
-    description: 'We are looking for an experienced full stack developer to join our team. Must have 5+ years of experience with React, Node.js, and PostgreSQL.',
-    skills: ['React', 'Node.js', 'PostgreSQL', 'TypeScript', 'AWS'],
-    status: ['published'],
-    date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-    publicationDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-    region: 'North America', // Added region
-    budget: { type: 'hourly', value: 75 },
-  };
+    const post1: WorkPost = {
+      userId: 'user-2',
+      postId: 'post-1',
+      title: 'Senior Full Stack Developer',
+      description: 'We are looking for an experienced full stack developer to join our team. Must have 5+ years of experience with React, Node.js, and PostgreSQL.',
+      skills: ['React', 'Node.js', 'PostgreSQL', 'TypeScript', 'AWS'],
+      status: ['published'],
+      date: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+      publicationDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+      region: 'North America',
+      budget: { type: 'hourly', value: 75 },
+    };
 
-  const post2: WorkPost = {
-    userId: 'user-2',
-    postId: 'post-2',
-    title: 'UI/UX Designer for Mobile App',
-    description: 'Looking for a talented UI/UX designer to redesign our mobile application. Experience with Figma required.',
-    skills: ['Figma', 'UI/UX Design', 'Mobile Design', 'Prototyping'],
-    status: ['published'],
-    date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-    publicationDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
-    region: 'Europe', // Added region
-    budget: { type: 'fixed', value: 3000 },
-  };
+    const post2: WorkPost = {
+      userId: 'user-2',
+      postId: 'post-2',
+      title: 'UI/UX Designer for Mobile App',
+      description: 'Looking for a talented UI/UX designer to redesign our mobile application. Experience with Figma required.',
+      skills: ['Figma', 'UI/UX Design', 'Mobile Design', 'Prototyping'],
+      status: ['published'],
+      date: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+      publicationDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000).toISOString(),
+      region: 'Europe',
+      budget: { type: 'fixed', value: 3000 },
+    };
 
-  const post3: WorkPost = {
-    userId: 'user-3',
-    postId: 'post-3',
-    title: 'Backend Developer - Python/Django',
-    description: 'Need a backend developer experienced with Python and Django to build REST APIs for our platform.',
-    skills: ['Python', 'Django', 'REST API', 'PostgreSQL', 'Docker'],
-    status: ['published'],
-    date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-    publicationDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-    region: 'Asia', // Added region
-    budget: { type: 'hourly', value: 60 },
-  };
+    const post3: WorkPost = {
+      userId: 'user-3',
+      postId: 'post-3',
+      title: 'Backend Developer - Python/Django',
+      description: 'Need a backend developer experienced with Python and Django to build REST APIs for our platform.',
+      skills: ['Python', 'Django', 'REST API', 'PostgreSQL', 'Docker'],
+      status: ['published'],
+      date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+      publicationDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+      region: 'Asia',
+      budget: { type: 'hourly', value: 60 },
+    };
 
-  const post4: WorkPost = {
-    userId: 'user-3',
-    postId: 'post-4',
-    title: 'DevOps Engineer',
-    description: 'Seeking a DevOps engineer to help set up CI/CD pipelines and manage our cloud infrastructure.',
-    skills: ['AWS', 'Docker', 'Kubernetes', 'Jenkins', 'Terraform'],
-    status: ['published'],
-    date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-    publicationDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-    region: 'Remote', // Added region
-    budget: { type: 'hourly', value: 80 },
-  };
+    const post4: WorkPost = {
+      userId: 'user-3',
+      postId: 'post-4',
+      title: 'DevOps Engineer',
+      description: 'Seeking a DevOps engineer to help set up CI/CD pipelines and manage our cloud infrastructure.',
+      skills: ['AWS', 'Docker', 'Kubernetes', 'Jenkins', 'Terraform'],
+      status: ['published'],
+      date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+      publicationDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+      region: 'Remote',
+      budget: { type: 'hourly', value: 80 },
+    };
 
-  const post5: WorkPost = {
-    userId: 'user-3',
-    postId: 'post-4',
-    title: 'DevOps Engineer No skills required',
-    description: 'Seeking a DevOps engineer to help set up CI/CD pipelines and manage our cloud infrastructure.',
-    status: ['published'],
-    date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-    publicationDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-    budget: { type: 'hourly', value: 80 },
-  };
+    const post5: WorkPost = {
+      userId: 'user-3',
+      postId: 'post-5',
+      title: 'DevOps Engineer No skills required',
+      description: 'Seeking a DevOps engineer to help set up CI/CD pipelines and manage our cloud infrastructure.',
+      status: ['published'],
+      date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+      publicationDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+      budget: { type: 'hourly', value: 80 },
+    };
 
     this.posts.set(post1.postId, post1);
     this.posts.set(post2.postId, post2);
     this.posts.set(post3.postId, post3);
     this.posts.set(post4.postId, post4);
-    this.posts.set(post4.postId, post5);
-
+    this.posts.set(post5.postId, post5);
 
     // Seed some proposals
     const proposal1: Proposal = {
@@ -334,6 +336,7 @@ export class ApiServiceMock {
     password: string;
     name: string;
     surname?: string;
+    aboutMe?: string;
     contacts: Contact[];
   }) {
     await this.delay();
@@ -354,6 +357,7 @@ export class ApiServiceMock {
       email: data.email,
       name: data.name,
       surname: data.surname,
+      aboutMe: data.aboutMe,
       verified: false,
       status: 'pending',
       password: data.password,
@@ -496,41 +500,42 @@ export class ApiServiceMock {
   }
 
   // Post endpoints
-async createPost(data: {
-  title: string;
-  description: string;
-  skills?: string[];
-  region?: string; // Added region parameter
-  budget?: { type: 'hourly' | 'fixed' | 'monthly'; value: number };
-}) {
-  await this.delay();
+  async createPost(data: {
+    title: string;
+    description: string;
+    skills?: string[];
+    region?: string;
+    budget?: { type: 'hourly' | 'fixed' | 'monthly'; value: number };
+  }) {
+    await this.delay();
 
-  const currentUser = this.getCurrentUser();
-  if (!currentUser) {
-    throw new Error('Not authenticated');
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) {
+      throw new Error('Not authenticated');
+    }
+
+    const postId = `post-${Date.now()}`;
+    const now = new Date().toISOString();
+
+    const newPost: WorkPost = {
+      userId: currentUser.id,
+      postId,
+      title: data.title,
+      description: data.description,
+      skills: data.skills,
+      status: ['published'],
+      date: now,
+      publicationDate: now,
+      region: data.region,
+      budget: data.budget,
+    };
+
+    store.getPosts().set(postId, newPost);
+
+    return newPost;
   }
 
-  const postId = `post-${Date.now()}`;
-  const now = new Date().toISOString();
-
-  const newPost: WorkPost = {
-    userId: currentUser.id,
-    postId,
-    title: data.title,
-    description: data.description,
-    skills: data.skills,
-    status: ['published'],
-    date: now,
-    publicationDate: now,
-    region: data.region, // Added region field
-    budget: data.budget,
-  };
-
-  store.getPosts().set(postId, newPost);
-
-  return newPost;
-}
-async getMyPosts(): Promise<WorkPost[]> {
+  async getMyPosts(): Promise<WorkPost[]> {
     await this.delay();
 
     const currentUser = this.getCurrentUser();
@@ -542,90 +547,80 @@ async getMyPosts(): Promise<WorkPost[]> {
       .filter(post => post.userId === currentUser.id)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
-async searchPosts(
-  query: string,
-  filters?: SearchFilters,
-  limit = 20,
-  nextToken?: string
-): Promise<SearchPostsResponse> {
-  await this.delay();
 
-  const currentUser = this.getCurrentUser();
-  if (!currentUser) {
-    throw new Error('Not authenticated');
+  async searchPosts(
+    query: string,
+    filters?: SearchFilters,
+    limit = 20,
+    nextToken?: string
+  ): Promise<SearchPostsResponse> {
+    await this.delay();
+
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) {
+      throw new Error('Not authenticated');
+    }
+
+    let allPosts = Array.from(store.getPosts().values())
+      .filter(post => post.userId !== currentUser.id);
+
+    let filteredPosts = [...allPosts];
+
+    if (query && query.trim()) {
+      const searchLower = query.toLowerCase();
+      filteredPosts = filteredPosts.filter(post => {
+        return (
+          post.title.toLowerCase().includes(searchLower) ||
+          post.description.toLowerCase().includes(searchLower) ||
+          post.skills?.some(skill => skill.toLowerCase().includes(searchLower))
+        );
+      });
+    }
+
+    const apiFilters: AvailableFilters = {
+      regions: ['North America', 'Europe', 'Asia', 'South America'],
+      budgetTypes: ['hourly', 'fixed', 'monthly'],
+      minBudget: 100,
+      maxBudget: 10000,
+    };
+
+    if (filters) {
+      if (filters.budgetType) {
+        filteredPosts = filteredPosts.filter(post =>
+          post.budget?.type === filters.budgetType
+        );
+      }
+
+      if (filters.minBudget !== undefined) {
+        filteredPosts = filteredPosts.filter(post =>
+          post.budget && post.budget.value >= filters.minBudget!
+        );
+      }
+
+      if (filters.maxBudget !== undefined) {
+        filteredPosts = filteredPosts.filter(post =>
+          post.budget && post.budget.value <= filters.maxBudget!
+        );
+      }
+
+      if (filters.region) {
+        filteredPosts = filteredPosts.filter(post =>
+          post.region?.toLowerCase() === filters.region!.toLowerCase()
+        );
+      }
+    }
+
+    const sortedPosts = filteredPosts.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+
+    return {
+      posts: sortedPosts.slice(0, limit),
+      nextToken: undefined,
+      filters: apiFilters,
+    };
   }
 
-  // Get posts from other users (not current user's posts)
-  let allPosts = Array.from(store.getPosts().values())
-    .filter(post => post.userId !== currentUser.id);
-
-  let filteredPosts = [...allPosts];
-
-  // Apply text search first
-  if (query && query.trim()) {
-    const searchLower = query.toLowerCase();
-    filteredPosts = filteredPosts.filter(post => {
-      return (
-        post.title.toLowerCase().includes(searchLower) ||
-        post.description.toLowerCase().includes(searchLower) ||
-        post.skills?.some(skill => skill.toLowerCase().includes(searchLower))
-      );
-    });
-  }
-
-  // Mock: Generate filters object that would come from backend
-  // In real API, this comes directly from the response, not calculated from posts
-  const apiFilters: AvailableFilters = {
-    regions: ['North America', 'Europe', 'Asia', 'South America'],
-    budgetTypes: ['hourly', 'fixed', 'monthly'],
-    minBudget: 100,
-    maxBudget: 10000,
-  };
-
-  // Now apply user-selected filters to posts
-  if (filters) {
-    // Filter by budget type
-    if (filters.budgetType) {
-      filteredPosts = filteredPosts.filter(post =>
-        post.budget?.type === filters.budgetType
-      );
-    }
-
-    // Filter by minimum budget
-    if (filters.minBudget !== undefined) {
-      filteredPosts = filteredPosts.filter(post =>
-        post.budget && post.budget.value >= filters.minBudget!
-      );
-    }
-
-    // Filter by maximum budget
-    if (filters.maxBudget !== undefined) {
-      filteredPosts = filteredPosts.filter(post =>
-        post.budget && post.budget.value <= filters.maxBudget!
-      );
-    }
-
-    // Filter by region
-    if (filters.region) {
-      filteredPosts = filteredPosts.filter(post =>
-        post.region?.toLowerCase() === filters.region!.toLowerCase()
-      );
-    }
-  }
-
-  // Sort by date (most recent first)
-  const sortedPosts = filteredPosts.sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
-
-  return {
-    posts: sortedPosts.slice(0, limit),
-    nextToken: undefined,
-    filters: apiFilters, 
-  };
-}
-
-  // GET /posts/list - List all posts with pagination
   async listPosts(limit = 20, nextToken?: string): Promise<{
     posts: WorkPost[];
     nextToken?: string;
@@ -637,14 +632,13 @@ async searchPosts(
       throw new Error('Not authenticated');
     }
 
-    // Get posts from other users (not current user's posts)
     const allPosts = Array.from(store.getPosts().values())
       .filter(post => post.userId !== currentUser.id)
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
     return {
       posts: allPosts.slice(0, limit),
-      nextToken: undefined, // No pagination in mock
+      nextToken: undefined,
     };
   }
 
@@ -678,7 +672,6 @@ async searchPosts(
 
     store.getPosts().delete(postId);
 
-    // Delete associated proposals
     const proposals = Array.from(store.getProposals().values())
       .filter(p => p.postId === postId);
     
@@ -694,6 +687,61 @@ async searchPosts(
         postId: post.postId,
         title: post.title,
       },
+    };
+  }
+
+  async updatePost(postId: string, body: Partial<WorkPost>) {
+    await this.delay();
+
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) {
+      throw new Error('Not authenticated');
+    }
+
+    const post = store.getPosts().get(postId);
+    if (!post) {
+      throw new Error('Post not found');
+    }
+
+    if (post.userId !== currentUser.id) {
+      throw new Error('You are not authorized to update this post');
+    }
+
+    Object.assign(post, body);
+
+    return {
+      message: 'Post updated successfully',
+      post,
+    };
+  }
+
+  async editUserProfile(body: Partial<EditUser>) {
+    await this.delay();
+
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) {
+      throw new Error('Not authenticated');
+    }
+
+    // Update user profile with provided fields
+    if (body.name !== undefined) {
+      currentUser.name = body.name;
+    }
+    if (body.surname !== undefined) {
+      currentUser.surname = body.surname;
+    }
+    if (body.aboutMe !== undefined) {
+      currentUser.aboutMe = body.aboutMe;
+    }
+    if (body.contacts !== undefined) {
+      currentUser.contacts = body.contacts;
+    }
+
+    const { password, ...userWithoutPassword } = currentUser;
+
+    return {
+      message: 'Profile updated successfully',
+      user: userWithoutPassword,
     };
   }
 
@@ -742,7 +790,6 @@ async searchPosts(
       throw new Error('Post not found');
     }
 
-    // Check if already sent proposal
     const existingProposal = Array.from(store.getProposals().values()).find(
       p => p.postId === postId && p.userId === currentUser.id
     );
@@ -814,15 +861,6 @@ async searchPosts(
       .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }
 
-  async updatePost(postId: string, body: Partial<WorkPost>) {
-    return
-  }
-
-  async editUserProfile(body: Partial<EditUser>) {
-    return
-  }
-
-
   async getProposalDetails(proposalId: string, postId: string) {
     await this.delay();
 
@@ -836,7 +874,6 @@ async searchPosts(
       throw new Error('Proposal not found');
     }
 
-    // Check if user is authorized (either proposal sender or post owner)
     const post = store.getPosts().get(proposal.postId);
     if (!post) {
       throw new Error('Post not found');
@@ -847,6 +884,26 @@ async searchPosts(
     }
 
     const discussion = store.getDiscussions().get(proposalId);
+    
+    // Get the proposal sender's full user info
+    const proposalUser = store.getUsers().get(proposal.userId);
+    if (proposalUser) {
+      // Add user info to the proposal
+      const proposalWithUserInfo = {
+        ...proposal,
+        userInfo: {
+          name: proposalUser.name,
+          surname: proposalUser.surname,
+          aboutMe: proposalUser.aboutMe,
+        }
+      };
+
+      return {
+        proposal: proposalWithUserInfo,
+        discussion: discussion || null,
+        post: post,
+      };
+    }
 
     return {
       proposal,
@@ -884,7 +941,6 @@ async searchPosts(
 
     proposal.status = status;
 
-    // If accepted, create discussion
     if (status === 'accepted' && !store.getDiscussions().has(proposalId)) {
       const discussion: ProposalDiscussion = {
         proposalId,

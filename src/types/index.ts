@@ -4,6 +4,7 @@ export interface User {
   name: string;
   surname?: string;
   contacts: Contact[];
+    aboutMe?: string; // Add this line
   verified: boolean;
   status?: 'pending' | 'confirmed' | 'recover';
 }
@@ -11,6 +12,8 @@ export interface User {
 export interface EditUser {
   name: string;
   surname?: string;
+    aboutMe?: string; // Add this line
+
   contacts: Contact[];
 }
 

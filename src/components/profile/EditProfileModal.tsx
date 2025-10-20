@@ -20,6 +20,7 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
   const { setUser } = useAuthStore();
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
+  const [aboutMe, setAboutMe] = useState('');
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [showAddContact, setShowAddContact] = useState(false);
   const [newContactType, setNewContactType] = useState<Contact['type']>('phone');
@@ -30,6 +31,7 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
     if (user) {
       setName(user.name);
       setSurname(user.surname || '');
+      setAboutMe(user.aboutMe || '');
       setContacts(user.contacts);
     }
   }, [user]);
@@ -69,14 +71,16 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
         ...user,
         name,
         surname,
+        aboutMe,
         contacts,
       };
+      
       await apiService.editUserProfile({
         name,
         surname,
+        aboutMe,
         contacts,
-      })
-
+      });
       
       setUser(updatedUser);
       alert('Profile updated successfully!');
@@ -90,7 +94,7 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Edit Profile">
-      <div className="space-y-4">
+      <div className="space-y-4 max-h-[70vh] overflow-y-auto">
         <Input
           label="First Name"
           value={name}
@@ -105,6 +109,25 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
           onChange={(e) => setSurname(e.target.value)}
           placeholder="Doe"
         />
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">
+            About Me
+          </label>
+          <textarea
+            value={aboutMe}
+            onChange={(e) => setAboutMe(e.target.value)}
+            placeholder="Tell us about yourself, your experience, skills, and what you're looking for..."
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+            rows={4}
+            maxLength={500}
+          />
+          <div className="mt-1 text-right">
+            <span className="text-xs text-gray-500">
+              {aboutMe.length}/500 characters
+            </span>
+          </div>
+        </div>
 
         <div className="space-y-3">
           <div className="flex justify-between items-center">
@@ -162,7 +185,7 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
             </div>
           )}
 
-          <div className="space-y-2 max-h-60 overflow-y-auto">
+          <div className="space-y-2 max-h-40 overflow-y-auto">
             {contacts.map((contact, index) => (
               <div
                 key={index}
@@ -199,7 +222,7 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
           </div>
         </div>
 
-        <div className="flex justify-end space-x-2 pt-4">
+        <div className="flex justify-end space-x-2 pt-4 border-t">
           <Button variant="secondary" onClick={onClose}>
             Cancel
           </Button>

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { ArrowLeft, Briefcase, User, Calendar, DollarSign } from 'lucide-react';
+import { ArrowLeft, Briefcase, User, Calendar, DollarSign, FileText } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
@@ -101,6 +101,7 @@ export default function ChatPage() {
 
   const isSender = proposal?.userId === user?.id;
   const otherUserName = isSender ? 'Job Owner' : proposal?.user.name;
+  const proposalWithUserInfo = proposal as any; // Type assertion for userInfo
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -191,12 +192,30 @@ export default function ChatPage() {
             </Card>
           )}
 
+          {/* Freelancer Profile (visible to job owner) */}
+          {!isSender && proposalWithUserInfo?.userInfo?.aboutMe && (
+            <Card className="p-6">
+              <h3 className="font-semibold text-gray-800 mb-4 flex items-center">
+                <FileText className="w-5 h-5 mr-2" />
+                About {proposal?.user.name}
+              </h3>
+              
+              <div className="space-y-3">
+                <div className="bg-gray-50 rounded-lg p-3 max-h-40 overflow-y-auto">
+                  <p className="text-sm text-gray-700 whitespace-pre-wrap">
+                    {proposalWithUserInfo.userInfo.aboutMe}
+                  </p>
+                </div>
+              </div>
+            </Card>
+          )}
+
           {/* Proposal Details */}
           {proposal && (
             <Card className="p-6">
               <h3 className="font-semibold text-gray-800 mb-4 flex items-center">
                 <User className="w-5 h-5 mr-2" />
-                Proposal Status
+                Proposal Details
               </h3>
               
               <div className="space-y-3">
@@ -212,16 +231,16 @@ export default function ChatPage() {
                   </p>
                 </div>
 
-                {isSender && (
-                  <div className="pt-3 border-t border-gray-200">
-                    <p className="text-xs text-gray-500 mb-2">Your Cover Letter</p>
-                    <div className="bg-gray-50 rounded-lg p-3 max-h-32 overflow-y-auto">
-                      <p className="text-sm text-gray-700 whitespace-pre-wrap">
-                        {proposal.coverLetter}
-                      </p>
-                    </div>
+                <div className="pt-3 border-t border-gray-200">
+                  <p className="text-xs text-gray-500 mb-2">
+                    {isSender ? 'Your Cover Letter' : "Freelancer's Cover Letter"}
+                  </p>
+                  <div className="bg-gray-50 rounded-lg p-3 max-h-32 overflow-y-auto">
+                    <p className="text-sm text-gray-700 whitespace-pre-wrap">
+                      {proposal.coverLetter}
+                    </p>
                   </div>
-                )}
+                </div>
               </div>
             </Card>
           )}
