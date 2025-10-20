@@ -25,7 +25,7 @@ export interface WorkPost {
   postId: string;
   title: string;
   description: string;
-  skills: string[];
+  skills?: string[];
   status: string[];
   date: string;
   publicationDate: string;

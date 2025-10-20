@@ -87,7 +87,7 @@ export function usePosts() {
   const createPost = async (data: {
     title: string;
     description: string;
-    skills: string[];
+    skills?: string[];
     region?: string;
     budget?: { type: 'hourly' | 'fixed' | 'monthly'; value: number };
   }) => {

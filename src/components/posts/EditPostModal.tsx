@@ -46,7 +46,7 @@ export function EditPostModal({
     if (post) {
       setTitle(post.title);
       setDescription(post.description);
-      setSkills(post.skills.join(', '));
+      setSkills(post.skills?.join(', ') || '');
       setRegion(post.region || '');
       setBudgetType(post.budget?.type || 'hourly');
       setBudgetValue(post.budget?.value.toString() || '');
@@ -61,7 +61,7 @@ export function EditPostModal({
 
     setIsLoading(true);
     try {
-      const skillsArray = skills.split(',').map(s => s.trim()).filter(s => s);
+      const skillsArray = skills ? skills.split(',').map(s => s.trim()).filter(s => s): undefined;
       await apiService.updatePost(post.postId, {
         title,
         description,
@@ -108,7 +108,6 @@ export function EditPostModal({
           value={skills}
           onChange={(e) => setSkills(e.target.value)}
           placeholder="e.g. React, Node.js, TypeScript"
-          required
         />
         
         {/* Region Selector */}

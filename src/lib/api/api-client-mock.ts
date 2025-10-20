@@ -134,10 +134,23 @@ class MockDataStore {
     budget: { type: 'hourly', value: 80 },
   };
 
+  const post5: WorkPost = {
+    userId: 'user-3',
+    postId: 'post-4',
+    title: 'DevOps Engineer No skills required',
+    description: 'Seeking a DevOps engineer to help set up CI/CD pipelines and manage our cloud infrastructure.',
+    status: ['published'],
+    date: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    publicationDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    budget: { type: 'hourly', value: 80 },
+  };
+
     this.posts.set(post1.postId, post1);
     this.posts.set(post2.postId, post2);
     this.posts.set(post3.postId, post3);
     this.posts.set(post4.postId, post4);
+    this.posts.set(post4.postId, post5);
+
 
     // Seed some proposals
     const proposal1: Proposal = {
@@ -486,7 +499,7 @@ export class ApiServiceMock {
 async createPost(data: {
   title: string;
   description: string;
-  skills: string[];
+  skills?: string[];
   region?: string; // Added region parameter
   budget?: { type: 'hourly' | 'fixed' | 'monthly'; value: number };
 }) {
@@ -555,7 +568,7 @@ async searchPosts(
       return (
         post.title.toLowerCase().includes(searchLower) ||
         post.description.toLowerCase().includes(searchLower) ||
-        post.skills.some(skill => skill.toLowerCase().includes(searchLower))
+        post.skills?.some(skill => skill.toLowerCase().includes(searchLower))
       );
     });
   }

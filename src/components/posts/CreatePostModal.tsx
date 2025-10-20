@@ -32,7 +32,7 @@ export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalP
 
     setIsLoading(true);
     try {
-      const skillsArray = skills.split(',').map(s => s.trim()).filter(s => s);
+      const skillsArray = skills ? skills.split(',').map(s => s.trim()).filter(s => s): undefined;
       await createPost({
         title,
         description,
@@ -82,7 +82,6 @@ export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalP
           value={skills}
           onChange={(e) => setSkills(e.target.value)}
           placeholder="e.g. React, Node.js, TypeScript"
-          required
         />
         
         {/* Region Selector */}

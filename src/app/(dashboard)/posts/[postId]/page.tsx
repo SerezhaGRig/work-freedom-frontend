@@ -139,7 +139,7 @@ export default function JobDetailsPage() {
             </div>
 
             {/* Skills */}
-            <div className="mb-6">
+            {post.skills && (<div className="mb-6">
               <h3 className="text-sm font-semibold text-gray-700 mb-3">Required Skills</h3>
               <div className="flex flex-wrap gap-2">
                 {post.skills.map((skill, index) => (
@@ -148,7 +148,7 @@ export default function JobDetailsPage() {
                   </Badge>
                 ))}
               </div>
-            </div>
+            </div>)}
 
             {/* Description */}
             <div>

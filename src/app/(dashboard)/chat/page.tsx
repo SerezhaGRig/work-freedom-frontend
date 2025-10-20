@@ -162,12 +162,12 @@ export default function ChatPage() {
                 </div>
 
                 <div className="flex flex-wrap gap-2">
-                  {post.skills.slice(0, 4).map((skill, index) => (
+                  {post.skills && (post.skills.slice(0, 4).map((skill, index) => (
                     <Badge key={index} variant="default">
                       {skill}
                     </Badge>
-                  ))}
-                  {post.skills.length > 4 && (
+                  )))}
+                  {(post.skills && post.skills.length > 4) && (
                     <Badge variant="default">+{post.skills.length - 4}</Badge>
                   )}
                 </div>

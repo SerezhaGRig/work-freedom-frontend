@@ -48,12 +48,12 @@ export function PostCard({ post }: PostCardProps) {
       </div>
       
       <div className="flex flex-wrap gap-2 mb-4">
-        {post.skills.slice(0, 5).map((skill, index) => (
+        {post.skills && (post.skills.slice(0, 5).map((skill, index) => (
           <Badge key={index} variant="default">
             {skill}
           </Badge>
-        ))}
-        {post.skills.length > 5 && (
+        )))}
+        {(post.skills && post.skills.length > 5) && (
           <Badge variant="default">+{post.skills.length - 5} more</Badge>
         )}
       </div>
