@@ -11,6 +11,6 @@ export default $config({
     };
   },
   async run() {
-    new sst.aws.Nextjs("job-pplatform");
+    new sst.aws.Nextjs("job-platform");
   },
 });
