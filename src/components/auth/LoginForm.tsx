@@ -16,6 +16,7 @@ export function LoginForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+  
     await login(email, password);
   };
 
