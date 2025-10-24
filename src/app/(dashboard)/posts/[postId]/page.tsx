@@ -1,5 +1,3 @@
-// page(post).tsx - Updated to display region
-
 'use client';
 
 import { useEffect, useState } from 'react';
