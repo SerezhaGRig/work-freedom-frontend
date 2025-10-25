@@ -248,7 +248,7 @@ export default function ChatPage() {
           {/* Shared Contacts */}
           {discussion?.shownContacts && discussion.shownContacts.length > 0 && (
             <ContactsDisplay
-              contacts={discussion.shownContacts}
+              contacts={isSender ? discussion.shownContacts: (proposalWithUserInfo.userInfo.contacts || [])}
               title={isSender ? "Job Owner's Contacts" : "Freelancer's Contacts"}
             />
           )}

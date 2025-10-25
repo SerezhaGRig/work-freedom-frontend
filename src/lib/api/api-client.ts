@@ -3,7 +3,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { User, Contact, WorkPost, Proposal, Message, EditUser } from '@/types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || API_URL;
 
 // Simplified SearchFilters interface
 export interface SearchFilters {
@@ -144,7 +144,6 @@ async register(data: {
     return response.data;
   }
 
-  // GET /posts/search - Search posts with dynamic filters
 async searchPosts(
   query: string,
   filters?: SearchFilters,
@@ -227,8 +226,8 @@ async editUserProfile(body: Partial<EditUser>) {
     return response.data.proposals;
   }
 
-  async getProposalDetails(proposalId: string, postId: string) {
-    const response = await this.client.get(`/proposals/${proposalId}/post/${postId}/details`);
+  async getProposalDetails(proposalId: string) {
+    const response = await this.client.get(`/proposals/${proposalId}/details`);
     return response.data;
   }
 

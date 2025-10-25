@@ -16,7 +16,7 @@ interface MyProposalsListProps {
 export function MyProposalsList({ proposals, onUpdate }: MyProposalsListProps) {
   const router = useRouter();
   const [expandedId, setExpandedId] = useState<string | null>(null);
-
+  console.log('proposals', proposals)
   const getBadgeVariant = (status: string) => {
     switch (status) {
       case 'accepted':
@@ -55,7 +55,7 @@ export function MyProposalsList({ proposals, onUpdate }: MyProposalsListProps) {
   // Group proposals by status
   const groupedProposals = {
     active: proposals.filter(p => p.status === 'accepted' || p.status === 'discussion'),
-    pending: proposals.filter(p => p.status === 'invited'),
+    pending: proposals.filter(p => p.status === 'pending'),
     rejected: proposals.filter(p => p.status === 'rejected'),
   };
 

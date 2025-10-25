@@ -8,7 +8,7 @@ import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
-import { SearchFilters as SearchFiltersType, AvailableFilters } from '@/lib/api/api-client-mock';
+import { SearchFilters as SearchFiltersType, AvailableFilters } from '@/lib/api/api-client';
 
 interface SearchFiltersProps {
   onApplyFilters: (filters: SearchFiltersType) => void;

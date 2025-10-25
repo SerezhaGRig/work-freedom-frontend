@@ -2,9 +2,8 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Message, ProposalDiscussion, WorkPost, Proposal } from '@/types';
-import { apiService } from '../api/api-client-mock';
-
-const POLLING_INTERVAL = 3000; // 3 seconds
+import { apiService } from '../api/api-client';
+import { POLLING_INTERVAL } from '@/config/constants';
 
 export function useChat() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -100,7 +99,7 @@ export function useChat() {
     setIsLoading(true);
     setError(null);
     try {
-      const details = await apiService.getProposalDetails(proposalId, '');
+      const details = await apiService.getProposalDetails(proposalId);
       setProposal(details.proposal);
       setPost(details.post || null);
       if (details.discussion) {

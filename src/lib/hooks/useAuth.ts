@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Contact } from '@/types';
-import { apiService } from '../api/api-client-mock';
+import { apiService } from '../api/api-client';
 import { useAuthStore } from '../store/authStore';
 
 export function useAuth() {

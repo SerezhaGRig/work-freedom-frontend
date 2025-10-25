@@ -9,7 +9,7 @@ import { PostList } from '@/components/posts/PostList';
 import { SearchFilters } from '@/components/posts/SearchFilters';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
-import { SearchFilters as SearchFiltersType } from '@/lib/api/api-client-mock';
+import { SearchFilters as SearchFiltersType } from '@/lib/api/api-client';
 
 export default function PostsPage() {
   const { 

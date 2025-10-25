@@ -60,7 +60,7 @@ export function PostProposalsList({
   const handleViewProfile = async (proposal: Proposal) => {
     try {
       // Get full user info including aboutMe
-      const fullProposalInfo = await getProposalWithUserInfo(proposal.proposalId, proposal.postId);
+      const fullProposalInfo = await getProposalWithUserInfo(proposal.proposalId);
       setSelectedProposal(fullProposalInfo);
       setShowProfileModal(true);
     } catch (error) {
@@ -153,7 +153,7 @@ export function PostProposalsList({
                 <span>Sent {new Date(proposal.date).toLocaleDateString()}</span>
                 
                 <div className="flex items-center space-x-2">
-                  {proposal.status === 'invited' && (
+                  {proposal.status === 'pending' && (
                     <>
                       <Button
                         size="sm"

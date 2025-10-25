@@ -6,7 +6,7 @@ import { Modal } from '@/components/ui/Modal';
 import { Input } from '@/components/ui/Input';
 import { Button } from '../ui/Button';
 import { TextArea } from '../ui/TextArea';
-import { apiService } from '@/lib/api/api-client-mock';
+import { apiService } from '@/lib/api/api-client';
 
 interface EditPostModalProps {
   isOpen: boolean;

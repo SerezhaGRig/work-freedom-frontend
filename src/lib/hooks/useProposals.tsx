@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Proposal } from '@/types';
-import { apiService } from '../api/api-client-mock';
+import { apiService } from '../api/api-client';
 import { useAuthStore } from '../store/authStore';
 
 export function useProposals() {
@@ -32,6 +32,7 @@ export function useProposals() {
     setError(null);
     try {
       const userProposals = await apiService.getMyProposals();
+      console.log('userProposals', userProposals)
       setMyProposals(userProposals || []);
     } catch (error) {
       console.error('Failed to load my proposals:', error);
@@ -60,12 +61,12 @@ export function useProposals() {
   };
 
   const getProposalDetails = async (proposalId: string, postId: string) => {
-    return await apiService.getProposalDetails(proposalId, postId);
+    return await apiService.getProposalDetails(proposalId);
   };
 
   // New method to get proposal with full user info including aboutMe
-  const getProposalWithUserInfo = async (proposalId: string, postId: string) => {
-    const details = await apiService.getProposalDetails(proposalId, postId);
+  const getProposalWithUserInfo = async (proposalId: string) => {
+    const details = await apiService.getProposalDetails(proposalId);
     return details.proposal;
   };
 

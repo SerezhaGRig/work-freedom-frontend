@@ -9,7 +9,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { TextArea } from '@/components/ui/TextArea';
 import { useProposals } from '@/lib/hooks/useProposals';
-import { apiService } from '@/lib/api/api-client-mock';
+import { apiService } from '@/lib/api/api-client';
 
 export default function JobDetailsPage() {
   const params = useParams();

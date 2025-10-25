@@ -4,7 +4,7 @@
 
 import { useState } from 'react';
 import { WorkPost } from '@/types';
-import { apiService, SearchFilters, AvailableFilters } from '../api/api-client-mock';
+import { apiService, SearchFilters, AvailableFilters } from '../api/api-client';
 
 export function usePosts() {
   const [posts, setPosts] = useState<WorkPost[]>([]);

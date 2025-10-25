@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/Input';
 import { useAuthStore } from '@/lib/store/authStore';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
-import { apiService } from '@/lib/api/api-client-mock';
+import { apiService } from '@/lib/api/api-client';
 
 interface EditProfileModalProps {
   isOpen: boolean;

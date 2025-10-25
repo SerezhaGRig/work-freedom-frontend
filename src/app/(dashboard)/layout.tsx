@@ -11,14 +11,25 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, _hasHydrated } = useAuthStore(); // Add _hasHydrated
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    // ONLY redirect AFTER hydration completes
+    if (_hasHydrated && !isAuthenticated) {
       router.push('/login');
     }
-  }, [isAuthenticated, router]);
+  }, [_hasHydrated, isAuthenticated, router]); // Add _hasHydrated to dependencies
 
+  // Show loading while store is hydrating from localStorage
+  if (!_hasHydrated) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        <div className="text-gray-600">Loading...</div>
+      </div>
+    );
+  }
+
+  // Don't show content while redirecting to login
   if (!isAuthenticated) {
     return null;
   }
