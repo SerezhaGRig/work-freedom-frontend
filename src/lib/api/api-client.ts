@@ -2,6 +2,7 @@
 
 import axios, { AxiosInstance } from 'axios';
 import { User, Contact, WorkPost, Proposal, Message, EditUser } from '@/types';
+import { API_URL } from '@/config/constants';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || API_URL;
 
