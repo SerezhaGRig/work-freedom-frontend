@@ -10,6 +10,8 @@ import { EditPostModal } from './EditPostModal';
 import { DeletePostModal } from './DeletePostModal';
 import { PostProposalsList } from './PostProposalsList';
 import { useProposals } from '@/lib/hooks/useProposals';
+import { Share } from '../ui/Share';
+import path from 'path';
 
 interface MyPostCardProps {
   post: WorkPost;
@@ -105,43 +107,63 @@ export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
               {proposalCount === 1 ? 'proposal' : 'proposals'}
             </span>
           </div>
+
         </div>
 
-        <div className="flex gap-2 pt-4 border-t border-gray-200">
-          <Button
-            size="sm"
-            variant="secondary"
-            className="flex-1"
-            onClick={handleToggleProposals}
-            disabled={isLoading && !showProposals}
-          >
-            {isLoading && !showProposals ? (
-              <>Loading...</>
-            ) : showProposals ? (
-              <>
-                <ChevronUp className="w-4 h-4" /> Hide Proposals
-              </>
-            ) : (
-              <>
-                <ChevronDown className="w-4 h-4" /> View Proposals ({proposalCount})
-              </>
-            )}
-          </Button>
+      {/* Buttons section */}
+      <div className="pt-4 border-t border-gray-200">
+        {/* Action buttons row */}
+        <div className="flex items-center gap-2 mb-3">
           <Button
             size="sm"
             variant="secondary"
             onClick={() => setShowEditModal(true)}
           >
-            <Edit3 className="w-4 h-4" />
+            <Edit3 className="w-4 h-4 mr-1" />
+            Edit
           </Button>
+
           <Button
             size="sm"
             variant="danger"
             onClick={() => setShowDeleteModal(true)}
           >
-            <Trash2 className="w-4 h-4" />
+            <Trash2 className="w-4 h-4 mr-1" />
+            Delete
           </Button>
+
+          <Share
+            title={post.title}
+            description={post.description}
+            disableCopy={true}
+            shareUrl={path.join(window.location.origin, 'posts', post.postId)}
+          />
         </div>
+
+        {/* View Proposals button - always below */}
+        <Button
+          size="sm"
+          variant="secondary"
+          className="w-full sm:w-auto"
+          onClick={handleToggleProposals}
+          disabled={isLoading && !showProposals}
+        >
+          {isLoading && !showProposals ? (
+            <>Loading...</>
+          ) : showProposals ? (
+            <>
+              <ChevronUp className="w-4 h-4 mr-1" /> Hide Proposals
+            </>
+          ) : (
+            <>
+              <ChevronDown className="w-4 h-4 mr-1" /> View Proposals ({proposalCount})
+            </>
+          )}
+        </Button>
+      </div>
+
+
+
 
         {showProposals && (
           <div className="mt-4 pt-4 border-t border-gray-200">
@@ -173,7 +195,7 @@ export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
           setShowDeleteModal(false);
           onUpdate();
         }}
-      />
+      />      
     </>
   );
 }

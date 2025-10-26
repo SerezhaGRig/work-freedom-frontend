@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { ArrowLeft, DollarSign, Calendar, Briefcase, User, Send, MapPin } from 'lucide-react';
+import { ArrowLeft, DollarSign, Calendar, Briefcase, User, Send, MapPin, Share2 } from 'lucide-react';
 import { WorkPost } from '@/types';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
@@ -10,12 +10,14 @@ import { Button } from '@/components/ui/Button';
 import { TextArea } from '@/components/ui/TextArea';
 import { useProposals } from '@/lib/hooks/useProposals';
 import { apiService } from '@/lib/api/api-client';
+import { Share } from '@/components/ui/Share';
+import { title } from 'process';
 
 export default function JobDetailsPage() {
   const params = useParams();
   const router = useRouter();
   const postId = params.postId as string;
-  
+
   const [post, setPost] = useState<WorkPost | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [coverLetter, setCoverLetter] = useState('');
@@ -107,7 +109,7 @@ export default function JobDetailsPage() {
                 <h1 className="text-3xl font-bold text-gray-900 mb-2">
                   {post.title}
                 </h1>
-                
+
                 <div className="flex items-center flex-wrap gap-4 text-sm text-gray-600 mb-2">
                   <div className="flex items-center">
                     <Calendar className="w-4 h-4 mr-1" />
@@ -115,7 +117,7 @@ export default function JobDetailsPage() {
                   </div>
                   <Badge variant="success">Active</Badge>
                 </div>
-                
+
                 {/* Region Display */}
                 {post.region && (
                   <div className="flex items-center text-sm text-gray-700 bg-blue-50 px-3 py-1.5 rounded-full w-fit">
@@ -124,7 +126,7 @@ export default function JobDetailsPage() {
                   </div>
                 )}
               </div>
-              
+
               {post.budget && (
                 <div className="text-right">
                   <div className="flex items-center text-2xl font-bold text-green-600">
@@ -164,7 +166,7 @@ export default function JobDetailsPage() {
             <h2 className="text-2xl font-bold text-gray-900 mb-6">
               Submit Your Proposal
             </h2>
-            
+
             <div className="space-y-4">
               <TextArea
                 label="Cover Letter"
@@ -174,7 +176,7 @@ export default function JobDetailsPage() {
                 rows={12}
                 required
               />
-              
+
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <div className="flex items-start space-x-3">
                   <div className="text-blue-600 text-xl">💡</div>
@@ -221,7 +223,7 @@ export default function JobDetailsPage() {
           {/* Job Details Card */}
           <Card className="p-6">
             <h3 className="font-semibold text-gray-800 mb-4">Job Details</h3>
-            
+
             <div className="space-y-4">
               {post.region && (
                 <div>
@@ -234,7 +236,7 @@ export default function JobDetailsPage() {
                   </div>
                 </div>
               )}
-              
+
               <div>
                 <p className="text-xs text-gray-500 mb-1">Budget Type</p>
                 <div className="flex items-center text-sm">
@@ -275,21 +277,20 @@ export default function JobDetailsPage() {
               </div>
             </div>
           </Card>
-
           {/* About the Client */}
           <Card className="p-6 bg-gray-50">
             <h3 className="font-semibold text-gray-800 mb-4 flex items-center">
               <User className="w-5 h-5 mr-2" />
               About the Client
             </h3>
-            
+
             <div className="space-y-3 text-sm text-gray-600">
               <p>
-                Review the job details carefully and submit a personalized proposal that 
+                Review the job details carefully and submit a personalized proposal that
                 highlights your relevant skills and experience.
               </p>
               <p className="text-xs text-gray-500">
-                After submitting, the client will review your proposal and may contact you 
+                After submitting, the client will review your proposal and may contact you
                 for further discussion.
               </p>
             </div>
@@ -304,12 +305,13 @@ export default function JobDetailsPage() {
                   Before You Apply
                 </h4>
                 <p className="text-xs text-amber-800">
-                  Make sure you have the required skills and can commit to the project 
+                  Make sure you have the required skills and can commit to the project
                   timeline. Only send genuine proposals.
                 </p>
               </div>
             </div>
           </Card>
+          {post && <Share title={post.title} description={post.description} shareUrl={window.location.href}/>}
         </div>
       </div>
     </div>
