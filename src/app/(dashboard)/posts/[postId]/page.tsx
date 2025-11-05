@@ -70,11 +70,7 @@ export default function JobDetailsPage() {
   };
 
   const handleBackClick = () => {
-    if (isAuthenticated) {
-      router.push('/posts');
-    } else {
-      router.push('/login');
-    }
+    router.push('/posts');
   };
 
   if (isLoading) {
@@ -94,7 +90,7 @@ export default function JobDetailsPage() {
         <Card className="p-8 text-center">
           <p className="text-gray-500">Job not found</p>
           <Button onClick={handleBackClick} className="mt-4">
-            {isAuthenticated ? 'Back to Jobs' : 'Go to Login'}
+            Back to Browse Jobs
           </Button>
         </Card>
       </div>
@@ -110,7 +106,7 @@ export default function JobDetailsPage() {
         onClick={handleBackClick}
         className="mb-6"
       >
-        <ArrowLeft className="w-4 h-4" /> {isAuthenticated ? 'Back to Jobs' : 'Back to Login'}
+        <ArrowLeft className="w-4 h-4" /> Back to Browse Jobs
       </Button>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

@@ -130,6 +130,7 @@ class ApiService {
     return response.data.posts;
   }
 
+  // PUBLIC ENDPOINT - No authentication required
   async listPosts(limit = 20, nextToken?: string): Promise<{
     posts: WorkPost[];
     nextToken?: string;
@@ -142,6 +143,7 @@ class ApiService {
     return response.data;
   }
 
+  // PUBLIC ENDPOINT - No authentication required
   async searchPosts(
     query: string,
     filters?: SearchFilters,

@@ -14,15 +14,16 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const { isAuthenticated, _hasHydrated } = useAuthStore();
 
-  // Check if current route is a public post page
+  // Check if current route is a public page
   const isPublicPostPage = pathname?.startsWith('/posts/') && pathname !== '/posts';
+  const isPublicPage = isPublicPostPage || pathname === '/posts';
 
   useEffect(() => {
     // ONLY redirect AFTER hydration completes
-    if (_hasHydrated && !isAuthenticated && !isPublicPostPage) {
+    if (_hasHydrated && !isAuthenticated && !isPublicPage) {
       router.push('/login');
     }
-  }, [_hasHydrated, isAuthenticated, router, isPublicPostPage]);
+  }, [_hasHydrated, isAuthenticated, router, isPublicPage]);
 
   // Show loading while store is hydrating from localStorage
   if (!_hasHydrated) {
@@ -33,8 +34,8 @@ export default function DashboardLayout({
     );
   }
 
-  // Allow public access to individual post pages
-  if (isPublicPostPage && !isAuthenticated) {
+  // Allow public access to individual post pages and search page
+  if (isPublicPage && !isAuthenticated) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         {/* Show a simplified navbar for public users */}

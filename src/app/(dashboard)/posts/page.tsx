@@ -1,17 +1,22 @@
-// page(posts).tsx - Updated with dynamic filters
+// page(posts).tsx - Updated with public access support
 
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Search, TrendingUp, Target } from 'lucide-react';
+import { Search, TrendingUp, Target, LogIn, UserPlus } from 'lucide-react';
 import { usePosts } from '@/lib/hooks/usePosts';
 import { PostList } from '@/components/posts/PostList';
 import { SearchFilters } from '@/components/posts/SearchFilters';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
+import { Card } from '@/components/ui/Card';
 import { SearchFilters as SearchFiltersType } from '@/lib/api/api-client';
+import { useAuthStore } from '@/lib/store/authStore';
+import { useRouter } from 'next/navigation';
 
 export default function PostsPage() {
+  const router = useRouter();
+  const { isAuthenticated } = useAuthStore();
   const { 
     posts, 
     loadPosts, 
@@ -73,11 +78,71 @@ export default function PostsPage() {
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
+      {/* Header Section */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">Browse Jobs</h1>
-        <p className="text-gray-600">
-          Find your next opportunity from available job postings
-        </p>
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">Browse Jobs</h1>
+            <p className="text-gray-600">
+              Find your next opportunity from available job postings
+            </p>
+          </div>
+          
+          {/* Auth Buttons for Public Users */}
+          {!isAuthenticated && (
+            <div className="flex gap-3">
+              <Button
+                variant="secondary"
+                size="sm"
+                onClick={() => router.push('/login')}
+              >
+                <LogIn className="w-4 h-4" />
+                Login
+              </Button>
+              <Button
+                size="sm"
+                onClick={() => router.push('/register')}
+              >
+                <UserPlus className="w-4 h-4" />
+                Sign Up
+              </Button>
+            </div>
+          )}
+        </div>
+
+        {/* Public User Banner */}
+        {!isAuthenticated && (
+          <Card className="mt-6 p-6 bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+                <UserPlus className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                  Join JobPlatform to Apply
+                </h3>
+                <p className="text-gray-600 mb-3">
+                  Browse jobs freely, but you'll need an account to submit proposals and connect with clients.
+                </p>
+                <div className="flex gap-3">
+                  <Button
+                    size="sm"
+                    onClick={() => router.push('/register')}
+                  >
+                    Create Free Account
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => router.push('/login')}
+                  >
+                    I Have an Account
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Card>
+        )}
       </div>
 
       {/* Search Bar */}
