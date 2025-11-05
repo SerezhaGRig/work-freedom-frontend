@@ -14,12 +14,13 @@ export default function DashboardPage() {
         Welcome back, {user?.name}!
       </h1>
       
-      <DashboardStats />
       
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-        <RecentActivity />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         <QuickActions />
+        <RecentActivity />
       </div>
+      <DashboardStats />
+
     </div>
   );
 }
