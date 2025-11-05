@@ -1,4 +1,4 @@
-// api-client.ts - Updated with dynamic filters
+// api-client.ts - Updated with public endpoint support
 
 import axios, { AxiosInstance } from 'axios';
 import { User, Contact, WorkPost, Proposal, Message, EditUser } from '@/types';
@@ -6,7 +6,6 @@ import { API_URL } from '@/config/constants';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || API_URL;
 
-// Simplified SearchFilters interface
 export interface SearchFilters {
   budgetType?: 'hourly' | 'fixed' | 'monthly';
   minBudget?: number;
@@ -16,7 +15,7 @@ export interface SearchFilters {
 
 export interface AvailableFilters {
   regions?: string[];
-  budgetTypes?: ('hourly' | 'fixed' | 'monthly' | 'monthly')[];
+  budgetTypes?: ('hourly' | 'fixed' | 'monthly')[];
   minBudget?: number;
   maxBudget?: number;
 }
@@ -24,7 +23,7 @@ export interface AvailableFilters {
 export interface SearchPostsResponse {
   posts: WorkPost[];
   nextToken?: string;
-  filters?: AvailableFilters; // Changed from availableFilters to filters
+  filters?: AvailableFilters;
 }
 
 class ApiService {
@@ -39,7 +38,7 @@ class ApiService {
       },
     });
 
-    // Add request interceptor to include token
+    // Add request interceptor to include token only if available
     this.client.interceptors.request.use((config) => {
       if (this.token) {
         config.headers.Authorization = `Bearer ${this.token}`;
@@ -66,7 +65,6 @@ class ApiService {
       localStorage.removeItem('authToken');
     }
   }
-
 
   async verify(email: string, code: string) {
     const response = await this.client.post('/auth/verify', { email, code });
@@ -103,6 +101,18 @@ class ApiService {
     return response.data;
   }
 
+  async register(data: {
+    email: string;
+    password: string;
+    name: string;
+    surname?: string;
+    aboutMe?: string;
+    contacts: Contact[];
+  }) {
+    const response = await this.client.post('/auth/register', data);
+    return response.data;
+  }
+
   // Post endpoints
   async createPost(data: {
     title: string;
@@ -120,19 +130,6 @@ class ApiService {
     return response.data.posts;
   }
 
-// When registering a new user, you can also optionally include aboutMe
-async register(data: {
-    email: string;
-    password: string;
-    name: string;
-    surname?: string;
-    aboutMe?: string; // Add this optional field
-    contacts: Contact[];
-}) {
-    const response = await this.client.post('/auth/register', data);
-    return response.data;
-}
-
   async listPosts(limit = 20, nextToken?: string): Promise<{
     posts: WorkPost[];
     nextToken?: string;
@@ -145,62 +142,63 @@ async register(data: {
     return response.data;
   }
 
-async searchPosts(
-  query: string,
-  filters?: SearchFilters,
-  limit = 20,
-  nextToken?: string
-): Promise<SearchPostsResponse> {
-  const body: Record<string, unknown> = {
-    query: query?.trim() || '',
-    limit,
-  };
+  async searchPosts(
+    query: string,
+    filters?: SearchFilters,
+    limit = 20,
+    nextToken?: string
+  ): Promise<SearchPostsResponse> {
+    const body: Record<string, unknown> = {
+      query: query?.trim() || '',
+      limit,
+    };
 
-  if (nextToken) {
-    body.nextToken = nextToken;
+    if (nextToken) {
+      body.nextToken = nextToken;
+    }
+
+    if (filters) {
+      if (filters.budgetType) {
+        body.budgetType = filters.budgetType;
+      }
+
+      if (filters.minBudget !== undefined) {
+        body.minBudget = filters.minBudget;
+      }
+
+      if (filters.maxBudget !== undefined) {
+        body.maxBudget = filters.maxBudget;
+      }
+
+      if (filters.region) {
+        body.region = filters.region;
+      }
+    }
+
+    const response = await this.client.post('/posts/search', body);
+    return response.data;
   }
 
-  if (filters) {
-    if (filters.budgetType) {
-      body.budgetType = filters.budgetType;
-    }
-
-    if (filters.minBudget !== undefined) {
-      body.minBudget = filters.minBudget;
-    }
-
-    if (filters.maxBudget !== undefined) {
-      body.maxBudget = filters.maxBudget;
-    }
-
-    if (filters.region) {
-      body.region = filters.region;
-    }
-  }
-
-  const response = await this.client.post('/posts/search', body);
-  return response.data;
-}
-
+  // PUBLIC ENDPOINT - No authentication required
   async getPost(postId: string): Promise<WorkPost> {
     const response = await this.client.get(`/posts/${postId}`);
     return response.data.post;
   }
 
-async deletePost(postId: string) {
+  async deletePost(postId: string) {
     const response = await this.client.delete(`/posts/${postId}`);
     return response.data;
   }
-    async updatePost(postId: string, body: Partial<WorkPost>) {
-    
-        const response = await this.client.patch(`/posts/${postId}`, body);
-      return response;
-    }
+
+  async updatePost(postId: string, body: Partial<WorkPost>) {
+    const response = await this.client.patch(`/posts/${postId}`, body);
+    return response;
+  }
   
-async editUserProfile(body: Partial<EditUser>) {
+  async editUserProfile(body: Partial<EditUser>) {
     const response = await this.client.patch(`/user/profile`, body);
-    return response
-    }
+    return response;
+  }
 
   async updatePostStatus(postId: string, status: 'published' | 'disabled' | 'outdated' | 'blocked') {
     const response = await this.client.patch(`/posts/${postId}/status`, { status });
@@ -231,7 +229,6 @@ async editUserProfile(body: Partial<EditUser>) {
     const response = await this.client.get(`/proposals/${proposalId}/details`);
     return response.data;
   }
-
 
   async updateProposalStatus(
     proposalId: string,

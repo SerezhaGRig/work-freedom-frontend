@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { ArrowLeft, DollarSign, Calendar, Briefcase, User, Send, MapPin, Share2 } from 'lucide-react';
+import { ArrowLeft, DollarSign, Calendar, Briefcase, User, Send, MapPin, LogIn } from 'lucide-react';
 import { WorkPost } from '@/types';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
@@ -11,12 +11,13 @@ import { TextArea } from '@/components/ui/TextArea';
 import { useProposals } from '@/lib/hooks/useProposals';
 import { apiService } from '@/lib/api/api-client';
 import { Share } from '@/components/ui/Share';
-import { title } from 'process';
+import { useAuthStore } from '@/lib/store/authStore';
 
 export default function JobDetailsPage() {
   const params = useParams();
   const router = useRouter();
   const postId = params.postId as string;
+  const { isAuthenticated } = useAuthStore();
 
   const [post, setPost] = useState<WorkPost | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -38,13 +39,18 @@ export default function JobDetailsPage() {
     } catch (error) {
       console.error('Failed to load post:', error);
       alert('Failed to load job details');
-      router.push('/posts');
+      router.push(isAuthenticated ? '/posts' : '/login');
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleSendProposal = async () => {
+    if (!isAuthenticated) {
+      router.push('/login');
+      return;
+    }
+
     if (!coverLetter.trim()) {
       alert('Please write a cover letter');
       return;
@@ -60,6 +66,14 @@ export default function JobDetailsPage() {
       alert(errorMessage);
     } finally {
       setIsSending(false);
+    }
+  };
+
+  const handleBackClick = () => {
+    if (isAuthenticated) {
+      router.push('/posts');
+    } else {
+      router.push('/login');
     }
   };
 
@@ -79,8 +93,8 @@ export default function JobDetailsPage() {
       <div className="max-w-4xl mx-auto px-4 py-8">
         <Card className="p-8 text-center">
           <p className="text-gray-500">Job not found</p>
-          <Button onClick={() => router.push('/posts')} className="mt-4">
-            Back to Jobs
+          <Button onClick={handleBackClick} className="mt-4">
+            {isAuthenticated ? 'Back to Jobs' : 'Go to Login'}
           </Button>
         </Card>
       </div>
@@ -93,10 +107,10 @@ export default function JobDetailsPage() {
       <Button
         variant="secondary"
         size="sm"
-        onClick={() => router.push('/posts')}
+        onClick={handleBackClick}
         className="mb-6"
       >
-        <ArrowLeft className="w-4 h-4" /> Back to Jobs
+        <ArrowLeft className="w-4 h-4" /> {isAuthenticated ? 'Back to Jobs' : 'Back to Login'}
       </Button>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -139,16 +153,18 @@ export default function JobDetailsPage() {
             </div>
 
             {/* Skills */}
-            {post.skills && (<div className="mb-6">
-              <h3 className="text-sm font-semibold text-gray-700 mb-3">Required Skills</h3>
-              <div className="flex flex-wrap gap-2">
-                {post.skills.map((skill, index) => (
-                  <Badge key={index} variant="default">
-                    {skill}
-                  </Badge>
-                ))}
+            {post.skills && (
+              <div className="mb-6">
+                <h3 className="text-sm font-semibold text-gray-700 mb-3">Required Skills</h3>
+                <div className="flex flex-wrap gap-2">
+                  {post.skills.map((skill, index) => (
+                    <Badge key={index} variant="default">
+                      {skill}
+                    </Badge>
+                  ))}
+                </div>
               </div>
-            </div>)}
+            )}
 
             {/* Description */}
             <div>
@@ -161,61 +177,89 @@ export default function JobDetailsPage() {
             </div>
           </Card>
 
-          {/* Send Proposal Section */}
-          <Card className="p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">
-              Submit Your Proposal
-            </h2>
+          {/* Send Proposal Section - Show only if authenticated */}
+          {isAuthenticated ? (
+            <Card className="p-8">
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">
+                Submit Your Proposal
+              </h2>
 
-            <div className="space-y-4">
-              <TextArea
-                label="Cover Letter"
-                value={coverLetter}
-                onChange={(e) => setCoverLetter(e.target.value)}
-                placeholder="Introduce yourself and explain why you're the perfect fit for this job. Highlight your relevant experience and skills..."
-                rows={12}
-                required
-              />
+              <div className="space-y-4">
+                <TextArea
+                  label="Cover Letter"
+                  value={coverLetter}
+                  onChange={(e) => setCoverLetter(e.target.value)}
+                  placeholder="Introduce yourself and explain why you're the perfect fit for this job. Highlight your relevant experience and skills..."
+                  rows={12}
+                  required
+                />
 
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <div className="flex items-start space-x-3">
-                  <div className="text-blue-600 text-xl">💡</div>
-                  <div>
-                    <h4 className="font-semibold text-blue-900 mb-1">
-                      Tips for a Great Proposal
-                    </h4>
-                    <ul className="text-sm text-blue-800 space-y-1">
-                      <li>• Be specific about your relevant experience</li>
-                      <li>• Mention similar projects you've completed</li>
-                      <li>• Explain your approach to this project</li>
-                      <li>• Keep it professional and concise</li>
-                    </ul>
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <div className="flex items-start space-x-3">
+                    <div className="text-blue-600 text-xl">💡</div>
+                    <div>
+                      <h4 className="font-semibold text-blue-900 mb-1">
+                        Tips for a Great Proposal
+                      </h4>
+                      <ul className="text-sm text-blue-800 space-y-1">
+                        <li>• Be specific about your relevant experience</li>
+                        <li>• Mention similar projects you've completed</li>
+                        <li>• Explain your approach to this project</li>
+                        <li>• Keep it professional and concise</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="flex justify-end space-x-3 pt-4">
-                <Button
-                  variant="secondary"
-                  onClick={() => router.push('/posts')}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={handleSendProposal}
-                  disabled={isSending || !coverLetter.trim()}
-                >
-                  {isSending ? (
-                    <>Sending...</>
-                  ) : (
-                    <>
-                      <Send className="w-4 h-4" /> Send Proposal
-                    </>
-                  )}
-                </Button>
+                <div className="flex justify-end space-x-3 pt-4">
+                  <Button
+                    variant="secondary"
+                    onClick={() => router.push('/posts')}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    onClick={handleSendProposal}
+                    disabled={isSending || !coverLetter.trim()}
+                  >
+                    {isSending ? (
+                      <>Sending...</>
+                    ) : (
+                      <>
+                        <Send className="w-4 h-4" /> Send Proposal
+                      </>
+                    )}
+                  </Button>
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          ) : (
+            // Call to action for non-authenticated users
+            <Card className="p-8 bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <LogIn className="w-8 h-8 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-2">
+                  Interested in this job?
+                </h2>
+                <p className="text-gray-600 mb-6">
+                  Create an account or login to submit your proposal and connect with clients.
+                </p>
+                <div className="flex justify-center gap-3">
+                  <Button
+                    variant="secondary"
+                    onClick={() => router.push('/login')}
+                  >
+                    Login
+                  </Button>
+                  <Button onClick={() => router.push('/register')}>
+                    Sign Up
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          )}
         </div>
 
         {/* Sidebar */}
@@ -277,6 +321,7 @@ export default function JobDetailsPage() {
               </div>
             </div>
           </Card>
+
           {/* About the Client */}
           <Card className="p-6 bg-gray-50">
             <h3 className="font-semibold text-gray-800 mb-4 flex items-center">
@@ -296,22 +341,32 @@ export default function JobDetailsPage() {
             </div>
           </Card>
 
-          {/* Warning Card */}
-          <Card className="p-6 bg-amber-50 border-amber-200">
-            <div className="flex items-start space-x-3">
-              <div className="text-amber-600 text-xl">⚠️</div>
-              <div>
-                <h4 className="font-semibold text-amber-900 mb-1 text-sm">
-                  Before You Apply
-                </h4>
-                <p className="text-xs text-amber-800">
-                  Make sure you have the required skills and can commit to the project
-                  timeline. Only send genuine proposals.
-                </p>
+          {/* Warning Card - Show only for authenticated users */}
+          {isAuthenticated && (
+            <Card className="p-6 bg-amber-50 border-amber-200">
+              <div className="flex items-start space-x-3">
+                <div className="text-amber-600 text-xl">⚠️</div>
+                <div>
+                  <h4 className="font-semibold text-amber-900 mb-1 text-sm">
+                    Before You Apply
+                  </h4>
+                  <p className="text-xs text-amber-800">
+                    Make sure you have the required skills and can commit to the project
+                    timeline. Only send genuine proposals.
+                  </p>
+                </div>
               </div>
-            </div>
-          </Card>
-          {post && <Share title={post.title} description={post.description} shareUrl={window.location.href}/>}
+            </Card>
+          )}
+
+          {/* Share Component */}
+          {post && typeof window !== 'undefined' && (
+            <Share 
+              title={post.title} 
+              description={post.description} 
+              shareUrl={window.location.href}
+            />
+          )}
         </div>
       </div>
     </div>
