@@ -546,26 +546,6 @@ export const translations = {
       myProposals: 'Իմ առաջարկները',
       brandName: 'JobPlatform',
     },
-        "chat": {
-      "noChat": "No chat selected",
-      "goToDashboard": "Go to Dashboard",
-      "loadingConversation": "Loading conversation...",
-      "jobOwner": "Job Owner",
-      "discussingProposal": "Discussing your proposal",
-      "proposalConversation": "Proposal conversation",
-      "live": "Live",
-      "jobPost": "Job Post",
-      "about": "About",
-      "proposalDetails": "Proposal Details",
-      "submitted": "Submitted",
-      "yourCoverLetter": "Your Cover Letter",
-      "freelancerCoverLetter": "Freelancer's Cover Letter",
-      "jobOwnersContacts": "Job Owner's Contacts",
-      "freelancersContacts": "Freelancer's Contacts",
-      "professionalCommunication": "Professional Communication",
-      "keepProfessional": "Keep your communication professional and respectful. This chat is monitored for quality assurance.",
-      "sendMessageFailed": "Failed to send message. Please try again."
-    },
     dashboard: {
       title: 'Բարի վերադարձ, {{name}}!',
       stats: {
