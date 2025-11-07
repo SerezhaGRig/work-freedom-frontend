@@ -4,17 +4,20 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { Briefcase } from 'lucide-react';
 import { ProfileDropdown } from './ProfileDropdown';
+import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
+import { useI18n } from '@/lib/i18n/i18n-context';
+import { LOCALE_KEY } from '@/config/constants';
 
 export function Navbar() {
   const pathname = usePathname();
+  const { t } = useI18n();
 
   const isActive = (path: string) => pathname === path;
 
   const navLinks = [
-    { href: '/dashboard', label: 'Dashboard' },
-    { href: '/posts', label: 'Browse Jobs' },
-    { href: '/my-posts', label: 'My Posts' },
-    { href: '/proposals', label: 'My Proposals' },
+    { href: '/posts', label: t('nav.browseJobs') },
+    { href: '/my-posts', label: t('nav.myPosts') },
+    { href: '/proposals', label: t('nav.myProposals') },
   ];
 
   return (
@@ -26,7 +29,7 @@ export function Navbar() {
               <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
                 <Briefcase className="w-6 h-6 text-white" />
               </div>
-              <span className="text-xl font-bold text-gray-800">JobPlatform</span>
+              <span className="text-xl font-bold text-gray-800">{t('nav.brandName')}</span>
             </Link>
             
             <div className="hidden md:flex space-x-4">
@@ -46,7 +49,8 @@ export function Navbar() {
             </div>
           </div>
           
-          <div className="flex items-center">
+          <div className="flex items-center space-x-3">
+            <LanguageSwitcher />
             <ProfileDropdown />
           </div>
         </div>

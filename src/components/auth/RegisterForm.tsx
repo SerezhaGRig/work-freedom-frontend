@@ -2,13 +2,15 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Mail, Users, Plus, X, Badge } from 'lucide-react';
+import { Mail, Users, Plus, X } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Modal } from '@/components/ui/Modal';
+import { Badge } from '@/components/ui/Badge';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { Contact } from '@/types';
-import { Button } from '../ui/Button';
+import { Button } from '@/components/ui/Button';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 export function RegisterForm() {
   const [email, setEmail] = useState('');
@@ -22,6 +24,7 @@ export function RegisterForm() {
   
   const { register, isLoading, error } = useAuth();
   const router = useRouter();
+  const { t } = useI18n();
 
   const addContact = () => {
     if (!newContactValue) return;
@@ -53,8 +56,8 @@ export function RegisterForm() {
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-green-600 to-blue-600 rounded-full mb-4">
             <Users className="w-8 h-8 text-white" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-800">Create Account</h1>
-          <p className="text-gray-600 mt-2">Join our job platform today</p>
+          <h1 className="text-3xl font-bold text-gray-800">{t('auth.createAccount')}</h1>
+          <p className="text-gray-600 mt-2">{t('auth.joinPlatform')}</p>
         </div>
         
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -65,7 +68,7 @@ export function RegisterForm() {
           )}
           
           <Input
-            label="Email"
+            label={t('auth.email')}
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -75,16 +78,16 @@ export function RegisterForm() {
           />
           
           <Input
-            label="Password"
+            label={t('auth.password')}
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Min. 8 characters"
+            placeholder={t('auth.minCharacters')}
             required
           />
           
           <Input
-            label="First Name"
+            label={t('auth.firstName')}
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="John"
@@ -92,7 +95,7 @@ export function RegisterForm() {
           />
           
           <Input
-            label="Last Name"
+            label={t('auth.lastName')}
             value={surname}
             onChange={(e) => setSurname(e.target.value)}
             placeholder="Doe"
@@ -100,13 +103,13 @@ export function RegisterForm() {
           
           <div className="space-y-2">
             <div className="flex justify-between items-center">
-              <label className="text-sm font-medium text-gray-700">Contacts</label>
+              <label className="text-sm font-medium text-gray-700">{t('auth.contacts')}</label>
               <Button
                 size="sm"
                 variant="secondary"
                 onClick={() => setShowContactModal(true)}
               >
-                <Plus className="w-4 h-4" /> Add
+                <Plus className="w-4 h-4" /> {t('common.add')}
               </Button>
             </div>
             
@@ -116,7 +119,7 @@ export function RegisterForm() {
                 className="flex items-center justify-between p-2 bg-gray-50 rounded-lg"
               >
                 <span className="text-sm">
-                  <Badge>{contact.type}</Badge> {contact.value}
+                  <Badge>{t(`auth.${contact.type}`)}</Badge> {contact.value}
                 </span>
                 <button
                   type="button"
@@ -130,18 +133,18 @@ export function RegisterForm() {
           </div>
           
           <Button className="w-full" disabled={isLoading}>
-            {isLoading ? 'Creating Account...' : 'Create Account'}
+            {isLoading ? t('auth.creatingAccount') : t('auth.createAccount')}
           </Button>
         </form>
         
         <div className="mt-6 text-center">
           <p className="text-gray-600">
-            Already have an account?{' '}
+            {t('auth.alreadyHaveAccount')}{' '}
             <button
               onClick={() => router.push('/login')}
               className="text-blue-600 hover:text-blue-700 font-semibold"
             >
-              Sign In
+              {t('auth.signIn')}
             </button>
           </p>
         </div>
@@ -150,36 +153,36 @@ export function RegisterForm() {
       <Modal
         isOpen={showContactModal}
         onClose={() => setShowContactModal(false)}
-        title="Add Contact"
+        title={t('auth.addContact')}
       >
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Contact Type
+              {t('auth.contactType')}
             </label>
             <select
               value={newContactType}
               onChange={(e) => setNewContactType(e.target.value as Contact['type'])}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             >
-              <option value="phone">Phone</option>
-              <option value="whatsapp">WhatsApp</option>
-              <option value="viber">Viber</option>
-              <option value="web">Website</option>
-              <option value="email">Email</option>
+              <option value="phone">{t('auth.phone')}</option>
+              <option value="whatsapp">{t('auth.whatsapp')}</option>
+              <option value="viber">{t('auth.viber')}</option>
+              <option value="web">{t('auth.website')}</option>
+              <option value="email">{t('auth.email')}</option>
             </select>
           </div>
           
           <Input
-            label="Contact Value"
+            label={t('auth.contactValue')}
             value={newContactValue}
             onChange={(e) => setNewContactValue(e.target.value)}
-            placeholder="Enter contact information"
+            placeholder={t('auth.enterContactInfo')}
             required
           />
           
           <Button onClick={addContact} className="w-full">
-            Add Contact
+            {t('auth.addContact')}
           </Button>
         </div>
       </Modal>

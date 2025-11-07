@@ -51,7 +51,7 @@ export interface Proposal {
   };
   date: string;
   coverLetter: string;
-  status: 'pending' | 'accepted' | 'discussion' | 'rejected';
+  status: 'pending' | 'accepted' | 'discussion' | 'rejected' |'invited';
 }
 
 export interface ProposalDiscussion {

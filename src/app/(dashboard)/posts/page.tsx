@@ -1,5 +1,3 @@
-// page(posts).tsx - Updated with public access support
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -13,10 +11,12 @@ import { Card } from '@/components/ui/Card';
 import { SearchFilters as SearchFiltersType } from '@/lib/api/api-client';
 import { useAuthStore } from '@/lib/store/authStore';
 import { useRouter } from 'next/navigation';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 export default function PostsPage() {
   const router = useRouter();
   const { isAuthenticated } = useAuthStore();
+  const { t } = useI18n();
   const { 
     posts, 
     loadPosts, 
@@ -82,9 +82,11 @@ export default function PostsPage() {
       <div className="mb-8">
         <div className="flex items-center justify-between flex-wrap gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-800 mb-2">Browse Jobs</h1>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">
+              {t('jobsPage.title')}
+            </h1>
             <p className="text-gray-600">
-              Find your next opportunity from available job postings
+              {t('jobsPage.subtitle')}
             </p>
           </div>
           
@@ -97,14 +99,14 @@ export default function PostsPage() {
                 onClick={() => router.push('/login')}
               >
                 <LogIn className="w-4 h-4" />
-                Login
+                {t('common.login')}
               </Button>
               <Button
                 size="sm"
                 onClick={() => router.push('/register')}
               >
                 <UserPlus className="w-4 h-4" />
-                Sign Up
+                {t('common.signUp')}
               </Button>
             </div>
           )}
@@ -119,24 +121,24 @@ export default function PostsPage() {
               </div>
               <div className="flex-1">
                 <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                  Join JobPlatform to Apply
+                  {t('jobsPage.joinBanner.title')}
                 </h3>
                 <p className="text-gray-600 mb-3">
-                  Browse jobs freely, but you'll need an account to submit proposals and connect with clients.
+                  {t('jobsPage.joinBanner.description')}
                 </p>
                 <div className="flex gap-3">
                   <Button
                     size="sm"
                     onClick={() => router.push('/register')}
                   >
-                    Create Free Account
+                    {t('jobsPage.joinBanner.createAccount')}
                   </Button>
                   <Button
                     variant="secondary"
                     size="sm"
                     onClick={() => router.push('/login')}
                   >
-                    I Have an Account
+                    {t('jobsPage.joinBanner.haveAccount')}
                   </Button>
                 </div>
               </div>
@@ -150,14 +152,14 @@ export default function PostsPage() {
         <div className="flex gap-3">
           <div className="flex-1">
             <Input
-              placeholder="Search jobs by title, skills, or keywords..."
+              placeholder={t('jobsPage.searchPlaceholder')}
               icon={<Search className="w-5 h-5" />}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
           <Button disabled={isLoading}>
-            Search
+            {t('jobsPage.searchButton')}
           </Button>
         </div>
       </form>
@@ -177,7 +179,7 @@ export default function PostsPage() {
           <div className="flex items-center gap-2 text-sm text-gray-700 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
             <TrendingUp className="w-4 h-4" />
             <span>
-              Showing <span className="font-semibold">most recent</span> job postings
+              {t('jobsPage.sorting.showingRecent')}
             </span>
           </div>
         ) : (
@@ -187,9 +189,11 @@ export default function PostsPage() {
               <span>
                 Showing{' '}
                 <span className="font-semibold">
-                  {hasActiveFilters ? 'filtered results' : 'best matches'}
+                  {hasActiveFilters 
+                    ? t('jobsPage.sorting.showingFiltered') 
+                    : t('jobsPage.sorting.showingMatches')}
                 </span>
-                {isSearchMode && searchQuery && ` for: "${searchQuery}"`}
+                {isSearchMode && searchQuery && ` ${t('jobsPage.sorting.for')}: "${searchQuery}"`}
               </span>
             </div>
             <Button
@@ -198,7 +202,7 @@ export default function PostsPage() {
               onClick={handleClearSearch}
             >
               <TrendingUp className="w-4 h-4" />
-              Back to Most Recent
+              {t('jobsPage.sorting.backToRecent')}
             </Button>
           </>
         )}
@@ -208,14 +212,16 @@ export default function PostsPage() {
         <div className="text-center py-12">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
           <p className="text-gray-600 mt-4">
-            {isSearchMode ? 'Searching...' : 'Loading jobs...'}
+            {isSearchMode ? t('jobsPage.results.searching') : t('jobsPage.results.loadingJobs')}
           </p>
         </div>
       ) : (
         <div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-semibold text-gray-700">
-              {isSearchMode || hasActiveFilters ? 'Search Results' : 'Available Jobs'} ({posts?.length || 0})
+              {isSearchMode || hasActiveFilters 
+                ? t('jobsPage.results.searchResults') 
+                : t('jobsPage.results.availableJobs')} ({posts?.length || 0})
             </h2>
           </div>
           
@@ -224,14 +230,14 @@ export default function PostsPage() {
             <div className="text-center py-8 bg-gray-50 rounded-lg">
               <div className="text-5xl mb-3">🔍</div>
               <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                No jobs found
+                {t('jobsPage.results.noJobsFound')}
               </h3>
               <p className="text-gray-600 mb-4">
-                Try different keywords or clear your filters
+                {t('jobsPage.results.tryDifferentKeywords')}
               </p>
               {hasActiveFilters && (
                 <Button variant="secondary" onClick={handleClearFilters}>
-                  Clear Filters
+                  {t('jobsPage.results.clearFilters')}
                 </Button>
               )}
             </div>

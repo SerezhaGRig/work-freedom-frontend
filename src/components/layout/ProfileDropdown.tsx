@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { User as UserIcon, Settings, LogOut, ChevronDown } from 'lucide-react';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { useAuthStore } from '@/lib/store/authStore';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 export function ProfileDropdown() {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,6 +13,7 @@ export function ProfileDropdown() {
   const { user } = useAuthStore();
   const { logout } = useAuth();
   const router = useRouter();
+  const { t } = useI18n();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -27,7 +29,7 @@ export function ProfileDropdown() {
   const menuItems = [
     {
       icon: UserIcon,
-      label: 'My Profile',
+      label: t('profile.myProfile'),
       onClick: () => {
         router.push('/profile');
         setIsOpen(false);
@@ -35,7 +37,7 @@ export function ProfileDropdown() {
     },
     {
       icon: Settings,
-      label: 'Settings',
+      label: t('common.settings'),
       onClick: () => {
         router.push('/settings');
         setIsOpen(false);
@@ -43,7 +45,7 @@ export function ProfileDropdown() {
     },
     {
       icon: LogOut,
-      label: 'Logout',
+      label: t('common.logout'),
       onClick: () => {
         logout();
         setIsOpen(false);

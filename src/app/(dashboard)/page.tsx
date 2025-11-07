@@ -1,16 +1,19 @@
 'use client';
-import { QuickActions } from '@/components/dashboard/QuickActions';
-import { RecentActivity } from '@/components/dashboard/ReactActivity';
+
 import { DashboardStats } from '@/components/layout/DashboardStats';
+import { QuickActions } from '@/components/dashboard/QuickActions';
+import { RecentActivity } from '@/components/dashboard/RecentActivity';
 import { useAuthStore } from '@/lib/store/authStore';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 export default function HomePage() {
   const { user } = useAuthStore();
+  const { t } = useI18n();
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-gray-800 mb-8">
-        Welcome back, {user?.name}!
+        {t('dashboard.title', { name: user?.name })}
       </h1>
       
       <DashboardStats />

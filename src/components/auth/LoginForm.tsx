@@ -6,17 +6,18 @@ import { Mail, Briefcase, User } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { useAuth } from '@/lib/hooks/useAuth';
-import { Button } from '../ui/Button';
+import { Button } from '@/components/ui/Button';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 export function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login, isLoading, error } = useAuth();
   const router = useRouter();
+  const { t } = useI18n();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  
     await login(email, password);
   };
 
@@ -26,8 +27,8 @@ export function LoginForm() {
         <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mb-4">
           <Briefcase className="w-8 h-8 text-white" />
         </div>
-        <h1 className="text-3xl font-bold text-gray-800">Welcome Back</h1>
-        <p className="text-gray-600 mt-2">Sign in to your account</p>
+        <h1 className="text-3xl font-bold text-gray-800">{t('auth.welcomeBack')}</h1>
+        <p className="text-gray-600 mt-2">{t('auth.signInToAccount')}</p>
       </div>
       
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -38,7 +39,7 @@ export function LoginForm() {
         )}
         
         <Input
-          label="Email"
+          label={t('auth.email')}
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -48,28 +49,28 @@ export function LoginForm() {
         />
         
         <Input
-          label="Password"
+          label={t('auth.password')}
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Enter your password"
+          placeholder={t('auth.password')}
           required
           icon={<User className="w-5 h-5" />}
         />
         
         <Button className="w-full" disabled={isLoading}>
-          {isLoading ? 'Signing in...' : 'Sign In'}
+          {isLoading ? t('auth.signingIn') : t('auth.signIn')}
         </Button>
       </form>
       
       <div className="mt-6 text-center">
         <p className="text-gray-600">
-          Don't have an account?{' '}
+          {t('auth.dontHaveAccount')}{' '}
           <button
             onClick={() => router.push('/register')}
             className="text-blue-600 hover:text-blue-700 font-semibold"
           >
-            Register
+            {t('auth.register')}
           </button>
         </p>
       </div>

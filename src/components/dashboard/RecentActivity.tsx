@@ -1,12 +1,15 @@
 'use client';
 
 import { Card } from '@/components/ui/Card';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 export function RecentActivity() {
+  const { t } = useI18n();
+  
   const activities = [
-    { type: 'success', text: 'New proposal accepted', time: '2 hours ago' },
-    { type: 'info', text: 'Job post published', time: '5 hours ago' },
-    { type: 'message', text: 'New message received', time: '1 day ago' },
+    { type: 'success', text: t('dashboard.recentActivity.proposalAccepted'), time: t('dashboard.recentActivity.hoursAgo', { count: 2 }) },
+    { type: 'info', text: t('dashboard.recentActivity.jobPublished'), time: t('dashboard.recentActivity.hoursAgo', { count: 5 }) },
+    { type: 'message', text: t('dashboard.recentActivity.newMessage'), time: t('dashboard.recentActivity.daysAgo', { count: 1 }) },
   ];
 
   const colorMap = {
@@ -17,7 +20,9 @@ export function RecentActivity() {
 
   return (
     <Card className="p-6">
-      <h2 className="text-xl font-bold text-gray-800 mb-4">Recent Activity</h2>
+      <h2 className="text-xl font-bold text-gray-800 mb-4">
+        {t('dashboard.recentActivity.title')}
+      </h2>
       <div className="space-y-4">
         {activities.map((activity, index) => (
           <div key={index} className="flex items-start space-x-3">

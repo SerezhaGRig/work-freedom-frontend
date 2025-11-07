@@ -5,12 +5,14 @@ import { Briefcase, Send, MessageCircle } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { usePosts } from '@/lib/hooks/usePosts';
 import { useProposals } from '@/lib/hooks/useProposals';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 export function DashboardStats() {
   const { myPosts, loadMyPosts } = usePosts();
   const { myProposals, loadMyProposals } = useProposals();
   const [activeChats, setActiveChats] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const { t } = useI18n();
 
   useEffect(() => {
     const loadData = async () => {
@@ -28,7 +30,6 @@ export function DashboardStats() {
   }, []);
 
   useEffect(() => {
-    // Count active chats from accepted/discussion proposals
     const chats = myProposals.filter(
       p => p.status === 'accepted' || p.status === 'discussion'
     ).length;
@@ -37,19 +38,19 @@ export function DashboardStats() {
 
   const stats = [
     {
-      label: 'My Job Posts',
+      label: t('dashboard.stats.myJobPosts'),
       value: myPosts.length.toString(),
       icon: Briefcase,
       color: 'blue',
     },
     {
-      label: 'Proposals Sent',
+      label: t('dashboard.stats.proposalsSent'),
       value: myProposals.length.toString(),
       icon: Send,
       color: 'green',
     },
     {
-      label: 'Active Chats',
+      label: t('dashboard.stats.activeChats'),
       value: activeChats.toString(),
       icon: MessageCircle,
       color: 'purple',
