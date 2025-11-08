@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
 import { SearchFilters as SearchFiltersType, AvailableFilters } from '@/lib/api/api-client';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 interface SearchFiltersProps {
   onApplyFilters: (filters: SearchFiltersType) => void;
@@ -25,6 +26,7 @@ export function SearchFilters({
   availableFilters,
   showFilters 
 }: SearchFiltersProps) {
+  const { t } = useI18n();
   const [isExpanded, setIsExpanded] = useState(false);
   const [localFilters, setLocalFilters] = useState<SearchFiltersType>(activeFilters);
   const filterRef = useRef<HTMLDivElement>(null);
@@ -86,7 +88,7 @@ export function SearchFilters({
           onClick={() => setIsExpanded(!isExpanded)}
         >
           <Filter className="w-4 h-4" />
-          {hasActiveFilters ? 'Filters Active' : 'Refine Results'}
+          {hasActiveFilters ? t('searchFilters.filtersActive') : t('searchFilters.refineResults')}
           {hasActiveFilters && (
             <Badge>
               {Object.keys(activeFilters).length}
@@ -101,7 +103,7 @@ export function SearchFilters({
             onClick={handleClear}
           >
             <X className="w-4 h-4" />
-            Clear All
+            {t('common.clearFilters')}
           </Button>
         )}
       </div>
@@ -113,7 +115,7 @@ export function SearchFilters({
             <div>
               <div className="flex items-center mb-3">
                 <MapPin className="w-4 h-4 mr-2 text-gray-600" />
-                <h3 className="font-semibold text-gray-800">Region</h3>
+                <h3 className="font-semibold text-gray-800">{t('posts.region')}</h3>
               </div>
               <select
                 value={localFilters.region || ''}
@@ -123,7 +125,7 @@ export function SearchFilters({
                 })}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               >
-                <option value="">All Regions</option>
+                <option value="">{t('searchFilters.allRegions')}</option>
                 {availableFilters.regions.map((region) => (
                   <option key={region} value={region}>
                     {region}
@@ -138,14 +140,14 @@ export function SearchFilters({
             <div>
               <div className="flex items-center mb-3">
                 <DollarSign className="w-4 h-4 mr-2 text-gray-600" />
-                <h3 className="font-semibold text-gray-800">Budget</h3>
+                <h3 className="font-semibold text-gray-800">{t('posts.budget')}</h3>
               </div>
               
               <div className="space-y-4">
                 {/* Budget Type - Only if available */}
                 {availableFilters?.budgetTypes && availableFilters.budgetTypes.length > 0 && (
                   <div>
-                    <label className="text-sm text-gray-600 mb-2 block">Budget Type</label>
+                    <label className="text-sm text-gray-600 mb-2 block">{t('posts.budgetType')}</label>
                     <div className="flex gap-2">
                       {availableFilters.budgetTypes.includes('hourly') && (
                         <Button
@@ -156,7 +158,7 @@ export function SearchFilters({
                             budgetType: localFilters.budgetType === 'hourly' ? undefined : 'hourly'
                           })}
                         >
-                          Hourly
+                          {t('posts.hourly')}
                         </Button>
                       )}
                       {availableFilters.budgetTypes.includes('fixed') && (
@@ -168,7 +170,7 @@ export function SearchFilters({
                             budgetType: localFilters.budgetType === 'fixed' ? undefined : 'fixed'
                           })}
                         >
-                          Fixed
+                          {t('posts.fixed')}
                         </Button>
                       )}
                       {availableFilters.budgetTypes.includes('monthly') && (
@@ -180,7 +182,7 @@ export function SearchFilters({
                             budgetType: localFilters.budgetType === 'monthly' ? undefined : 'monthly'
                           })}
                         >
-                          Monthly
+                          {t('posts.monthly')}
                         </Button>
                       )}
                     </div>
@@ -191,12 +193,12 @@ export function SearchFilters({
                 {availableFilters?.minBudget !== undefined && availableFilters?.maxBudget !== undefined && (
                   <div>
                     <label className="text-sm text-gray-600 mb-2 block">
-                      Budget Range: ${availableFilters.minBudget} - ${availableFilters.maxBudget}
+                      {t('searchFilters.budgetRange')}: ${availableFilters.minBudget} - ${availableFilters.maxBudget}
                     </label>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <Input
-                          label="Min Budget ($)"
+                          label={t('searchFilters.minBudget')}
                           type="number"
                           value={`${localFilters.minBudget}` || ''}
                           onChange={(e) => setLocalFilters({
@@ -208,7 +210,7 @@ export function SearchFilters({
                       </div>
                       <div>
                         <Input
-                          label="Max Budget ($)"
+                          label={t('searchFilters.maxBudget')}
                           type="number"
                           value={`${localFilters.maxBudget}` || ''}
                           onChange={(e) => setLocalFilters({
@@ -231,12 +233,12 @@ export function SearchFilters({
               variant="secondary"
               onClick={handleClear}
             >
-              Clear All
+              {t('common.clearFilters')}
             </Button>
             <Button
               onClick={handleApply}
             >
-              Apply Filters
+              {t('searchFilters.applyFilters')}
             </Button>
           </div>
         </Card>
@@ -263,7 +265,7 @@ export function SearchFilters({
           )}
           {localFilters.budgetType && (
             <Badge>
-              {localFilters.budgetType} rate
+              {localFilters.budgetType} {t('searchFilters.rate')}
               <button
                 onClick={() => {
                   const newFilters = { ...localFilters, budgetType: undefined };

@@ -3,26 +3,29 @@
 import { User, Mail, Calendar, Briefcase, Award } from 'lucide-react';
 import { User as UserType } from '@/types';
 import { Card } from '@/components/ui/Card';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 interface ProfileInfoProps {
   user: UserType;
 }
 
 export function ProfileInfo({ user }: ProfileInfoProps) {
+  const { t } = useI18n();
+  
   const infoItems = [
     {
       icon: User,
-      label: 'Full Name',
+      label: t('profile.fullName'),
       value: `${user.name} ${user.surname || ''}`.trim(),
     },
     {
       icon: Mail,
-      label: 'Email Address',
+      label: t('profile.emailAddress'),
       value: user.email,
     },
     {
       icon: Calendar,
-      label: 'Member Since',
+      label: t('profile.memberSince'),
       value: new Date().toLocaleDateString('en-US', {
         month: 'long',
         year: 'numeric',
@@ -30,19 +33,21 @@ export function ProfileInfo({ user }: ProfileInfoProps) {
     },
     {
       icon: Briefcase,
-      label: 'Active Posts',
-      value: '0 posts',
+      label: t('profile.activePosts'),
+      value: t('profile.postsCount', { count: 0 }),
     },
     {
       icon: Award,
-      label: 'Proposals Sent',
-      value: '0 proposals',
+      label: t('profile.proposalsSent'),
+      value: t('profile.proposalsCount', { count: 0 }),
     },
   ];
 
   return (
     <Card className="p-6">
-      <h2 className="text-xl font-bold text-gray-800 mb-6">Profile Information</h2>
+      <h2 className="text-xl font-bold text-gray-800 mb-6">
+        {t('profile.profileInformation')}
+      </h2>
       
       <div className="space-y-4">
         {infoItems.map((item, index) => {

@@ -8,6 +8,7 @@ import { useProposals } from '@/lib/hooks/useProposals';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 import { Modal } from '../ui/Modal';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 interface ProposalWithUserInfo extends Proposal {
   userInfo?: {
@@ -30,6 +31,7 @@ export function PostProposalsList({
   isLoading,
   onUpdate,
 }: PostProposalsListProps) {
+  const { t } = useI18n();
   const router = useRouter();
   const { updateProposalStatus, getProposalWithUserInfo } = useProposals();
   const [processingId, setProcessingId] = useState<string | null>(null);
@@ -43,10 +45,10 @@ export function PostProposalsList({
     setProcessingId(proposal.proposalId);
     try {
       await updateProposalStatus(proposal, status);
-      alert(`Proposal ${status} successfully!`);
+      alert(t('proposalsList.statusUpdateSuccess', { status }));
       onUpdate();
     } catch (error: any) {
-      const errorMessage = error.response?.data?.error || 'Failed to update proposal status';
+      const errorMessage = error.response?.data?.error || t('proposalsList.statusUpdateFailed');
       alert(errorMessage);
     } finally {
       setProcessingId(null);
@@ -87,7 +89,7 @@ export function PostProposalsList({
     return (
       <div className="text-center py-4">
         <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        <p className="text-gray-600 text-sm mt-2">Loading proposals...</p>
+        <p className="text-gray-600 text-sm mt-2">{t('proposalsList.loadingProposals')}</p>
       </div>
     );
   }
@@ -96,9 +98,9 @@ export function PostProposalsList({
     return (
       <div className="text-center py-8 bg-gray-50 rounded-lg">
         <User className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-        <p className="text-gray-500 text-sm">No proposals yet</p>
+        <p className="text-gray-500 text-sm">{t('proposalsList.noProposalsYet')}</p>
         <p className="text-gray-400 text-xs mt-1">
-          Proposals will appear here when freelancers apply
+          {t('proposalsList.proposalsWillAppear')}
         </p>
       </div>
     );
@@ -108,7 +110,7 @@ export function PostProposalsList({
     <>
       <div className="space-y-3">
         <h4 className="font-semibold text-gray-800 mb-3">
-          Proposals ({proposals.length})
+          {t('proposalsList.proposalsCount', { count: proposals.length })}
         </h4>
         
         {proposals.map((proposal) => {
@@ -131,7 +133,7 @@ export function PostProposalsList({
                         onClick={() => handleViewProfile(proposal)}
                         className="text-blue-600 hover:text-blue-700 text-sm"
                       >
-                        View Profile
+                        {t('proposalsList.viewProfile')}
                       </button>
                     </div>
                     <div className="flex items-center space-x-2 text-xs text-gray-500">
@@ -150,7 +152,7 @@ export function PostProposalsList({
               </div>
 
               <div className="flex items-center justify-between text-xs text-gray-500">
-                <span>Sent {new Date(proposal.date).toLocaleDateString()}</span>
+                <span>{t('proposalsList.sent')} {new Date(proposal.date).toLocaleDateString()}</span>
                 
                 <div className="flex items-center space-x-2">
                   {proposal.status === 'pending' && (
@@ -161,7 +163,7 @@ export function PostProposalsList({
                         onClick={() => handleStatusUpdate(proposal, 'accepted')}
                         disabled={processingId === proposal.proposalId}
                       >
-                        <Check className="w-3 h-3" /> Accept
+                        <Check className="w-3 h-3" /> {t('proposalsList.accept')}
                       </Button>
                       <Button
                         size="sm"
@@ -169,7 +171,7 @@ export function PostProposalsList({
                         onClick={() => handleStatusUpdate(proposal, 'rejected')}
                         disabled={processingId === proposal.proposalId}
                       >
-                        <X className="w-3 h-3" /> Reject
+                        <X className="w-3 h-3" /> {t('proposalsList.reject')}
                       </Button>
                     </>
                   )}
@@ -179,7 +181,7 @@ export function PostProposalsList({
                       size="sm"
                       onClick={() => handleOpenChat(proposal.proposalId)}
                     >
-                      <MessageCircle className="w-3 h-3" /> Open Chat
+                      <MessageCircle className="w-3 h-3" /> {t('proposalsList.openChat')}
                     </Button>
                   )}
                 </div>
@@ -193,7 +195,7 @@ export function PostProposalsList({
       <Modal
         isOpen={showProfileModal}
         onClose={() => setShowProfileModal(false)}
-        title="Freelancer Profile"
+        title={t('proposalsList.freelancerProfile')}
       >
         {selectedProposal && (
           <div className="space-y-6">
@@ -213,7 +215,7 @@ export function PostProposalsList({
               <div>
                 <div className="flex items-center space-x-2 mb-2">
                   <FileText className="w-4 h-4 text-gray-600" />
-                  <h4 className="font-semibold text-gray-800">About</h4>
+                  <h4 className="font-semibold text-gray-800">{t('proposalsList.about')}</h4>
                 </div>
                 <div className="bg-gray-50 rounded-lg p-4">
                   {selectedProposal.userInfo?.aboutMe ? (
@@ -222,7 +224,7 @@ export function PostProposalsList({
                     </p>
                   ) : (
                     <p className="text-gray-500 italic">
-                      No bio provided by this freelancer
+                      {t('proposalsList.noBioProvided')}
                     </p>
                   )}
                 </div>
@@ -231,7 +233,7 @@ export function PostProposalsList({
               <div>
                 <div className="flex items-center space-x-2 mb-2">
                   <Briefcase className="w-4 h-4 text-gray-600" />
-                  <h4 className="font-semibold text-gray-800">Cover Letter</h4>
+                  <h4 className="font-semibold text-gray-800">{t('proposals.coverLetter')}</h4>
                 </div>
                 <div className="bg-gray-50 rounded-lg p-4">
                   <p className="text-gray-700 whitespace-pre-wrap">
@@ -242,7 +244,7 @@ export function PostProposalsList({
 
               <div className="border-t pt-4">
                 <p className="text-sm text-gray-500">
-                  Proposal submitted: {new Date(selectedProposal.date).toLocaleDateString()}
+                  {t('proposalsList.proposalSubmitted')}: {new Date(selectedProposal.date).toLocaleDateString()}
                 </p>
               </div>
             </div>

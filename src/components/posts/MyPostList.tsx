@@ -4,12 +4,14 @@ import { useRouter } from 'next/navigation';
 import { WorkPost } from '@/types';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '../ui/Badge';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 interface MyPostsListProps {
   posts: WorkPost[];
 }
 
 export function MyPostsList({ posts }: MyPostsListProps) {
+  const { t } = useI18n();
   const router = useRouter();
 
   const handleViewProposals = (post: WorkPost) => {
@@ -19,7 +21,7 @@ export function MyPostsList({ posts }: MyPostsListProps) {
   if (posts.length === 0) {
     return (
       <p className="text-gray-500 text-center py-8 text-sm">
-        You haven't created any posts yet
+        {t('myPosts.noPostsYet')}
       </p>
     );
   }
@@ -33,12 +35,12 @@ export function MyPostsList({ posts }: MyPostsListProps) {
             {post.description}
           </p>
           <div className="flex justify-between items-center mt-4">
-            <Badge variant="success">Active</Badge>
+            <Badge variant="success">{t('posts.published')}</Badge>
             <button
               onClick={() => handleViewProposals(post)}
               className="text-blue-600 hover:text-blue-700 text-sm font-medium"
             >
-              View Proposals
+              {t('myPosts.viewProposals')}
             </button>
           </div>
         </Card>

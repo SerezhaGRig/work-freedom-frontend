@@ -9,6 +9,7 @@ import { useAuthStore } from '@/lib/store/authStore';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
 import { apiService } from '@/lib/api/api-client';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 interface EditProfileModalProps {
   isOpen: boolean;
@@ -18,6 +19,7 @@ interface EditProfileModalProps {
 
 export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProps) {
   const { setUser } = useAuthStore();
+  const { t } = useI18n();
   const [name, setName] = useState('');
   const [surname, setSurname] = useState('');
   const [aboutMe, setAboutMe] = useState('');
@@ -83,20 +85,20 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
       });
       
       setUser(updatedUser);
-      alert('Profile updated successfully!');
+      alert(t('profile.updateSuccess'));
       onClose();
     } catch (error) {
-      alert('Failed to update profile');
+      alert(t('profile.updateFailed'));
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Edit Profile">
+    <Modal isOpen={isOpen} onClose={onClose} title={t('profile.editProfile')}>
       <div className="space-y-4 max-h-[70vh] overflow-y-auto">
         <Input
-          label="First Name"
+          label={t('profile.name')}
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="John"
@@ -104,7 +106,7 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
         />
 
         <Input
-          label="Last Name"
+          label={t('profile.surname')}
           value={surname}
           onChange={(e) => setSurname(e.target.value)}
           placeholder="Doe"
@@ -112,19 +114,19 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
 
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
-            About Me
+            {t('profile.bio')}
           </label>
           <textarea
             value={aboutMe}
             onChange={(e) => setAboutMe(e.target.value)}
-            placeholder="Tell us about yourself, your experience, skills, and what you're looking for..."
+            placeholder={t('profile.bioPlaceholder')}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
             rows={4}
             maxLength={500}
           />
           <div className="mt-1 text-right">
             <span className="text-xs text-gray-500">
-              {aboutMe.length}/500 characters
+              {aboutMe.length}/500 {t('profile.characters')}
             </span>
           </div>
         </div>
@@ -132,14 +134,14 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
         <div className="space-y-3">
           <div className="flex justify-between items-center">
             <label className="text-sm font-medium text-gray-700">
-              Contact Methods
+              {t('profile.contactMethods')}
             </label>
             <Button
               size="sm"
               variant="secondary"
               onClick={() => setShowAddContact(!showAddContact)}
             >
-              <Plus className="w-4 h-4" /> Add
+              <Plus className="w-4 h-4" /> {t('common.add')}
             </Button>
           </div>
 
@@ -150,17 +152,17 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
                 onChange={(e) => setNewContactType(e.target.value as Contact['type'])}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               >
-                <option value="phone">Phone</option>
-                <option value="whatsapp">WhatsApp</option>
-                <option value="viber">Viber</option>
-                <option value="web">Website</option>
-                <option value="email">Email</option>
+                <option value="phone">{t('profile.contactTypes.phone')}</option>
+                <option value="whatsapp">{t('profile.contactTypes.whatsapp')}</option>
+                <option value="viber">{t('profile.contactTypes.viber')}</option>
+                <option value="web">{t('profile.contactTypes.website')}</option>
+                <option value="email">{t('profile.contactTypes.email')}</option>
               </select>
               
               <Input
                 value={newContactValue}
                 onChange={(e) => setNewContactValue(e.target.value)}
-                placeholder="Enter contact information"
+                placeholder={t('profile.enterContact')}
               />
               
               <div className="flex gap-2">
@@ -169,7 +171,7 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
                   onClick={addContact}
                   className="flex-1"
                 >
-                  Add
+                  {t('common.add')}
                 </Button>
                 <Button
                   size="sm"
@@ -179,7 +181,7 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
                     setNewContactValue('');
                   }}
                 >
-                  Cancel
+                  {t('common.cancel')}
                 </Button>
               </div>
             </div>
@@ -207,7 +209,7 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
                         : 'bg-gray-200 text-gray-600'
                     }`}
                   >
-                    {contact.show ? 'Visible' : 'Hidden'}
+                    {contact.show ? t('profile.visible') : t('profile.hidden')}
                   </button>
                   <button
                     type="button"
@@ -224,10 +226,10 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
 
         <div className="flex justify-end space-x-2 pt-4 border-t">
           <Button variant="secondary" onClick={onClose}>
-            Cancel
+            {t('common.cancel')}
           </Button>
           <Button onClick={handleSubmit} disabled={isLoading}>
-            {isLoading ? 'Saving...' : 'Save Changes'}
+            {isLoading ? t('profile.saving') : t('profile.saveChanges')}
           </Button>
         </div>
       </div>

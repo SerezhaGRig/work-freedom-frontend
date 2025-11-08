@@ -11,6 +11,7 @@ import { DeletePostModal } from './DeletePostModal';
 import { PostProposalsList } from './PostProposalsList';
 import { useProposals } from '@/lib/hooks/useProposals';
 import { Share } from '../ui/Share';
+import { useI18n } from '@/lib/i18n/i18n-context';
 import path from 'path';
 
 interface MyPostCardProps {
@@ -19,6 +20,7 @@ interface MyPostCardProps {
 }
 
 export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
+  const { t } = useI18n();
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showProposals, setShowProposals] = useState(false);
@@ -70,7 +72,7 @@ export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
               {post.description}
             </p>
           </div>
-          <Badge variant="success">Active</Badge>
+          <Badge variant="success">{t('posts.published')}</Badge>
         </div>
 
         <div className="flex flex-wrap gap-2 mb-4">
@@ -80,7 +82,7 @@ export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
             </Badge>
           )))}
           {(post.skills && post.skills.length>3) && (
-            <Badge variant="default">+{post.skills.length - 3} more</Badge>
+            <Badge variant="default">+{post.skills.length - 3} {t('myPosts.more')}</Badge>
           )}
         </div>
 
@@ -97,14 +99,14 @@ export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
           
           <div className="flex items-center text-gray-600">
             <Calendar className="w-4 h-4 mr-2" />
-            <span>Posted {new Date(post.date).toLocaleDateString()}</span>
+            <span>{t('myPosts.posted')} {new Date(post.date).toLocaleDateString()}</span>
           </div>
           
           <div className="flex items-center text-gray-600">
             <Users className="w-4 h-4 mr-2" />
             <span className="font-semibold text-blue-600">{proposalCount}</span>
             <span className="ml-1">
-              {proposalCount === 1 ? 'proposal' : 'proposals'}
+              {proposalCount === 1 ? t('myPosts.proposal') : t('myPosts.proposals')}
             </span>
           </div>
 
@@ -120,7 +122,7 @@ export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
             onClick={() => setShowEditModal(true)}
           >
             <Edit3 className="w-4 h-4 mr-1" />
-            Edit
+            {t('common.edit')}
           </Button>
 
           <Button
@@ -129,7 +131,7 @@ export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
             onClick={() => setShowDeleteModal(true)}
           >
             <Trash2 className="w-4 h-4 mr-1" />
-            Delete
+            {t('common.delete')}
           </Button>
 
           <Share
@@ -149,21 +151,18 @@ export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
           disabled={isLoading && !showProposals}
         >
           {isLoading && !showProposals ? (
-            <>Loading...</>
+            <>{t('common.loading')}</>
           ) : showProposals ? (
             <>
-              <ChevronUp className="w-4 h-4 mr-1" /> Hide Proposals
+              <ChevronUp className="w-4 h-4 mr-1" /> {t('myPosts.hideProposals')}
             </>
           ) : (
             <>
-              <ChevronDown className="w-4 h-4 mr-1" /> View Proposals ({proposalCount})
+              <ChevronDown className="w-4 h-4 mr-1" /> {t('myPosts.viewProposals')} ({proposalCount})
             </>
           )}
         </Button>
       </div>
-
-
-
 
         {showProposals && (
           <div className="mt-4 pt-4 border-t border-gray-200">

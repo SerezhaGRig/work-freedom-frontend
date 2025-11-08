@@ -4,12 +4,15 @@ import { Phone, Mail, Globe, MessageCircle } from 'lucide-react';
 import { Contact } from '@/types';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '../ui/Badge';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 interface ContactsListProps {
   contacts: Contact[];
 }
 
 export function ContactsList({ contacts }: ContactsListProps) {
+  const { t } = useI18n();
+  
   const getIcon = (type: Contact['type']) => {
     switch (type) {
       case 'phone':
@@ -26,13 +29,26 @@ export function ContactsList({ contacts }: ContactsListProps) {
     }
   };
 
+  const getContactTypeLabel = (type: Contact['type']) => {
+    const typeMap: Record<Contact['type'], string> = {
+      phone: t('profile.contactTypes.phone'),
+      email: t('profile.contactTypes.email'),
+      web: t('profile.contactTypes.website'),
+      whatsapp: t('profile.contactTypes.whatsapp'),
+      viber: t('profile.contactTypes.viber'),
+    };
+    return typeMap[type] || type;
+  };
+
   return (
     <Card className="p-6">
-      <h2 className="text-xl font-bold text-gray-800 mb-4">Contact Methods</h2>
+      <h2 className="text-xl font-bold text-gray-800 mb-4">
+        {t('profile.contactMethods')}
+      </h2>
       
       {contacts.length === 0 ? (
         <p className="text-gray-500 text-sm text-center py-4">
-          No contact methods added yet
+          {t('profile.noContactsYet')}
         </p>
       ) : (
         <div className="space-y-3">
@@ -49,10 +65,12 @@ export function ContactsList({ contacts }: ContactsListProps) {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-1">
                     <Badge variant="default">
-                      {contact.type}
+                      {getContactTypeLabel(contact.type)}
                     </Badge>
                     {contact.show && (
-                      <span className="text-xs text-green-600">Visible</span>
+                      <span className="text-xs text-green-600">
+                        {t('profile.visible')}
+                      </span>
                     )}
                   </div>
                   <p className="text-sm text-gray-800 break-all">

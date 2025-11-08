@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Plus } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { MyPostCard } from './MyPostCard';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 interface MyPostsGridProps {
   posts: WorkPost[];
@@ -13,6 +14,7 @@ interface MyPostsGridProps {
 }
 
 export function MyPostsGrid({ posts, onUpdate }: MyPostsGridProps) {
+  const { t } = useI18n();
   const router = useRouter();
 
   if (posts.length === 0) {
@@ -23,10 +25,10 @@ export function MyPostsGrid({ posts, onUpdate }: MyPostsGridProps) {
             <Plus className="w-12 h-12 text-gray-400" />
           </div>
           <h3 className="text-xl font-semibold text-gray-800 mb-2">
-            No posts yet
+            {t('myPosts.noPostsTitle')}
           </h3>
           <p className="text-gray-600 mb-6">
-            Create your first job post to start receiving proposals from talented professionals.
+            {t('myPosts.noPostsDescription')}
           </p>
         </div>
       </Card>

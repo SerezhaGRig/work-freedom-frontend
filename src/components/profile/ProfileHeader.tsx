@@ -5,6 +5,7 @@ import { User as UserType } from '@/types';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 interface ProfileHeaderProps {
   user: UserType;
@@ -12,6 +13,8 @@ interface ProfileHeaderProps {
 }
 
 export function ProfileHeader({ user, onEdit }: ProfileHeaderProps) {
+  const { t } = useI18n();
+  
   return (
     <Card className="p-6">
       <div className="flex items-start justify-between">
@@ -32,12 +35,12 @@ export function ProfileHeader({ user, onEdit }: ProfileHeaderProps) {
               {user.verified ? (
                 <Badge variant="success">
                   <CheckCircle className="w-3 h-3 mr-1" />
-                  Verified
+                  {t('profile.verified')}
                 </Badge>
               ) : (
                 <Badge variant="warning">
                   <XCircle className="w-3 h-3 mr-1" />
-                  Not Verified
+                  {t('profile.notVerified')}
                 </Badge>
               )}
             </div>
@@ -45,7 +48,7 @@ export function ProfileHeader({ user, onEdit }: ProfileHeaderProps) {
         </div>
         
         <Button onClick={onEdit} variant="secondary">
-          <Edit3 className="w-4 h-4" /> Edit Profile
+          <Edit3 className="w-4 h-4" /> {t('profile.editProfile')}
         </Button>
       </div>
     </Card>

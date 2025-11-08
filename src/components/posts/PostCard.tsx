@@ -7,12 +7,14 @@ import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { useAuthStore } from '@/lib/store/authStore';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 interface PostCardProps {
   post: WorkPost;
 }
 
 export function PostCard({ post }: PostCardProps) {
+  const { t } = useI18n();
   const router = useRouter();
   const { isAuthenticated } = useAuthStore();
 
@@ -67,13 +69,13 @@ export function PostCard({ post }: PostCardProps) {
           </Badge>
         )))}
         {(post.skills && post.skills.length > 5) && (
-          <Badge variant="default">+{post.skills.length - 5} more</Badge>
+          <Badge variant="default">+{post.skills.length - 5} {t('myPosts.more')}</Badge>
         )}
       </div>
       
       <div className="flex justify-between items-center pt-4 border-t border-gray-200">
         <p className="text-sm text-gray-500">
-          Posted {new Date(post.date).toLocaleDateString()}
+          {t('myPosts.posted')} {new Date(post.date).toLocaleDateString()}
         </p>
         <div className="flex gap-2">
           <Button
@@ -81,14 +83,14 @@ export function PostCard({ post }: PostCardProps) {
             variant="secondary"
             onClick={handleViewDetails}
           >
-            <Eye className="w-4 h-4" /> View Details
+            <Eye className="w-4 h-4" /> {t('postCard.viewDetails')}
           </Button>
           {!isAuthenticated && (
             <Button
               size="sm"
               onClick={handleApplyClick}
             >
-              <LogIn className="w-4 h-4" /> Login to Apply
+              <LogIn className="w-4 h-4" /> {t('postCard.loginToApply')}
             </Button>
           )}
         </div>

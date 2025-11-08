@@ -7,6 +7,7 @@ import { usePosts } from '@/lib/hooks/usePosts';
 import { Button } from '../ui/Button';
 import { TextArea } from '../ui/TextArea';
 import { REGIONS } from '@/config/constants';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 interface CreatePostModalProps {
   isOpen: boolean;
@@ -15,6 +16,7 @@ interface CreatePostModalProps {
 }
 
 export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalProps) {
+  const { t } = useI18n();
   const { createPost } = usePosts();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -26,7 +28,7 @@ export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalP
 
   const handleSubmit = async () => {
     if (!title.trim() || !description.trim() || !skills.trim()) {
-      alert('Please fill in all required fields');
+      alert(t('modals.createPost.fillRequired'));
       return;
     }
 
@@ -51,50 +53,50 @@ export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalP
       setBudgetValue('');
       onSuccess();
     } catch (error) {
-      alert('Failed to create post');
+      alert(t('modals.createPost.createFailed'));
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Create Job Post">
+    <Modal isOpen={isOpen} onClose={onClose} title={t('modals.createPost.title')}>
       <div className="space-y-4">
         <Input
-          label="Job Title"
+          label={t('modals.createPost.jobTitle')}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="e.g. Senior Full Stack Developer"
+          placeholder={t('modals.createPost.jobTitlePlaceholder')}
           required
         />
         
         <TextArea
-          label="Description"
+          label={t('modals.createPost.description')}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          placeholder="Describe the job requirements and responsibilities..."
+          placeholder={t('modals.createPost.descriptionPlaceholder')}
           required
           rows={6}
         />
         
         <Input
-          label="Required Skills (comma-separated)"
+          label={t('modals.createPost.requiredSkills')}
           value={skills}
           onChange={(e) => setSkills(e.target.value)}
-          placeholder="e.g. React, Node.js, TypeScript"
+          placeholder={t('modals.createPost.skillsPlaceholder')}
         />
         
         {/* Region Selector */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Region
+            {t('modals.createPost.region')}
           </label>
           <select
             value={region}
             onChange={(e) => setRegion(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           >
-            <option value="">Select a region (optional)</option>
+            <option value="">{t('modals.createPost.selectRegion')}</option>
             {REGIONS.map((r) => (
               <option key={r} value={r}>
                 {r}
@@ -102,41 +104,41 @@ export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalP
             ))}
           </select>
           <p className="text-xs text-gray-500 mt-1">
-            Specify the work location or choose "Remote" for remote positions
+            {t('modals.createPost.regionHint')}
           </p>
         </div>
         
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Budget Type
+              {t('modals.createPost.budgetType')}
             </label>
             <select
               value={budgetType}
               onChange={(e) => setBudgetType(e.target.value as 'hourly' | 'fixed' | 'monthly')}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             >
-              <option value="hourly">Hourly Rate</option>
-              <option value="fixed">Fixed Price</option>
-              <option value="monthly">Monthly Price</option>
+              <option value="hourly">{t('modals.createPost.hourlyRate')}</option>
+              <option value="fixed">{t('modals.createPost.fixedPrice')}</option>
+              <option value="monthly">{t('modals.createPost.monthlyPrice')}</option>
             </select>
           </div>
           
           <Input
-            label="Budget Value ($)"
+            label={t('modals.createPost.budgetValue')}
             type="number"
             value={budgetValue}
             onChange={(e) => setBudgetValue(e.target.value)}
-            placeholder="e.g. 50"
+            placeholder={t('modals.createPost.budgetPlaceholder')}
           />
         </div>
         
         <div className="flex justify-end space-x-2 pt-4">
           <Button variant="secondary" onClick={onClose}>
-            Cancel
+            {t('common.cancel')}
           </Button>
           <Button onClick={handleSubmit} disabled={isLoading}>
-            {isLoading ? 'Creating...' : 'Create Post'}
+            {isLoading ? t('modals.createPost.creating') : t('modals.createPost.createButton')}
           </Button>
         </div>
       </div>
