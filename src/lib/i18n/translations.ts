@@ -1,6 +1,9 @@
 // src/lib/i18n/translations.ts
 export const translations = {
   en: {
+      dashboardPage: {
+    welcomeBack: "Welcome back, {{name}}!",
+  },
     "modals": {
       "createPost": {
         "title": "Create Job Post",
@@ -301,35 +304,35 @@ export const translations = {
       "loadingPosts": "Loading your posts..."
     },
     chat: {
-      "noChat": "Չատը ընտրված չէ",
-      "goToDashboard": "Անցնել վահանակ",
-      "loadingConversation": "Բեռնվում է նամակագրությունը...",
-      "jobOwner": "Աշխատանքի տեր",
-      "discussingProposal": "Ձեր առաջարկի քննարկում",
-      "proposalConversation": "Առաջարկի նամակագրություն",
-      "live": "Ուղիղ",
-      "jobPost": "Աշխատանքի հայտարարություն",
-      "about": "Մասին",
-      "proposalDetails": "Առաջարկի մանրամասներ",
-      "submitted": "Ուղարկված է",
-      "yourCoverLetter": "Ձեր ուղեկցող նամակը",
-      "freelancerCoverLetter": "Ֆրիլանսերի ուղեկցող նամակը",
-      "jobOwnersContacts": "Աշխատանքի տիրոջ կոնտակտներ",
-      "freelancersContacts": "Ֆրիլանսերի կոնտակտներ",
-      "professionalCommunication": "Պրոֆեսիոնալ շփում",
-      "keepProfessional": "Պահպանեք պրոֆեսիոնալ և հարգալից շփում: Այս չատը վերահսկվում է որակի ապահովման նպատակով:",
-      "sendMessageFailed": "Չհաջողվեց ուղարկել հաղորդագրությունը: Փորձեք կրկին:"
+      "noChat": "No chat selected",
+      "goToDashboard": "Go to Dashboard",
+      "loadingConversation": "Loading conversation...",
+      "jobOwner": "Job Owner",
+      "discussingProposal": "Discussing your proposal",
+      "proposalConversation": "Proposal Conversation",
+      "live": "Live",
+      "jobPost": "Job Post",
+      "about": "About",
+      "proposalDetails": "Proposal Details",
+      "submitted": "Submitted",
+      "yourCoverLetter": "Your Cover Letter",
+      "freelancerCoverLetter": "Freelancer's Cover Letter",
+      "jobOwnersContacts": "Job Owner's Contacts",
+      "freelancersContacts": "Freelancer's Contacts",
+      "professionalCommunication": "Professional Communication",
+      "keepProfessional": "Keep communication professional and respectful. This chat is monitored for quality assurance.",
+      "sendMessageFailed": "Failed to send message. Please try again."
     },
     auth: {
-        welcomeBack: "Welcome Back",
-        createAccount: "Create Account",
-        joinPlatform: "Join Platform",
-        firstName: "First Name",
-        lastName: "Last Name",
-        contacts: "Contacts",
-        signIn: "Sign In",
-        register: "Register",
-        signInToAccount: "Sign in to Account",
+      welcomeBack: "Welcome Back",
+      createAccount: "Create Account",
+      joinPlatform: "Join Platform",
+      firstName: "First Name",
+      lastName: "Last Name",
+      contacts: "Contacts",
+      signIn: "Sign In",
+      register: "Register",
+      signInToAccount: "Sign in to Account",
       loginTitle: 'Login to your account',
       registerTitle: 'Create new account',
       email: 'Email',
@@ -383,6 +386,9 @@ export const translations = {
     },
   },
   ru: {
+      dashboardPage: {
+    welcomeBack: "С возвращением, {{name}}!",
+  },
     "modals": {
       "createPost": {
         "title": "Создать объявление о работе",
@@ -677,6 +683,11 @@ export const translations = {
       "noProposalsDescription": "Начните откликаться на вакансии, чтобы увидеть свои предложения здесь.",
       "browseJobs": "Просмотреть доступные вакансии"
     },
+    "myPostsPage": {
+      "subtitle": "Управляйте вашими объявлениями и просматривайте предложения",
+      "createNewPost": "Создать новое объявление",
+      "loadingPosts": "Загрузка ваших объявлений..."
+    },
     chat: {
       "noChat": "Чат не выбран",
       "goToDashboard": "Перейти в панель управления",
@@ -698,17 +709,17 @@ export const translations = {
       "sendMessageFailed": "Не удалось отправить сообщение. Попробуйте снова."
     },
     auth: {
-     "welcomeBack": "С возвращением",
+      "welcomeBack": "С возвращением",
       loginTitle: 'Войти в аккаунт',
       registerTitle: 'Создать новый аккаунт',
       createAccount: "Создать аккаунт",
-        joinPlatform: "Присоединиться к платформе",
-        firstName: "Имя",
-        lastName: "Фамилия",
-        contacts: "Контакты",
-        signIn: "Войти",
-        register: "Зарегистрироваться",
-        signInToAccount: "Войти в аккаунт",
+      joinPlatform: "Присоединиться к платформе",
+      firstName: "Имя",
+      lastName: "Фамилия",
+      contacts: "Контакты",
+      signIn: "Войти",
+      register: "Зарегистрироваться",
+      signInToAccount: "Войти в аккаунт",
       email: 'Электронная почта',
       password: 'Пароль',
       confirmPassword: 'Подтвердите пароль',
@@ -760,7 +771,10 @@ export const translations = {
     },
   },
   hy: {
-        "modals": {
+      dashboardPage: {
+    welcomeBack: "Բարի վերադարձ, {{name}}!",
+  },
+    "modals": {
       "createPost": {
         "title": "Ստեղծել աշխատանքի հայտարարություն",
         "jobTitle": "Աշխատանքի անվանում",
@@ -773,7 +787,7 @@ export const translations = {
         "selectRegion": "Ընտրեք տարածաշրջան (ոչ պարտադիր)",
         "regionHint": "Նշեք աշխատանքի վայրը կամ ընտրեք \"Remote\" հեռավար պաշտոնների համար",
         "budgetType": "Բյուջեի տեսակ",
-        "hourlyRate": "Ժամային սակագին",
+        "hourlyRate": "Պամային սակագին",
         "fixedPrice": "Ֆիքսված գին",
         "monthlyPrice": "Ամսական գին",
         "budgetValue": "Բյուջեի արժեք ($)",
@@ -800,7 +814,7 @@ export const translations = {
         "deleteFailed": "Չհաջողվեց ջնջել հայտարարությունը"
       }
     },
-        "myPosts": {
+    "myPosts": {
       "posted": "Հրապարակված",
       "proposal": "առաջարկ",
       "proposals": "առաջարկներ",
@@ -811,7 +825,7 @@ export const translations = {
       "noPostsTitle": "Դեռ հայտարարություններ չկան",
       "noPostsDescription": "Ստեղծեք ձեր առաջին աշխատանքի հայտարարությունը՝ տաղանդավոր մասնագետներից առաջարկներ ստանալու համար:"
     },
-        "postCard": {
+    "postCard": {
       "viewDetails": "Դիտել մանրամասները",
       "loginToApply": "Մուտք գործել դիմելու համար"
     },
@@ -834,12 +848,12 @@ export const translations = {
       "about": "Մասին",
       "noBioProvided": "Ֆրիլանսերը կենսագրություն չի տրամադրել",
       "proposalSubmitted": "Առաջարկը ուղարկված է",
-      "statusUpdateSuccess": "Առաջարկը {{status}} հաջողությամբ:",
+      "statusUpdateSuccess": "Առաջարկը {{status}} հաջողությամբ։",
       "statusUpdateFailed": "Չհաջողվեց թարմացնել առաջարկի կարգավիճակը"
     },
     "searchFilters": {
       "filtersActive": "Զտիչները ակտիվ են",
-      "refineResults": "Ճշգրտել արդյունքները",
+      "refineResults": "Փշգրտել արդյունքները",
       "allRegions": "Բոլոր տարածաշրջանները",
       "budgetRange": "Բյուջեի միջակայք",
       "minBudget": "Նվազագույն բյուջե ($)",
@@ -847,7 +861,7 @@ export const translations = {
       "applyFilters": "Կիրառել զտիչները",
       "rate": "սակագին"
     },
-        "settings": {
+    "settings": {
       "changePassword": "Փոխել գաղտնաբառը",
       "currentPassword": "Ընթացիկ գաղտնաբառ",
       "currentPasswordPlaceholder": "Մուտքագրեք ընթացիկ գաղտնաբառը",
@@ -866,7 +880,7 @@ export const translations = {
       "deleteAccountWarning": "Երբ ջնջեք ձեր հաշիվը, ետ ճանապարհ չկա: Խնդրում ենք վստահ լինել:",
       "deleteAccount": "Ջնջել հաշիվը"
     },
-        "jobDetails": {
+    "jobDetails": {
       "loading": "Բեռնվում է աշխատանքի մանրամասները...",
       "jobNotFound": "Աշխատանքը չի գտնվել",
       "backToBrowse": "Վերադառնալ ցանկին",
@@ -937,7 +951,7 @@ export const translations = {
       optional: 'Ոչ պարտադիր',
       required: 'Պարտադիր',
       showing: 'Ցուցադրված է',
-      of: '-իċ',
+      of: '-ից',
       results: 'արդյունքներ',
     },
     nav: {
@@ -1021,7 +1035,7 @@ export const translations = {
       description: 'Նկարագրություն',
       budget: 'Բյուջե',
       budgetType: 'Բյուջեի տեսակ',
-      hourly: 'Ժամային',
+      hourly: 'Պամային',
       fixed: 'Ֆիքսված',
       monthly: 'Ամսական',
       skills: 'Պահանջվող հմտություններ',
@@ -1051,8 +1065,13 @@ export const translations = {
       "subtitle": "Հետևեք բոլոր առաջարկներին, որոնք ուղարկել եք աշխատանքների",
       "loadingProposals": "Բեռնվում են ձեր առաջարկները...",
       "noProposalsTitle": "Դեռ առաջարկներ չկան",
-      "noProposalsDescription": "Սկսեք դիմել աշխատանքների՝ ձեր առաջարկները տեսնելու համար:",
+      "noProposalsDescription": "Սկսեք դիմել աշխատանքներից՝ ձեր առաջարկները տեսնելու համար:",
       "browseJobs": "Դիտել հասանելի աշխատանքները"
+    },
+    "myPostsPage": {
+      "subtitle": "Կառավարեք ձեր հայտարարությունները և դիտեք առաջարկները",
+      "createNewPost": "Ստեղծել նոր հայտարարություն",
+      "loadingPosts": "Բեռնվում են ձեր հայտարարությունները..."
     },
     chat: {
       "noChat": "Չատը ընտրված չէ",
@@ -1080,13 +1099,13 @@ export const translations = {
       registerTitle: 'Ստեղծել նոր հաշիվ',
       email: 'Էլ. փոստ',
       createAccount: "Ստեղծել հաշիվ",
-        joinPlatform: "Միանալ հարթակին",
-        firstName: "Անուն",
-        lastName: "Ազգանուն",
-        contacts: "Կոնտակտներ",
-        signIn: "Մուտք գործել",
-        register: "Գրանցվել",
-        signInToAccount: "Մուտք գործել հաշիվ",
+      joinPlatform: "Միանալ հարթակին",
+      firstName: "Անուն",
+      lastName: "Ազգանուն",
+      contacts: "Կոնտակտներ",
+      signIn: "Մուտք գործել",
+      register: "Գրանցվել",
+      signInToAccount: "Մուտք գործել հաշիվ",
       password: 'Գաղտնաբառ',
       confirmPassword: 'Հաստատել գաղտնաբառը',
       rememberMe: 'Հիշել ինձ',
@@ -1101,8 +1120,8 @@ export const translations = {
       invalidEmail: 'Անվավեր էլ. փոստի հասցե',
       passwordTooShort: 'Գաղտնաբառը պետք է պարունակի առնվազն 8 նիշ',
       passwordsMustMatch: 'Գաղտնաբառերը պետք է համընկնեն',
-      loginFailed: 'Մուտքի սխալ՝ Ստուգեք ձեր տվյալները՝',
-      registrationFailed: 'Գրանցման սխալ՝ Փորձեք նորից՝',
+      loginFailed: 'Մուտքի սխալ։ Ստուգեք ձեր տվյալները։',
+      registrationFailed: 'Գրանցման սխալ։ Փորձեք նորից։',
       loadingFailed: 'Չհաջողվեց բեռնել տվյալները',
       sendProposalFailed: 'Չհաջողվեց ուղարկել առաջարկը',
       coverLetterRequired: 'Խնդրում ենք գրել ուղեկցող նամակ',
@@ -1114,7 +1133,7 @@ export const translations = {
       searchButton: 'Որոնել',
       joinBanner: {
         title: 'Միացեք JobPlatform-ին դիմելու համար',
-        description: 'Ազատորեն դիտեք աշխատատեղերը, բայց առաջարկներ ուղարկելու և հաճախորդների հետ կապվելու համար ձեզ հաշիվ կպահանջվի՝',
+        description: 'Ազատորեն դիտեք աշխատատեղերը, բայց առաջարկներ ուղարկելու և հաճախորդների հետ կապվելու համար ձեզ հաշիվ կպահանջվի։',
         createAccount: 'Ստեղծել անվճար հաշիվ',
         haveAccount: 'Ես ունեմ հաշիվ',
       },
