@@ -251,6 +251,8 @@ export const translations = {
         telegram: 'Telegram',
         email: 'Email',
       },
+      verified: 'Verified',
+      notVerified: 'Not Verified',
     },
     posts: {
       createPost: 'Create Post',
@@ -285,6 +287,18 @@ export const translations = {
       message: 'Message',
       coverLetter: 'Cover Letter',
       proposedRate: 'Proposed Rate',
+    },
+    "proposalsPage": {
+      "subtitle": "Track all proposals you've sent to job posts",
+      "loadingProposals": "Loading your proposals...",
+      "noProposalsTitle": "No proposals yet",
+      "noProposalsDescription": "Start applying to job posts to see your proposals here.",
+      "browseJobs": "Browse Available Jobs"
+    },
+    "myPostsPage": {
+      "subtitle": "Manage your job postings and review proposals",
+      "createNewPost": "Create New Post",
+      "loadingPosts": "Loading your posts..."
     },
     chat: {
       "noChat": "Չատը ընտրված չէ",
@@ -619,6 +633,8 @@ export const translations = {
         telegram: 'Telegram',
         email: 'Эл. почта',
       },
+      verified: 'Подтвержден',
+      notVerified: 'Не подтвержден',
     },
     posts: {
       createPost: 'Создать объявление',
@@ -653,6 +669,13 @@ export const translations = {
       message: 'Сообщение',
       coverLetter: 'Сопроводительное письмо',
       proposedRate: 'Предлагаемая ставка',
+    },
+    "proposalsPage": {
+      "subtitle": "Отслеживайте все предложения, которые вы отправили на вакансии",
+      "loadingProposals": "Загрузка ваших предложений...",
+      "noProposalsTitle": "Пока нет предложений",
+      "noProposalsDescription": "Начните откликаться на вакансии, чтобы увидеть свои предложения здесь.",
+      "browseJobs": "Просмотреть доступные вакансии"
     },
     chat: {
       "noChat": "Чат не выбран",
@@ -987,6 +1010,8 @@ export const translations = {
         telegram: 'Telegram',
         email: 'Էլ. փոստ',
       },
+      verified: 'Հաստատված',
+      notVerified: 'Չհաստատված',
     },
     posts: {
       createPost: 'Ստեղծել հայտարարություն',
@@ -1021,6 +1046,13 @@ export const translations = {
       message: 'Հաղորդագրություն',
       coverLetter: 'Ուղեկցող նամակ',
       proposedRate: 'Առաջարկվող գին',
+    },
+    "proposalsPage": {
+      "subtitle": "Հետևեք բոլոր առաջարկներին, որոնք ուղարկել եք աշխատանքների",
+      "loadingProposals": "Բեռնվում են ձեր առաջարկները...",
+      "noProposalsTitle": "Դեռ առաջարկներ չկան",
+      "noProposalsDescription": "Սկսեք դիմել աշխատանքների՝ ձեր առաջարկները տեսնելու համար:",
+      "browseJobs": "Դիտել հասանելի աշխատանքները"
     },
     chat: {
       "noChat": "Չատը ընտրված չէ",

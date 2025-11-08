@@ -17,19 +17,19 @@ export function ProfileHeader({ user, onEdit }: ProfileHeaderProps) {
   
   return (
     <Card className="p-6">
-      <div className="flex items-start justify-between">
-        <div className="flex items-center space-x-4">
-          <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+      <div className="flex flex-col sm:flex-row items-start sm:items-start justify-between gap-4">
+        <div className="flex items-center space-x-4 flex-1 min-w-0">
+          <div className="w-20 h-20 flex-shrink-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
             <User className="w-10 h-10 text-white" />
           </div>
           
-          <div>
-            <h1 className="text-2xl font-bold text-gray-800">
+          <div className="flex-1 min-w-0">
+            <h1 className="text-2xl font-bold text-gray-800 truncate">
               {user.name} {user.surname}
             </h1>
             <div className="flex items-center space-x-2 mt-1">
-              <Mail className="w-4 h-4 text-gray-500" />
-              <span className="text-gray-600">{user.email}</span>
+              <Mail className="w-4 h-4 text-gray-500 flex-shrink-0" />
+              <span className="text-gray-600 truncate text-sm sm:text-base">{user.email}</span>
             </div>
             <div className="flex items-center space-x-2 mt-2">
               {user.verified ? (
@@ -47,8 +47,15 @@ export function ProfileHeader({ user, onEdit }: ProfileHeaderProps) {
           </div>
         </div>
         
-        <Button onClick={onEdit} variant="secondary">
-          <Edit3 className="w-4 h-4" /> {t('profile.editProfile')}
+        <Button 
+          onClick={onEdit} 
+          variant="secondary"
+          className="w-full sm:w-auto flex-shrink-0"
+          size="sm"
+        >
+          <Edit3 className="w-4 h-4" /> 
+          <span className="hidden sm:inline ml-2">{t('profile.editProfile')}</span>
+          <span className="sm:hidden ml-2">{t('common.edit')}</span>
         </Button>
       </div>
     </Card>
