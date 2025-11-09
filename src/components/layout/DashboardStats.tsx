@@ -49,12 +49,12 @@ export function DashboardStats() {
       icon: Send,
       color: 'green',
     },
-    {
-      label: t('dashboard.stats.activeChats'),
-      value: activeChats.toString(),
-      icon: MessageCircle,
-      color: 'purple',
-    },
+    // {
+    //   label: t('dashboard.stats.activeChats'),
+    //   value: activeChats.toString(),
+    //   icon: MessageCircle,
+    //   color: 'purple',
+    // },
   ];
 
   const colorMap = {
@@ -65,7 +65,7 @@ export function DashboardStats() {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
         {[1, 2, 3].map((i) => (
           <Card key={i} className="p-6 animate-pulse">
             <div className="h-16 bg-gray-200 rounded"></div>
@@ -76,7 +76,7 @@ export function DashboardStats() {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
       {stats.map((stat) => {
         const Icon = stat.icon;
         return (

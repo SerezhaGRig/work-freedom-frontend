@@ -2,10 +2,37 @@
 export const translations = {
   en: {
       dashboardPage: {
-    welcomeBack: "Welcome back, {{name}}!",
-  },
+        welcomeBack: "Welcome back, {{name}}!",
+      },
     "modals": {
+      "updateStatus": {
+        "title": "Update Post Status",
+        "currentStatus": "Current Status",
+        "selectNewStatus": "Select New Status",
+        "publishedDesc": "Post is visible to all users and accepting proposals",
+        "disabledDesc": "Post is temporarily hidden from public view",
+        "outdatedDesc": "Post is marked as no longer relevant",
+        "blockedDesc": "Post is blocked and cannot receive proposals",
+        "visibilityWarning": "Changing status will affect post visibility and proposal acceptance.",
+        "noChangeDetected": "Please select a different status",
+        "updateSuccess": "Post status updated successfully!",
+        "updateFailed": "Failed to update post status",
+        "updating": "Updating...",
+        "updateButton": "Update Status"
+      },
+      "posts": {
+        "duration": {
+          "lessThanMonth": "Less than 1 month",
+          "lessThan3Months": "1-3 months",
+          "moreThan3Months": "More than 3 months"
+        }
+      },
       "createPost": {
+        "duration": "Project Duration",
+        "lessThanMonth": "Less than 1 month",
+        "lessThan3Months": "1-3 months",
+        "moreThan3Months": "More than 3 months",
+        "durationHint": "Expected duration of the project",
         "title": "Create Job Post",
         "jobTitle": "Job Title",
         "jobTitlePlaceholder": "e.g. Senior Full Stack Developer",
@@ -45,6 +72,7 @@ export const translations = {
       }
     },
     "myPosts": {
+            "changeStatus": "Change Status",
       "posted": "Posted",
       "proposal": "proposal",
       "proposals": "proposals",
@@ -82,6 +110,7 @@ export const translations = {
       "statusUpdateFailed": "Failed to update proposal status"
     },
     "searchFilters": {
+      "allDurations": "All Durations",
       "filtersActive": "Filters Active",
       "refineResults": "Refine Results",
       "allRegions": "All Regions",
@@ -92,9 +121,9 @@ export const translations = {
       "rate": "rate"
     },
     "settings": {
-   settingsPage: {
-    title: "Settings",
-  },
+      settingsPage: {
+        title: "Settings",
+      },
       "changePassword": "Change Password",
       "currentPassword": "Current Password",
       "currentPasswordPlaceholder": "Enter current password",
@@ -114,6 +143,7 @@ export const translations = {
       "deleteAccount": "Delete Account"
     },
     "jobDetails": {
+      "projectDuration": "Project Duration",
       "loading": "Loading job details...",
       "jobNotFound": "Job not found",
       "backToBrowse": "Back to Browse",
@@ -151,6 +181,7 @@ export const translations = {
       "ensureSkills": "Ensure you have the required skills and can deliver quality work within the specified timeframe."
     },
     common: {
+      "warning": "Warning",
       loading: 'Loading...',
       error: 'Error',
       success: 'Success',
@@ -261,6 +292,12 @@ export const translations = {
       notVerified: 'Not Verified',
     },
     posts: {
+      "duration": {
+          "lessThanMonth": "Less than 1 month",
+          "lessThan3Months": "1-3 months",
+          "moreThan3Months": "More than 3 months"
+      },
+      "projectDuration": "Project Duration",
       createPost: 'Create Post',
       editPost: 'Edit Post',
       deletePost: 'Delete Post',
@@ -393,7 +430,34 @@ export const translations = {
     welcomeBack: "С возвращением, {{name}}!",
   },
     "modals": {
+            "updateStatus": {
+            "title": "Обновить статус объявления",
+            "currentStatus": "Текущий статус",
+            "selectNewStatus": "Выберите новый статус",
+            "publishedDesc": "Объявление видно всем пользователям и принимает предложения",
+            "disabledDesc": "Объявление временно скрыто от публичного просмотра",
+            "outdatedDesc": "Объявление помечено как неактуальное",
+            "blockedDesc": "Объявление заблокировано и не может получать предложения",
+            "visibilityWarning": "Изменение статуса повлияет на видимость объявления и прием предложений.",
+            "noChangeDetected": "Пожалуйста, выберите другой статус",
+            "updateSuccess": "Статус объявления успешно обновлен!",
+            "updateFailed": "Не удалось обновить статус объявления",
+            "updating": "Обновление...",
+            "updateButton": "Обновить статус"
+          },
+        "posts": {
+          "duration": {
+            "lessThanMonth": "Менее 1 месяца",
+            "lessThan3Months": "1-3 месяца",
+            "moreThan3Months": "Более 3 месяцев"
+          },
+        },
       "createPost": {
+            "duration": "Продолжительность проекта",
+        "lessThanMonth": "Менее 1 месяца",
+        "lessThan3Months": "1-3 месяца",
+        "moreThan3Months": "Более 3 месяцев",
+        "durationHint": "Ожидаемая продолжительность проекта",
         "title": "Создать объявление о работе",
         "jobTitle": "Название работы",
         "jobTitlePlaceholder": "например, Senior Full Stack разработчик",
@@ -433,6 +497,7 @@ export const translations = {
       }
     },
     "myPosts": {
+            "changeStatus": "Изменить статус",
       "posted": "Опубликовано",
       "proposal": "предложение",
       "proposals": "предложений",
@@ -470,6 +535,8 @@ export const translations = {
       "statusUpdateFailed": "Не удалось обновить статус предложения"
     },
     "searchFilters": {
+        "allDurations": "Все сроки",
+
       "filtersActive": "Фильтры активны",
       "refineResults": "Уточнить результаты",
       "allRegions": "Все регионы",
@@ -502,6 +569,7 @@ export const translations = {
       "deleteAccount": "Удалить аккаунт"
     },
     "jobDetails": {
+        "projectDuration": "Продолжительность проекта",
       "loading": "Загрузка деталей работы...",
       "jobNotFound": "Работа не найдена",
       "backToBrowse": "Вернуться к списку",
@@ -539,6 +607,7 @@ export const translations = {
       "ensureSkills": "Убедитесь, что у вас есть необходимые навыки и вы можете выполнить качественную работу в указанные сроки."
     },
     common: {
+            "warning": "Предупреждение",
       loading: 'Загрузка...',
       error: 'Ошибка',
       success: 'Успешно',
@@ -649,6 +718,12 @@ export const translations = {
       notVerified: 'Не подтвержден',
     },
     posts: {
+        "duration": {
+    "lessThanMonth": "Менее 1 месяца",
+    "lessThan3Months": "1-3 месяца",
+    "moreThan3Months": "Более 3 месяцев"
+  },
+  "projectDuration": "Продолжительность проекта",
       createPost: 'Создать объявление',
       editPost: 'Редактировать объявление',
       deletePost: 'Удалить объявление',
@@ -781,7 +856,34 @@ export const translations = {
     welcomeBack: "Բարի վերադարձ, {{name}}!",
   },
     "modals": {
+          "updateStatus": {
+            "title": "Թարմացնել հայտարարության կարգավիճակը",
+            "currentStatus": "Ընթացիկ կարգավիճակ",
+            "selectNewStatus": "Ընտրեք նոր կարգավիճակ",
+            "publishedDesc": "Հայտարարությունը տեսանելի է բոլոր օգտատերերի համար և ընդունում է առաջարկներ",
+            "disabledDesc": "Հայտարարությունը ժամանակավորապես թաքցված է հանրային դիտումից",
+            "outdatedDesc": "Հայտարարությունը նշված է որպես այլևս արդիական չէ",
+            "blockedDesc": "Հայտարարությունը արգելափակված է և չի կարող ստանալ առաջարկներ",
+            "visibilityWarning": "Կարգավիճակի փոփոխությունը կազդի հայտարարության տեսանելիության և առաջարկների ընդունման վրա:",
+            "noChangeDetected": "Խնդրում ենք ընտրել այլ կարգավիճակ",
+            "updateSuccess": "Հայտարարության կարգավիճակը հաջողությամբ թարմացվեց!",
+            "updateFailed": "Չհաջողվեց թարմացնել հայտարարության կարգավիճակը",
+            "updating": "Թարմացում...",
+            "updateButton": "Թարմացնել կարգավիճակը"
+        },
+      "posts": {
+        "duration": {
+          "lessThanMonth": "Մինչև 1 ամիս",
+          "lessThan3Months": "1-3 ամիս",
+          "moreThan3Months": "3 ամիսից ավելի"
+        }
+  },
       "createPost": {
+            "duration": "Նախագծի տևողություն",
+    "lessThanMonth": "Մինչև 1 ամիս",
+    "lessThan3Months": "1-3 ամիս",
+    "moreThan3Months": "3 ամիսից ավելի",
+    "durationHint": "Նախագծի ակնկալվող տևողությունը",
         "title": "Ստեղծել աշխատանքի հայտարարություն",
         "jobTitle": "Աշխատանքի անվանում",
         "jobTitlePlaceholder": "օրինակ՝ Ավագ Full Stack մշակող",
@@ -821,6 +923,7 @@ export const translations = {
       }
     },
     "myPosts": {
+            "changeStatus": "Փոխել կարգավիճակը",
       "posted": "Հրապարակված",
       "proposal": "առաջարկ",
       "proposals": "առաջարկներ",
@@ -858,6 +961,8 @@ export const translations = {
       "statusUpdateFailed": "Չհաջողվեց թարմացնել առաջարկի կարգավիճակը"
     },
     "searchFilters": {
+        "allDurations": "Բոլոր ժամկետները",
+
       "filtersActive": "Զտիչները ակտիվ են",
       "refineResults": "Փշգրտել արդյունքները",
       "allRegions": "Բոլոր տարածաշրջանները",
@@ -890,6 +995,8 @@ export const translations = {
       "deleteAccount": "Ջնջել հաշիվը"
     },
     "jobDetails": {
+        "projectDuration": "Նախագծի տևողություն",
+
       "loading": "Բեռնվում է աշխատանքի մանրամասները...",
       "jobNotFound": "Աշխատանքը չի գտնվել",
       "backToBrowse": "Վերադառնալ ցանկին",
@@ -927,6 +1034,7 @@ export const translations = {
       "ensureSkills": "Համոզվեք, որ ունեք անհրաժեշտ հմտությունները և կարող եք որակյալ աշխատանք կատարել նշված ժամկետներում:"
     },
     common: {
+      "warning": "Զգուշացում",
       loading: 'Բեռնվում է...',
       error: 'Սխալ',
       success: 'Հաջողված է',
@@ -1037,6 +1145,12 @@ export const translations = {
       notVerified: 'Չհաստատված',
     },
     posts: {
+        "duration": {
+    "lessThanMonth": "Մինչև 1 ամիս",
+    "lessThan3Months": "1-3 ամիս",
+    "moreThan3Months": "3 ամիսից ավելի"
+  },
+  "projectDuration": "Նախագծի տևողություն",
       createPost: 'Ստեղծել հայտարարություն',
       editPost: 'Խմբագրել հայտարարությունը',
       deletePost: 'Ջնջել հայտարարությունը',

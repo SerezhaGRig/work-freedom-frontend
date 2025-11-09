@@ -1,4 +1,4 @@
-// api-client.ts - Updated with duration support
+// api-client.ts - Fixed with proper response transformation
 
 import axios, { AxiosInstance } from 'axios';
 import { User, Contact, WorkPost, Proposal, Message, EditUser } from '@/types';
@@ -26,6 +26,23 @@ export interface SearchPostsResponse {
   posts: WorkPost[];
   nextToken?: string;
   filters?: AvailableFilters;
+}
+
+// API response structure (as returned by backend)
+interface ApiSearchResponse {
+  posts: WorkPost[];
+  nextToken?: string;
+  filters?: {
+    regions?: string[];
+    durations?: ('less_than_month' | 'less_than_3_months' | 'more_than_3_months')[];
+    budget?: {
+      type?: ('hourly' | 'fixed' | 'monthly')[];
+      value?: {
+        min: number;
+        max: number;
+      };
+    };
+  };
 }
 
 class ApiService {
@@ -66,6 +83,41 @@ class ApiService {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('authToken');
     }
+  }
+
+  // Transform API response filters to frontend format
+  private transformFilters(apiFilters?: ApiSearchResponse['filters']): AvailableFilters | undefined {
+    if (!apiFilters) return undefined;
+
+    const transformed: AvailableFilters = {};
+
+    // Copy regions directly
+    if (apiFilters.regions && apiFilters.regions.length > 0) {
+      transformed.regions = apiFilters.regions;
+    }
+
+    // Copy durations directly
+    if (apiFilters.durations && apiFilters.durations.length > 0) {
+      transformed.durations = apiFilters.durations;
+    }
+
+    // Transform budget structure
+    if (apiFilters.budget) {
+      if (apiFilters.budget.type && apiFilters.budget.type.length > 0) {
+        transformed.budgetTypes = apiFilters.budget.type;
+      }
+      if (apiFilters.budget.value) {
+        transformed.minBudget = apiFilters.budget.value.min;
+        transformed.maxBudget = apiFilters.budget.value.max;
+      }
+    }
+
+    // Return undefined if no filters are actually available
+    if (Object.keys(transformed).length === 0) {
+      return undefined;
+    }
+
+    return transformed;
   }
 
   async verify(email: string, code: string) {
@@ -181,8 +233,8 @@ class ApiService {
         }
 
         if (filters.minBudget !== undefined || filters.maxBudget !== undefined) {
-          budgetFilter.vlaue = {
-            min: filters.minBudget ?? 0,
+          budgetFilter.value = {
+            min: filters.minBudget ?? 1,
             max: filters.maxBudget ?? 90000000,
           };
         }
@@ -195,8 +247,14 @@ class ApiService {
       }
     }
 
-    const response = await this.client.post('/posts/search', body);
-    return response.data;
+    const response = await this.client.post<ApiSearchResponse>('/posts/search', body);
+    
+    // Transform the response to match frontend expectations
+    return {
+      posts: response.data.posts,
+      nextToken: response.data.nextToken,
+      filters: this.transformFilters(response.data.filters)
+    };
   }
 
   // PUBLIC ENDPOINT - No authentication required

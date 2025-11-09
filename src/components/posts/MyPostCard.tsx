@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Edit3, Trash2, Users, DollarSign, Calendar, ChevronDown, ChevronUp, MapPin, Clock } from 'lucide-react';
+import { Edit3, Trash2, Users, DollarSign, Calendar, ChevronDown, ChevronUp, MapPin, RefreshCw } from 'lucide-react';
 import { WorkPost } from '@/types';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
@@ -13,7 +13,7 @@ import { useProposals } from '@/lib/hooks/useProposals';
 import { Share } from '../ui/Share';
 import { useI18n } from '@/lib/i18n/i18n-context';
 import path from 'path';
-import { getDurationLabel } from '@/config/constants';
+import { UpdatePostStatusModal } from './UpdatePostStatusModal';
 
 interface MyPostCardProps {
   post: WorkPost;
@@ -24,6 +24,7 @@ export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
   const { t } = useI18n();
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showStatusModal, setShowStatusModal] = useState(false);
   const [showProposals, setShowProposals] = useState(false);
   const { proposals, loadProposalsForPost, isLoading } = useProposals();
   const [proposalCount, setProposalCount] = useState(0);
@@ -52,6 +53,24 @@ export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
     setShowProposals(!showProposals);
   };
 
+  // Get status badge variant
+  const getStatusVariant = (status: string) => {
+    switch (status) {
+      case 'published':
+        return 'success';
+      case 'disabled':
+        return 'secondary';
+      case 'outdated':
+        return 'warning';
+      case 'blocked':
+        return 'danger';
+      default:
+        return 'default';
+    }
+  };
+
+  const currentStatus = post.status || 'published';
+
   return (
     <>
       <Card className="p-6 hover:shadow-lg transition-shadow">
@@ -73,7 +92,9 @@ export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
               {post.description}
             </p>
           </div>
-          <Badge variant="success">{t('posts.published')}</Badge>
+          <Badge>
+            {t(`posts.${currentStatus}`)}
+          </Badge>
         </div>
 
         <div className="flex flex-wrap gap-2 mb-4">
@@ -102,10 +123,7 @@ export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
             <Calendar className="w-4 h-4 mr-2" />
             <span>{t('myPosts.posted')} {new Date(post.date).toLocaleDateString()}</span>
           </div>
-          <div className="flex items-center text-gray-600">
-              <Clock className="w-4 h-4 mr-2" />
-              <span>{getDurationLabel(post.duration, t)}</span>
-            </div> 
+          
           <div className="flex items-center text-gray-600">
             <Users className="w-4 h-4 mr-2" />
             <span className="font-semibold text-blue-600">{proposalCount}</span>
@@ -119,7 +137,7 @@ export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
       {/* Buttons section */}
       <div className="pt-4 border-t border-gray-200">
         {/* Action buttons row */}
-        <div className="flex items-center gap-2 mb-3">
+        <div className="flex items-center gap-2 mb-3 flex-wrap">
           <Button
             size="sm"
             variant="secondary"
@@ -127,6 +145,15 @@ export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
           >
             <Edit3 className="w-4 h-4 mr-1" />
             {t('common.edit')}
+          </Button>
+
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={() => setShowStatusModal(true)}
+          >
+            <RefreshCw className="w-4 h-4 mr-1" />
+            {t('myPosts.changeStatus')}
           </Button>
 
           <Button
@@ -186,6 +213,16 @@ export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
         onClose={() => setShowEditModal(false)}
         onSuccess={() => {
           setShowEditModal(false);
+          onUpdate();
+        }}
+      />
+
+      <UpdatePostStatusModal
+        isOpen={showStatusModal}
+        post={post}
+        onClose={() => setShowStatusModal(false)}
+        onSuccess={() => {
+          setShowStatusModal(false);
           onUpdate();
         }}
       />
