@@ -7,6 +7,7 @@ import { Proposal } from '@/types';
 import { Card } from '@/components/ui/Card';
 import { Button } from '../ui/Button';
 import { Badge } from '../ui/Badge';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 interface MyProposalsListProps {
   proposals: Proposal[];
@@ -15,8 +16,9 @@ interface MyProposalsListProps {
 
 export function MyProposalsList({ proposals, onUpdate }: MyProposalsListProps) {
   const router = useRouter();
+  const { t } = useI18n();
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  console.log('proposals', proposals)
+
   const getBadgeVariant = (status: string) => {
     switch (status) {
       case 'accepted':
@@ -32,13 +34,13 @@ export function MyProposalsList({ proposals, onUpdate }: MyProposalsListProps) {
   const getStatusDescription = (status: string) => {
     switch (status) {
       case 'invited':
-        return 'Waiting for response';
+        return t('myProposalsList.waitingResponse');
       case 'accepted':
-        return 'Accepted - Ready to chat';
+        return t('myProposalsList.acceptedReady');
       case 'discussion':
-        return 'In discussion';
+        return t('myProposalsList.inDiscussion');
       case 'rejected':
-        return 'Not selected';
+        return t('myProposalsList.notSelected');
       default:
         return status;
     }
@@ -55,7 +57,7 @@ export function MyProposalsList({ proposals, onUpdate }: MyProposalsListProps) {
   // Group proposals by status
   const groupedProposals = {
     active: proposals.filter(p => p.status === 'accepted' || p.status === 'discussion'),
-    pending: proposals.filter(p => p.status === 'pending'),
+    pending: proposals.filter(p => p.status === 'pending' || p.status === 'invited'),
     rejected: proposals.filter(p => p.status === 'rejected'),
   };
 
@@ -69,11 +71,11 @@ export function MyProposalsList({ proposals, onUpdate }: MyProposalsListProps) {
           <div className="flex-1">
             <div className="flex items-center space-x-2 mb-2">
               <Briefcase className="w-4 h-4 text-gray-500" />
-              <h3 className="font-semibold text-gray-800">Job Post</h3>
+              <h3 className="font-semibold text-gray-800">{t('myProposalsList.jobPost')}</h3>
             </div>
             <div className="flex items-center space-x-3 mb-2">
               <Badge variant={getBadgeVariant(proposal.status)}>
-                {proposal.status}
+                {t(`proposals.${proposal.status}`)}
               </Badge>
               <span className="text-sm text-gray-500">
                 {getStatusDescription(proposal.status)}
@@ -86,30 +88,30 @@ export function MyProposalsList({ proposals, onUpdate }: MyProposalsListProps) {
               size="sm"
               onClick={() => handleOpenChat(proposal.proposalId)}
             >
-              <MessageCircle className="w-4 h-4" /> Open Chat
+              <MessageCircle className="w-4 h-4" /> {t('myProposalsList.openChat')}
             </Button>
           )}
         </div>
 
         <div className="flex items-center text-sm text-gray-500 mb-3">
           <Calendar className="w-4 h-4 mr-2" />
-          <span>Sent {new Date(proposal.date).toLocaleDateString()}</span>
+          <span>{t('myProposalsList.sent')} {new Date(proposal.date).toLocaleDateString()}</span>
         </div>
 
         <div className="bg-gray-50 rounded-lg p-3">
           <div className="flex items-center justify-between">
-            <p className="text-sm font-medium text-gray-700">Cover Letter</p>
+            <p className="text-sm font-medium text-gray-700">{t('myProposalsList.coverLetter')}</p>
             <button
               onClick={() => toggleExpand(proposal.proposalId)}
               className="text-blue-600 hover:text-blue-700 text-sm flex items-center"
             >
               {isExpanded ? (
                 <>
-                  Hide <ChevronUp className="w-4 h-4 ml-1" />
+                  {t('myProposalsList.hide')} <ChevronUp className="w-4 h-4 ml-1" />
                 </>
               ) : (
                 <>
-                  Show <ChevronDown className="w-4 h-4 ml-1" />
+                  {t('myProposalsList.show')} <ChevronDown className="w-4 h-4 ml-1" />
                 </>
               )}
             </button>
@@ -137,7 +139,7 @@ export function MyProposalsList({ proposals, onUpdate }: MyProposalsListProps) {
         <div>
           <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
             <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-            Active Conversations ({groupedProposals.active.length})
+            {t('myProposalsList.activeConversations')} ({groupedProposals.active.length})
           </h2>
           <div className="space-y-3">
             {groupedProposals.active.map(renderProposalCard)}
@@ -149,7 +151,7 @@ export function MyProposalsList({ proposals, onUpdate }: MyProposalsListProps) {
         <div>
           <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
             <span className="w-2 h-2 bg-yellow-500 rounded-full mr-2"></span>
-            Pending Response ({groupedProposals.pending.length})
+            {t('myProposalsList.pendingResponse')} ({groupedProposals.pending.length})
           </h2>
           <div className="space-y-3">
             {groupedProposals.pending.map(renderProposalCard)}
@@ -161,7 +163,7 @@ export function MyProposalsList({ proposals, onUpdate }: MyProposalsListProps) {
         <div>
           <h2 className="text-xl font-semibold text-gray-800 mb-4 flex items-center">
             <span className="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
-            Not Selected ({groupedProposals.rejected.length})
+            {t('myProposalsList.notSelectedGroup')} ({groupedProposals.rejected.length})
           </h2>
           <div className="space-y-3">
             {groupedProposals.rejected.map(renderProposalCard)}

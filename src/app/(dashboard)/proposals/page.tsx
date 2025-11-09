@@ -43,9 +43,11 @@ export default function ProposalsPage() {
             <p className="text-gray-600 mb-6">
               {t('proposalsPage.noProposalsDescription')}
             </p>
+            <div className="flex items-center justify-center mx-auto mb-4">
             <Button onClick={() => router.push('/posts')}>
               {t('proposalsPage.browseJobs')}
             </Button>
+            </div>
           </div>
         </Card>
       ) : (

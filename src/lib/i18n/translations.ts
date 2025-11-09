@@ -1,6 +1,21 @@
 // src/lib/i18n/translations.ts
 export const translations = {
   en: {
+        "myProposalsList": {
+      "jobPost": "Job Post",
+      "waitingResponse": "Waiting for response",
+      "acceptedReady": "Accepted - Ready to chat",
+      "inDiscussion": "In discussion",
+      "notSelected": "Not selected",
+      "openChat": "Open Chat",
+      "sent": "Sent",
+      "coverLetter": "Cover Letter",
+      "hide": "Hide",
+      "show": "Show",
+      "activeConversations": "Active Conversations",
+      "pendingResponse": "Pending Response",
+      "notSelectedGroup": "Not Selected"
+    },
       dashboardPage: {
         welcomeBack: "Welcome back, {{name}}!",
       },
@@ -320,12 +335,14 @@ export const translations = {
       viewDetails: 'View Details',
     },
     proposals: {
+          "invited": "Invited",
+      "accepted": "Accepted",
+      "discussion": "Discussion",
+      "rejected": "Rejected",
+      "pending": "Pending",
       myProposals: 'My Proposals',
       sendProposal: 'Send Proposal',
       proposalSent: 'Proposal Sent',
-      accepted: 'Accepted',
-      rejected: 'Rejected',
-      pending: 'Pending',
       inDiscussion: 'In Discussion',
       message: 'Message',
       coverLetter: 'Cover Letter',
@@ -364,6 +381,7 @@ export const translations = {
       "sendMessageFailed": "Failed to send message. Please try again."
     },
     auth: {
+      signingIn: "Signing In",
       welcomeBack: "Welcome Back",
       createAccount: "Create Account",
       joinPlatform: "Join Platform",
@@ -426,6 +444,21 @@ export const translations = {
     },
   },
   ru: {
+       "myProposalsList": {
+      "jobPost": "Вакансия",
+      "waitingResponse": "Ожидание ответа",
+      "acceptedReady": "Принято - Готово к общению",
+      "inDiscussion": "На обсуждении",
+      "notSelected": "Не выбрано",
+      "openChat": "Открыть чат",
+      "sent": "Отправлено",
+      "coverLetter": "Сопроводительное письмо",
+      "hide": "Скрыть",
+      "show": "Показать",
+      "activeConversations": "Активные переписки",
+      "pendingResponse": "Ожидание ответа",
+      "notSelectedGroup": "Не выбрано"
+    },
       dashboardPage: {
     welcomeBack: "С возвращением, {{name}}!",
   },
@@ -746,12 +779,14 @@ export const translations = {
       viewDetails: 'Подробнее',
     },
     proposals: {
+            "invited": "Приглашен",
+      "accepted": "Принято",
+      "discussion": "Обсуждение",
+      "rejected": "Отклонено",
+      "pending": "На рассмотрении",
       myProposals: 'Мои предложения',
       sendProposal: 'Отправить предложение',
       proposalSent: 'Предложение отправлено',
-      accepted: 'Принято',
-      rejected: 'Отклонено',
-      pending: 'На рассмотрении',
       inDiscussion: 'В обсуждении',
       message: 'Сообщение',
       coverLetter: 'Сопроводительное письмо',
@@ -852,9 +887,24 @@ export const translations = {
     },
   },
   hy: {
-      dashboardPage: {
-    welcomeBack: "Բարի վերադարձ, {{name}}!",
-  },
+    "myProposalsList": {
+      "jobPost": "Աշխատանքի հայտարարություն",
+      "waitingResponse": "Սպասում է պատասխանի",
+      "acceptedReady": "Ընդունված է - Պատրաստ է զրույցի",
+      "inDiscussion": "Քննարկման մեջ",
+      "notSelected": "Չընտրված",
+      "openChat": "Բացել չատը",
+      "sent": "Ուղարկված",
+      "coverLetter": "Ուղեկցող նամակ",
+      "hide": "Թաքցնել",
+      "show": "Ցույց տալ",
+      "activeConversations": "Ակտիվ զրույցներ",
+      "pendingResponse": "Սպասում է պատասխանի",
+      "notSelectedGroup": "Չընտրված"
+    },
+    dashboardPage: {
+      welcomeBack: "Բարի վերադարձ, {{name}}!",
+    },
     "modals": {
           "updateStatus": {
             "title": "Թարմացնել հայտարարության կարգավիճակը",
@@ -1173,12 +1223,14 @@ export const translations = {
       viewDetails: 'Մանրամասներ',
     },
     proposals: {
+           "invited": "Հրավիրված",
+      "accepted": "Ընդունված",
+      "discussion": "Քննարկում",
+      "rejected": "Մերժված",
+      "pending": "Սպասման մեջ",
       myProposals: 'Իմ առաջարկները',
       sendProposal: 'Ուղարկել առաջարկ',
       proposalSent: 'Առաջարկը ուղարկված է',
-      accepted: 'Ընդունված',
-      rejected: 'Մերժված',
-      pending: 'Սպասման մեջ',
       inDiscussion: 'Քննարկման մեջ',
       message: 'Հաղորդագրություն',
       coverLetter: 'Ուղեկցող նամակ',
