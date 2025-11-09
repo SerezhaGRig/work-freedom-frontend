@@ -92,6 +92,9 @@ export const translations = {
       "rate": "rate"
     },
     "settings": {
+   settingsPage: {
+    title: "Settings",
+  },
       "changePassword": "Change Password",
       "currentPassword": "Current Password",
       "currentPasswordPlaceholder": "Enter current password",
@@ -477,6 +480,9 @@ export const translations = {
       "rate": "ставка"
     },
     "settings": {
+        settingsPage: {
+    title: "Настройки",
+  },
       "changePassword": "Изменить пароль",
       "currentPassword": "Текущий пароль",
       "currentPasswordPlaceholder": "Введите текущий пароль",
@@ -862,6 +868,9 @@ export const translations = {
       "rate": "սակագին"
     },
     "settings": {
+        settingsPage: {
+    title: "Կարգավորումներ",
+  },
       "changePassword": "Փոխել գաղտնաբառը",
       "currentPassword": "Ընթացիկ գաղտնաբառ",
       "currentPasswordPlaceholder": "Մուտքագրեք ընթացիկ գաղտնաբառը",

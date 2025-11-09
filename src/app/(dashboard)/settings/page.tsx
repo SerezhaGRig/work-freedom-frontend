@@ -3,58 +3,64 @@
 import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { useState } from 'react';
-import { Lock, Bell, Shield, Trash2 } from 'lucide-react';
+import { Lock, Bell, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { useI18n } from '@/lib/i18n/i18n-context';
 
 export default function SettingsPage() {
+  const { t } = useI18n();
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleChangePassword = async () => {
     if (newPassword !== confirmPassword) {
-      alert('Passwords do not match');
+      alert(t('settings.passwordsDoNotMatch'));
       return;
     }
     // TODO: Implement password change
-    alert('Password changed successfully!');
+    alert(t('settings.passwordChangedSuccess'));
   };
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-gray-800 mb-8">Settings</h1>
+      <h1 className="text-3xl font-bold text-gray-800 mb-8">
+        {t('settings.settingsPage.title')}
+      </h1>
 
       <div className="space-y-6">
         <Card className="p-6">
           <div className="flex items-center space-x-3 mb-4">
             <Lock className="w-5 h-5 text-gray-600" />
-            <h2 className="text-xl font-bold text-gray-800">Change Password</h2>
+            <h2 className="text-xl font-bold text-gray-800">
+              {t('settings.changePassword')}
+            </h2>
           </div>
           
           <div className="space-y-4">
             <Input
-              label="Current Password"
+              label={t('settings.currentPassword')}
               type="password"
               value={currentPassword}
               onChange={(e) => setCurrentPassword(e.target.value)}
-              placeholder="Enter current password"
+              placeholder={t('settings.currentPasswordPlaceholder')}
             />
             <Input
-              label="New Password"
+              label={t('settings.newPassword')}
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
-              placeholder="Enter new password"
+              placeholder={t('settings.newPasswordPlaceholder')}
             />
             <Input
-              label="Confirm New Password"
+              label={t('settings.confirmNewPassword')}
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              placeholder="Confirm new password"
+              placeholder={t('settings.confirmPasswordPlaceholder')}
             />
             <Button onClick={handleChangePassword}>
-              Update Password
+              {t('settings.updatePassword')}
             </Button>
           </div>
         </Card>
@@ -62,21 +68,29 @@ export default function SettingsPage() {
         <Card className="p-6">
           <div className="flex items-center space-x-3 mb-4">
             <Bell className="w-5 h-5 text-gray-600" />
-            <h2 className="text-xl font-bold text-gray-800">Notifications</h2>
+            <h2 className="text-xl font-bold text-gray-800">
+              {t('settings.notifications')}
+            </h2>
           </div>
           
           <div className="space-y-3">
             <label className="flex items-center space-x-3">
               <input type="checkbox" className="rounded" defaultChecked />
-              <span className="text-gray-700">Email notifications</span>
+              <span className="text-gray-700">
+                {t('settings.emailNotifications')}
+              </span>
             </label>
             <label className="flex items-center space-x-3">
               <input type="checkbox" className="rounded" defaultChecked />
-              <span className="text-gray-700">New proposal alerts</span>
+              <span className="text-gray-700">
+                {t('settings.newProposalAlerts')}
+              </span>
             </label>
             <label className="flex items-center space-x-3">
               <input type="checkbox" className="rounded" />
-              <span className="text-gray-700">Marketing emails</span>
+              <span className="text-gray-700">
+                {t('settings.marketingEmails')}
+              </span>
             </label>
           </div>
         </Card>
@@ -84,14 +98,16 @@ export default function SettingsPage() {
         <Card className="p-6 border-red-200">
           <div className="flex items-center space-x-3 mb-4">
             <Trash2 className="w-5 h-5 text-red-600" />
-            <h2 className="text-xl font-bold text-red-800">Danger Zone</h2>
+            <h2 className="text-xl font-bold text-red-800">
+              {t('settings.dangerZone')}
+            </h2>
           </div>
           
           <p className="text-gray-600 mb-4">
-            Once you delete your account, there is no going back. Please be certain.
+            {t('settings.deleteAccountWarning')}
           </p>
           <Button variant="danger">
-            Delete Account
+            {t('settings.deleteAccount')}
           </Button>
         </Card>
       </div>
