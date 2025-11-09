@@ -1,4 +1,4 @@
-// usePosts.ts - Updated with dynamic filters support
+// usePosts.ts - Updated with duration support
 
 'use client';
 
@@ -89,6 +89,7 @@ export function usePosts() {
     description: string;
     skills?: string[];
     region?: string;
+    duration: 'less_than_month' | 'less_than_3_months' | 'more_than_3_months';
     budget?: { type: 'hourly' | 'fixed' | 'monthly'; value: number };
   }) => {
     const newPost = await apiService.createPost(data);

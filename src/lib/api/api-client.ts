@@ -1,4 +1,4 @@
-// api-client.ts - Updated with public endpoint support
+// api-client.ts - Updated with duration support
 
 import axios, { AxiosInstance } from 'axios';
 import { User, Contact, WorkPost, Proposal, Message, EditUser } from '@/types';
@@ -11,6 +11,7 @@ export interface SearchFilters {
   minBudget?: number;
   maxBudget?: number;
   region?: string;
+  duration?: 'less_than_month' | 'less_than_3_months' | 'more_than_3_months';
 }
 
 export interface AvailableFilters {
@@ -18,6 +19,7 @@ export interface AvailableFilters {
   budgetTypes?: ('hourly' | 'fixed' | 'monthly')[];
   minBudget?: number;
   maxBudget?: number;
+  durations?: ('less_than_month' | 'less_than_3_months' | 'more_than_3_months')[];
 }
 
 export interface SearchPostsResponse {
@@ -120,6 +122,7 @@ class ApiService {
     skills?: string[];
     region?: string;
     budget?: { type: 'hourly' | 'fixed' | 'monthly'; value: number };
+    duration: 'less_than_month' | 'less_than_3_months' | 'more_than_3_months';
   }) {
     const response = await this.client.post('/posts', data);
     return response.data.post;
@@ -160,20 +163,35 @@ class ApiService {
     }
 
     if (filters) {
-      if (filters.budgetType) {
-        body.budgetType = filters.budgetType;
-      }
-
-      if (filters.minBudget !== undefined) {
-        body.minBudget = filters.minBudget;
-      }
-
-      if (filters.maxBudget !== undefined) {
-        body.maxBudget = filters.maxBudget;
-      }
+      const searchFilters: Record<string, unknown> = {};
 
       if (filters.region) {
-        body.region = filters.region;
+        searchFilters.region = filters.region;
+      }
+
+      if (filters.duration) {
+        searchFilters.duration = filters.duration;
+      }
+
+      if (filters.budgetType || filters.minBudget !== undefined || filters.maxBudget !== undefined) {
+        const budgetFilter: Record<string, unknown> = {};
+        
+        if (filters.budgetType) {
+          budgetFilter.type = filters.budgetType;
+        }
+
+        if (filters.minBudget !== undefined || filters.maxBudget !== undefined) {
+          budgetFilter.vlaue = {
+            min: filters.minBudget ?? 0,
+            max: filters.maxBudget ?? 90000000,
+          };
+        }
+
+        searchFilters.budget = budgetFilter;
+      }
+
+      if (Object.keys(searchFilters).length > 0) {
+        body.filters = searchFilters;
       }
     }
 

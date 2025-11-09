@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { ArrowLeft, DollarSign, Calendar, Briefcase, User, Send, MapPin, LogIn } from 'lucide-react';
+import { ArrowLeft, DollarSign, Calendar, Briefcase, User, Send, MapPin, LogIn, Clock } from 'lucide-react';
 import { WorkPost } from '@/types';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
@@ -13,6 +13,7 @@ import { apiService } from '@/lib/api/api-client';
 import { Share } from '@/components/ui/Share';
 import { useAuthStore } from '@/lib/store/authStore';
 import { useI18n } from '@/lib/i18n/i18n-context';
+import { getDurationLabel } from '@/config/constants';
 
 export default function JobDetailsPage() {
   const params = useParams();
@@ -268,6 +269,15 @@ export default function JobDetailsPage() {
                   </div>
                 </div>
               )}
+              <div>
+                <p className="text-xs text-gray-500 mb-1">{t('jobDetails.projectDuration')}</p>
+                <div className="flex items-center text-sm">
+                  <Clock className="w-4 h-4 mr-2 text-gray-600" />
+                  <span className="font-medium text-gray-800">
+                    {getDurationLabel(post.duration, t)}
+                  </span>
+                </div>
+              </div>
 
               <div>
                 <p className="text-xs text-gray-500 mb-1">{t('jobDetails.budgetType')}</p>

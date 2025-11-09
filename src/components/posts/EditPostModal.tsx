@@ -42,6 +42,7 @@ export function EditPostModal({
   const [region, setRegion] = useState('');
   const [budgetType, setBudgetType] = useState<'hourly' | 'fixed' | 'monthly'>('hourly');
   const [budgetValue, setBudgetValue] = useState('');
+  const [duration, setDuration] = useState<'less_than_month' | 'less_than_3_months' | 'more_than_3_months'>('less_than_3_months');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -52,6 +53,7 @@ export function EditPostModal({
       setRegion(post.region || '');
       setBudgetType(post.budget?.type || 'hourly');
       setBudgetValue(post.budget?.value.toString() || '');
+      setDuration(post.duration || 'less_than_3_months');
     }
   }, [post]);
 
@@ -69,6 +71,7 @@ export function EditPostModal({
         description,
         skills: skillsArray,
         region: region || undefined,
+        duration,
         budget: budgetValue ? {
           type: budgetType,
           value: parseFloat(budgetValue)
@@ -128,6 +131,23 @@ export function EditPostModal({
                 {r}
               </option>
             ))}
+          </select>
+        </div>
+
+        {/* Duration Selector */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {t('modals.createPost.duration')} <span className="text-red-500">*</span>
+          </label>
+          <select
+            value={duration}
+            onChange={(e) => setDuration(e.target.value as 'less_than_month' | 'less_than_3_months' | 'more_than_3_months')}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            required
+          >
+            <option value="less_than_month">{t('modals.createPost.lessThanMonth')}</option>
+            <option value="less_than_3_months">{t('modals.createPost.lessThan3Months')}</option>
+            <option value="more_than_3_months">{t('modals.createPost.moreThan3Months')}</option>
           </select>
         </div>
         

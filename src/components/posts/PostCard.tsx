@@ -8,6 +8,8 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { useAuthStore } from '@/lib/store/authStore';
 import { useI18n } from '@/lib/i18n/i18n-context';
+import { Clock } from 'lucide-react';
+import { getDurationLabel } from '@/config/constants';
 
 interface PostCardProps {
   post: WorkPost;
@@ -77,6 +79,10 @@ export function PostCard({ post }: PostCardProps) {
         <p className="text-sm text-gray-500">
           {t('myPosts.posted')} {new Date(post.date).toLocaleDateString()}
         </p>
+        <div className="flex items-center text-sm text-gray-600">
+          <Clock className="w-4 h-4 mr-1" />
+          <span>{getDurationLabel(post.duration, t)}</span>
+        </div>
         <div className="flex gap-2">
           <Button
             size="sm"

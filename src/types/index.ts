@@ -30,6 +30,7 @@ export interface WorkPost {
   description: string;
   skills?: string[];
   status: string[];
+  duration: 'less_than_month' | 'less_than_3_months' | 'more_than_3_months';
   date: string;
   publicationDate: string;
   region?: string; // Added region field

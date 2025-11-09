@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Edit3, Trash2, Users, DollarSign, Calendar, ChevronDown, ChevronUp, MapPin } from 'lucide-react';
+import { Edit3, Trash2, Users, DollarSign, Calendar, ChevronDown, ChevronUp, MapPin, Clock } from 'lucide-react';
 import { WorkPost } from '@/types';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
@@ -13,6 +13,7 @@ import { useProposals } from '@/lib/hooks/useProposals';
 import { Share } from '../ui/Share';
 import { useI18n } from '@/lib/i18n/i18n-context';
 import path from 'path';
+import { getDurationLabel } from '@/config/constants';
 
 interface MyPostCardProps {
   post: WorkPost;
@@ -101,7 +102,10 @@ export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
             <Calendar className="w-4 h-4 mr-2" />
             <span>{t('myPosts.posted')} {new Date(post.date).toLocaleDateString()}</span>
           </div>
-          
+          <div className="flex items-center text-gray-600">
+              <Clock className="w-4 h-4 mr-2" />
+              <span>{getDurationLabel(post.duration, t)}</span>
+            </div> 
           <div className="flex items-center text-gray-600">
             <Users className="w-4 h-4 mr-2" />
             <span className="font-semibold text-blue-600">{proposalCount}</span>

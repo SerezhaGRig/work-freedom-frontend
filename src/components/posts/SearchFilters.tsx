@@ -3,13 +3,14 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Filter, X, DollarSign, MapPin } from 'lucide-react';
+import { Filter, X, DollarSign, MapPin, Clock } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
 import { SearchFilters as SearchFiltersType, AvailableFilters } from '@/lib/api/api-client';
 import { useI18n } from '@/lib/i18n/i18n-context';
+import { getDurationLabel } from '@/config/constants';
 
 interface SearchFiltersProps {
   onApplyFilters: (filters: SearchFiltersType) => void;
@@ -70,6 +71,7 @@ export function SearchFilters({
 
   const hasAvailableFilters = availableFilters && (
     (availableFilters.regions && availableFilters.regions.length > 0) ||
+    (availableFilters.durations && availableFilters.durations.length > 0) ||
     (availableFilters.budgetTypes && availableFilters.budgetTypes.length > 0) ||
     availableFilters.minBudget !== undefined
   );
@@ -129,6 +131,31 @@ export function SearchFilters({
                 {availableFilters.regions.map((region) => (
                   <option key={region} value={region}>
                     {region}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          {/* Duration Filter - Only if available from API */}
+          {availableFilters?.durations && availableFilters.durations.length > 0 && (
+            <div>
+              <div className="flex items-center mb-3">
+                <Clock className="w-4 h-4 mr-2 text-gray-600" />
+                <h3 className="font-semibold text-gray-800">{t('posts.projectDuration')}</h3>
+              </div>
+              <select
+                value={localFilters.duration || ''}
+                onChange={(e) => setLocalFilters({
+                  ...localFilters,
+                  duration: e.target.value as any || undefined
+                })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">{t('searchFilters.allDurations')}</option>
+                {availableFilters.durations.map((duration) => (
+                  <option key={duration} value={duration}>
+                    {getDurationLabel(duration, t)}
                   </option>
                 ))}
               </select>
@@ -254,6 +281,22 @@ export function SearchFilters({
               <button
                 onClick={() => {
                   const newFilters = { ...localFilters, region: undefined };
+                  setLocalFilters(newFilters);
+                  onApplyFilters(newFilters);
+                }}
+                className="ml-1 hover:text-red-600"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            </Badge>
+          )}
+          {localFilters.duration && (
+            <Badge>
+              <Clock className="w-3 h-3 mr-1" />
+              {getDurationLabel(localFilters.duration, t)}
+              <button
+                onClick={() => {
+                  const newFilters = { ...localFilters, duration: undefined };
                   setLocalFilters(newFilters);
                   onApplyFilters(newFilters);
                 }}
