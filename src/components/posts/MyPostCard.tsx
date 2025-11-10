@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Edit3, Trash2, Users, DollarSign, Calendar, ChevronDown, ChevronUp, MapPin, RefreshCw } from 'lucide-react';
+import { Edit3, Trash2, Users, Calendar, ChevronDown, ChevronUp, MapPin, RefreshCw } from 'lucide-react';
 import { WorkPost } from '@/types';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
@@ -111,10 +111,12 @@ export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
         <div className="space-y-2 mb-4 text-sm">
           {post.budget && (
             <div className="flex items-center text-gray-600">
-              <DollarSign className="w-4 h-4 mr-2" />
               <span className="font-semibold text-green-600">
                 ${post.budget.value}
               </span>
+              <span className="inline-block w-3 h-4 text-center leading-4 text-current ml-2">
+                      ֏
+              </span> 
               <span className="ml-1 text-gray-500">/ {post.budget.type}</span>
             </div>
           )}

@@ -8,6 +8,7 @@ import { Button } from '../ui/Button';
 import { TextArea } from '../ui/TextArea';
 import { apiService } from '@/lib/api/api-client';
 import { useI18n } from '@/lib/i18n/i18n-context';
+import { REGIONS } from '@/config/constants';
 
 interface EditPostModalProps {
   isOpen: boolean;
@@ -15,19 +16,6 @@ interface EditPostModalProps {
   onClose: () => void;
   onSuccess: () => void;
 }
-
-// Common regions list
-const REGIONS = [
-  'Remote',
-  'North America',
-  'Europe',
-  'Asia',
-  'South America',
-  'Africa',
-  'Oceania',
-  'Middle East',
-  'Worldwide',
-];
 
 export function EditPostModal({
   isOpen,

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
-import { ArrowLeft, Briefcase, User, Calendar, DollarSign, FileText } from 'lucide-react';
+import { ArrowLeft, Briefcase, User, Calendar, FileText } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
@@ -170,11 +170,13 @@ export default function ChatPage() {
                 </div>
 
                 {post.budget && (
-                  <div className="flex items-center text-sm text-gray-600 pt-2 border-t border-gray-200">
-                    <DollarSign className="w-4 h-4 mr-1" />
+                  <div className="flex items-center text-sm text-gray-600 pt-2 border-t border-gray-200">                
                     <span className="font-semibold text-green-600">
-                      ${post.budget.value}
+                      {post.budget.value}
                     </span>
+                    <span className="inline-block w-3 h-4 text-center leading-4 text-current ml-2">
+                      ֏
+                    </span> 
                     <span className="mx-1">/</span>
                     <span>{t(`posts.${post.budget.type}`)}</span>
                   </div>

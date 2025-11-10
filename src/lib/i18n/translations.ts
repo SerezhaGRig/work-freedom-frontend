@@ -985,12 +985,12 @@ export const translations = {
       "noPostsDescription": "Ստեղծեք ձեր առաջին աշխատանքի հայտարարությունը՝ տաղանդավոր մասնագետներից առաջարկներ ստանալու համար:"
     },
     "postCard": {
-      "viewDetails": "Դիտել մանրամասները",
+      "viewDetails": "Դիտել",
       "loginToApply": "Մուտք գործել դիմելու համար"
     },
     "postList": {
       "unableToLoad": "Չհաջողվեց բեռնել հայտարարությունները",
-      "noJobsTitle": "Աշխատատեղեր չկան",
+      "noJobsTitle": "աշխատանքներ չկան",
       "noJobsDescription": "Ստուգեք ավելի ուշ նոր հնարավորությունների համար"
     },
     "proposalsList": {
@@ -1013,13 +1013,13 @@ export const translations = {
     "searchFilters": {
         "allDurations": "Բոլոր ժամկետները",
 
-      "filtersActive": "Զտիչները ակտիվ են",
+      "filtersActive": "Ֆիլտրները ակտիվ են",
       "refineResults": "Փշգրտել արդյունքները",
       "allRegions": "Բոլոր տարածաշրջանները",
       "budgetRange": "Բյուջեի միջակայք",
       "minBudget": "Նվազագույն բյուջե (֏)",
       "maxBudget": "Առավելագույն բյուջե (֏)",
-      "applyFilters": "Կիրառել զտիչները",
+      "applyFilters": "Կիրառել ֆիլտրները",
       "rate": "սակագին"
     },
     "settings": {
@@ -1093,7 +1093,7 @@ export const translations = {
       delete: 'Ջնջել',
       edit: 'Խմբագրել',
       search: 'Որոնել',
-      filter: 'Զտել',
+      filter: 'Ֆիլտրել',
       clearFilters: 'Մաքրել զտիչները',
       noResults: 'Արդյունքներ չեն գտնվել',
       signUp: 'Գրանցվել',
@@ -1208,7 +1208,7 @@ export const translations = {
       description: 'Նկարագրություն',
       budget: 'Բյուջե',
       budgetType: 'Բյուջեի տեսակ',
-      hourly: 'Պամային',
+      hourly: 'Ժամային',
       fixed: 'Ֆիքսված',
       monthly: 'Ամսական',
       skills: 'Պահանջվող հմտություններ',
@@ -1237,10 +1237,10 @@ export const translations = {
       proposedRate: 'Առաջարկվող գին',
     },
     "proposalsPage": {
-      "subtitle": "Հետևեք բոլոր առաջարկներին, որոնք ուղարկել եք աշխատանքների",
+      "subtitle": "Հետևեք բոլոր առաջարկներին, որոնք ուղարկել եք աշխատանքներին դիմելիս",
       "loadingProposals": "Բեռնվում են ձեր առաջարկները...",
       "noProposalsTitle": "Դեռ առաջարկներ չկան",
-      "noProposalsDescription": "Սկսեք դիմել աշխատանքներից՝ ձեր առաջարկները տեսնելու համար:",
+      "noProposalsDescription": "Սկսեք դիմել աշխատանքի՝ ձեր առաջարկները տեսնելու համար:",
       "browseJobs": "Դիտել հասանելի աշխատանքները"
     },
     "myPostsPage": {
@@ -1303,30 +1303,30 @@ export const translations = {
     },
     jobsPage: {
       title: 'Աշխատանքի որոնում',
-      subtitle: 'Գտեք ձեր հաջորդ հնարավորությունը հասանելի աշխատատեղերից',
+      subtitle: 'Գտեք ձեր հաջորդ հնարավորությունը հասանելի աշխատանքներից',
       searchPlaceholder: 'Որոնեք աշխատանք ըստ վերնագրի, հմտությունների կամ բանալի բառերի...',
       searchButton: 'Որոնել',
       joinBanner: {
         title: 'Միացեք JobPlatform-ին դիմելու համար',
-        description: 'Ազատորեն դիտեք աշխատատեղերը, բայց առաջարկներ ուղարկելու և հաճախորդների հետ կապվելու համար ձեզ հաշիվ կպահանջվի։',
+        description: 'Ազատորեն դիտեք աշխատանքները, բայց առաջարկներ ուղարկելու և հաճախորդների հետ կապվելու համար ձեզանից կպահանջվի գրանցվել։',
         createAccount: 'Ստեղծել անվճար հաշիվ',
         haveAccount: 'Ես ունեմ հաշիվ',
       },
       sorting: {
-        showingRecent: 'Ցուցադրվում են վերջին աշխատատեղերը',
-        showingMatches: 'լավագույն համապատասխանություններ',
-        showingFiltered: 'զտված արդյունքներ',
+        showingRecent: 'Ցուցադրվում են վերջին աշխատանքները',
+        showingMatches: 'լավագույն համնկնումները',
+        showingFiltered: 'ֆիլտրված արդյունքներ',
         for: 'համար',
         backToRecent: 'Վերադառնալ վերջիններին',
       },
       results: {
         searching: 'Որոնում...',
-        loadingJobs: 'Աշխատատեղերի բեռնում...',
+        loadingJobs: 'Աշխատանքների բեռնում...',
         searchResults: 'Որոնման արդյունքներ',
-        availableJobs: 'Հասանելի աշխատատեղեր',
-        noJobsFound: 'Աշխատատեղեր չեն գտնվել',
-        tryDifferentKeywords: 'Փորձեք այլ բանալի բառեր կամ մաքրեք զտիչները',
-        clearFilters: 'Մաքրել զտիչները',
+        availableJobs: 'Հասանելի աշխատանք',
+        noJobsFound: 'Աշխատանք չի գտնվել',
+        tryDifferentKeywords: 'Փորձեք այլ բանալի բառեր կամ մաքրեք ֆիլտրները',
+        clearFilters: 'Մաքրել ֆիլտրները',
       },
     },
   },

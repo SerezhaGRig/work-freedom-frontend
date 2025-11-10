@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { ArrowLeft, DollarSign, Calendar, Briefcase, User, Send, MapPin, LogIn, Clock } from 'lucide-react';
+import { ArrowLeft, Calendar, Briefcase, User, Send, MapPin, LogIn, Clock } from 'lucide-react';
 import { WorkPost } from '@/types';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
@@ -138,9 +138,11 @@ export default function JobDetailsPage() {
 
               {post.budget && (
                 <div className="text-right">
-                  <div className="flex items-center text-2xl font-bold text-green-600">
-                    <DollarSign className="w-6 h-6" />
+                  <div className="flex items-center text-2xl font-bold text-green-600">   
                     {post.budget.value}
+                    <span className="inline-block w-3 h-4 text-center leading-4 text-current ml-2">
+                      ֏
+                    </span>    
                   </div>
                   <p className="text-sm text-gray-500 capitalize">{t(`posts.${post.budget.type}`)}</p>
                 </div>
@@ -282,10 +284,12 @@ export default function JobDetailsPage() {
               <div>
                 <p className="text-xs text-gray-500 mb-1">{t('jobDetails.budgetType')}</p>
                 <div className="flex items-center text-sm">
-                  <DollarSign className="w-4 h-4 mr-2 text-gray-600" />
                   <span className="font-medium text-gray-800 capitalize">
                     {post.budget ? t(`posts.${post.budget.type}`) : t('jobDetails.notSpecified')}
                   </span>
+                    <span className="inline-block w-3 h-4 text-center leading-4 text-current ml-2">
+                      ֏
+                    </span> 
                 </div>
               </div>
 

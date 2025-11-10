@@ -3,7 +3,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Filter, X, DollarSign, MapPin, Clock } from 'lucide-react';
+import { Filter, X, MapPin, Clock } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -166,8 +166,10 @@ export function SearchFilters({
           {(availableFilters?.budgetTypes || availableFilters?.minBudget !== undefined) && (
             <div>
               <div className="flex items-center mb-3">
-                <DollarSign className="w-4 h-4 mr-2 text-gray-600" />
                 <h3 className="font-semibold text-gray-800">{t('posts.budget')}</h3>
+                    <span className="inline-block w-3 h-4 text-center leading-4 text-current ml-2">
+                      ֏
+                    </span> 
               </div>
               
               <div className="space-y-4">

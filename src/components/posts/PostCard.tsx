@@ -57,14 +57,14 @@ export function PostCard({ post }: PostCardProps) {
         {post.budget && (
           <div className="text-right ml-4">
             <p className="text-lg font-bold text-green-600">
-              ${post.budget.value}
+              {post.budget.value} ֏
             </p>
             <p className="text-sm text-gray-500 capitalize">{post.budget.type}</p>
           </div>
         )}
       </div>
       
-      <div className="flex flex-wrap gap-2 mb-4">
+      <div className="flex flex-wrap gap-2 mb-3">
         {post.skills && (post.skills.slice(0, 5).map((skill, index) => (
           <Badge key={index} variant="default">
             {skill}
@@ -73,16 +73,18 @@ export function PostCard({ post }: PostCardProps) {
         {(post.skills && post.skills.length > 5) && (
           <Badge variant="default">+{post.skills.length - 5} {t('myPosts.more')}</Badge>
         )}
+
+          <div className="flex items-center text-sm text-gray-600 ml-1 mt-2">
+          <Clock className="w-4 h-4 mr-1" />
+          <span>{getDurationLabel(post.duration, t)}</span>
+        </div>
+        
       </div>
       
       <div className="flex justify-between items-center pt-4 border-t border-gray-200">
         <p className="text-sm text-gray-500">
           {t('myPosts.posted')} {new Date(post.date).toLocaleDateString()}
         </p>
-        <div className="flex items-center text-sm text-gray-600">
-          <Clock className="w-4 h-4 mr-1" />
-          <span>{getDurationLabel(post.duration, t)}</span>
-        </div>
         <div className="flex gap-2">
           <Button
             size="sm"
