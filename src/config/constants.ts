@@ -1,7 +1,8 @@
 export const REGIONS =  [
   'Yerevan', 
-  'Ararat', 
-  'Vayoc Dzor'
+  'Remote', 
+  'Gyumri',
+  'Other'
 ];
 
 export const POLLING_INTERVAL = 5000;

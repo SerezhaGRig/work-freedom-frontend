@@ -2,11 +2,12 @@
 
 import { DashboardStats } from '@/components/layout/DashboardStats';
 import { QuickActions } from '@/components/dashboard/QuickActions';
-import { RecentActivity } from '@/components/dashboard/RecentActivity';
+import { RecentActivity } from '@/components/dashboard/ReactActivity';
 import { useAuthStore } from '@/lib/store/authStore';
+
 import { useI18n } from '@/lib/i18n/i18n-context';
 
-export default function HomePage() {
+export default function DashboardPage() {
   const { user } = useAuthStore();
   const { t } = useI18n();
 
@@ -16,11 +17,11 @@ export default function HomePage() {
         {t('dashboard.title', { name: user?.name })}
       </h1>
       
-      <DashboardStats />
-      
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-        <RecentActivity />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         <QuickActions />
+        {/* <RecentActivity /> */}
+              <DashboardStats />
+
       </div>
     </div>
   );
