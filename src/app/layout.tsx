@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'JobPlatform - Find Your Next Opportunity',
   description: 'Connect with employers and freelancers on our job platform',
+  icons: {
+    icon: '/favicon.svg', // ✅ your favicon file (place it in /public)
+  },
 };
 
 export default function RootLayout({

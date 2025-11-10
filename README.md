@@ -6,6 +6,7 @@
 - Node.js 18+ and npm
 - Git
 - Modern web browser
+- icon: https://www.svgrepo.com/svg/87497/suitcase
 
 ### Installation
 

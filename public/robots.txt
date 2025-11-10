@@ -1,8 +1,0 @@
-# https://www.robotstxt.org/robotstxt.html
-User-agent: *
-Allow: /
-Disallow: /api/
-Disallow: /chat/
-
-# Sitemap
-Sitemap: https://bots.garagewebsolutions.com/sitemap.xml
