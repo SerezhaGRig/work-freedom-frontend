@@ -73,14 +73,12 @@ export function PostCard({ post }: PostCardProps) {
         {(post.skills && post.skills.length > 5) && (
           <Badge variant="default">+{post.skills.length - 5} {t('myPosts.more')}</Badge>
         )}
-
-          <div className="flex items-center text-sm text-gray-600 ml-1 mt-2">
+        
+      </div>
+          <div className="flex items-center text-sm text-gray-600 ml-2 mb-2">
           <Clock className="w-4 h-4 mr-1" />
           <span>{getDurationLabel(post.duration, t)}</span>
         </div>
-        
-      </div>
-      
       <div className="flex justify-between items-center pt-4 border-t border-gray-200">
         <p className="text-sm text-gray-500">
           {t('myPosts.posted')} {new Date(post.date).toLocaleDateString()}

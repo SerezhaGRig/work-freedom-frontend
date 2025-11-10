@@ -65,7 +65,7 @@ export default function SettingsPage() {
           </div>
         </Card>
 
-        <Card className="p-6">
+        {/* <Card className="p-6">
           <div className="flex items-center space-x-3 mb-4">
             <Bell className="w-5 h-5 text-gray-600" />
             <h2 className="text-xl font-bold text-gray-800">
@@ -93,7 +93,7 @@ export default function SettingsPage() {
               </span>
             </label>
           </div>
-        </Card>
+        </Card> */}
 
         <Card className="p-6 border-red-200">
           <div className="flex items-center space-x-3 mb-4">
