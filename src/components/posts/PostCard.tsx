@@ -75,9 +75,12 @@ export function PostCard({ post }: PostCardProps) {
         )}
         
       </div>
-          <div className="flex items-center text-sm text-gray-600 ml-2 mb-2">
-          <Clock className="w-4 h-4 mr-1" />
-          <span>{getDurationLabel(post.duration, t)}</span>
+      <div className="flex items-center text-sm text-gray-600 ml-2 mb-2">
+        <Clock className="w-4 h-4 mr-1" />
+        <span>{getDurationLabel(post.duration, t)}</span>
+      </div>
+        <div className="flex items-center text-sm text-gray-600">
+          <span>{post.category}</span>
         </div>
       <div className="flex justify-between items-center pt-4 border-t border-gray-200">
         <p className="text-sm text-gray-500">

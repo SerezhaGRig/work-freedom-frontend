@@ -25,6 +25,7 @@ export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalP
   const [budgetType, setBudgetType] = useState<'hourly' | 'fixed' | 'monthly'>('hourly');
   const [budgetValue, setBudgetValue] = useState('');
   const [duration, setDuration] = useState<'less_than_month' | 'less_than_3_months' | 'more_than_3_months'>('less_than_3_months');
+  const [category, setCategory] = useState<'IT' | 'Other'>('IT');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async () => {
@@ -41,6 +42,7 @@ export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalP
         description,
         skills: skillsArray,
         region: region || undefined,
+        category,
         duration,
         budget: budgetValue ? {
           type: budgetType,
@@ -54,6 +56,7 @@ export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalP
       setRegion('');
       setBudgetValue('');
       setDuration('less_than_3_months');
+      setCategory('IT');
       onSuccess();
     } catch (error) {
       alert(t('modals.createPost.createFailed'));
@@ -128,6 +131,24 @@ export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalP
           </select>
           <p className="text-xs text-gray-500 mt-1">
             {t('modals.createPost.durationHint')}
+          </p>
+        </div>
+
+          <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {t('modals.createPost.category')} <span className="text-red-500">*</span>
+          </label>
+          <select
+            value={duration}
+            onChange={(e) => setCategory(e.target.value as 'IT' | 'Other')}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            required
+          >
+            <option value="It">{'IT'}</option>
+            <option value="Other">{'Other'}</option>
+          </select>
+          <p className="text-xs text-gray-500 mt-1">
+            {t('modals.createPost.category')}
           </p>
         </div>
         

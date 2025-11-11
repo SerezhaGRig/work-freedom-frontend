@@ -89,6 +89,7 @@ export function usePosts() {
     description: string;
     skills?: string[];
     region?: string;
+    category: 'IT' | 'Other';
     duration: 'less_than_month' | 'less_than_3_months' | 'more_than_3_months';
     budget?: { type: 'hourly' | 'fixed' | 'monthly'; value: number };
   }) => {

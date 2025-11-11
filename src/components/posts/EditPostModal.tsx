@@ -31,6 +31,7 @@ export function EditPostModal({
   const [budgetType, setBudgetType] = useState<'hourly' | 'fixed' | 'monthly'>('hourly');
   const [budgetValue, setBudgetValue] = useState('');
   const [duration, setDuration] = useState<'less_than_month' | 'less_than_3_months' | 'more_than_3_months'>('less_than_3_months');
+  const [category, setCategory] = useState<'IT' | 'Other'>('IT');
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -41,6 +42,8 @@ export function EditPostModal({
       setRegion(post.region || '');
       setBudgetType(post.budget?.type || 'hourly');
       setBudgetValue(post.budget?.value.toString() || '');
+      setCategory(post.category || 'IT');
+
       setDuration(post.duration || 'less_than_3_months');
     }
   }, [post]);
@@ -60,6 +63,7 @@ export function EditPostModal({
         skills: skillsArray,
         region: region || undefined,
         duration,
+        category,
         budget: budgetValue ? {
           type: budgetType,
           value: parseFloat(budgetValue)
@@ -136,6 +140,21 @@ export function EditPostModal({
             <option value="less_than_month">{t('modals.createPost.lessThanMonth')}</option>
             <option value="less_than_3_months">{t('modals.createPost.lessThan3Months')}</option>
             <option value="more_than_3_months">{t('modals.createPost.moreThan3Months')}</option>
+          </select>
+        </div>
+
+                <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {t('modals.createPost.category')} <span className="text-red-500">*</span>
+          </label>
+          <select
+            value={duration}
+            onChange={(e) => setCategory(e.target.value as 'IT' | 'Other')}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            required
+          >
+            <option value="IT">{'IT'}</option>
+            <option value="Other">{'Other'}</option>
           </select>
         </div>
         

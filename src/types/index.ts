@@ -31,6 +31,7 @@ export interface WorkPost {
   skills?: string[];
   status: string[];
   duration: 'less_than_month' | 'less_than_3_months' | 'more_than_3_months';
+  category: 'IT' | 'Other';
   date: string;
   publicationDate: string;
   region?: string; // Added region field

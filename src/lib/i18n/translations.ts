@@ -43,6 +43,7 @@ export const translations = {
         }
       },
       "createPost": {
+        "category": "Job category",
         "duration": "Project Duration",
         "lessThanMonth": "Less than 1 month",
         "lessThan3Months": "1-3 months",
@@ -486,6 +487,8 @@ export const translations = {
           },
         },
       "createPost": {
+                "category": "Категория",
+
             "duration": "Продолжительность проекта",
         "lessThanMonth": "Менее 1 месяца",
         "lessThan3Months": "1-3 месяца",
@@ -929,6 +932,7 @@ export const translations = {
         }
   },
       "createPost": {
+        "category": "Կատեգորիա",
             "duration": "Նախագծի տևողություն",
     "lessThanMonth": "Մինչև 1 ամիս",
     "lessThan3Months": "1-3 ամիս",
