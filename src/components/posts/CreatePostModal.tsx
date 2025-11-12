@@ -139,7 +139,7 @@ export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalP
             {t('modals.createPost.category')} <span className="text-red-500">*</span>
           </label>
           <select
-            value={duration}
+            value={category}
             onChange={(e) => setCategory(e.target.value as 'IT' | 'Other')}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             required

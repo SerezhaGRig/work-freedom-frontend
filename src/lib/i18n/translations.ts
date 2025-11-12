@@ -159,6 +159,7 @@ export const translations = {
       "deleteAccount": "Delete Account"
     },
     "jobDetails": {
+      "category": "Category",
       "projectDuration": "Project Duration",
       "loading": "Loading job details...",
       "jobNotFound": "Job not found",
@@ -308,6 +309,7 @@ export const translations = {
       notVerified: 'Not Verified',
     },
     posts: {
+            "category": "Category",
       "duration": {
           "lessThanMonth": "Less than 1 month",
           "lessThan3Months": "1-3 months",
@@ -605,6 +607,7 @@ export const translations = {
       "deleteAccount": "Удалить аккаунт"
     },
     "jobDetails": {
+        "category": "Категория",
         "projectDuration": "Продолжительность проекта",
       "loading": "Загрузка деталей работы...",
       "jobNotFound": "Работа не найдена",
@@ -754,11 +757,12 @@ export const translations = {
       notVerified: 'Не подтвержден',
     },
     posts: {
+                                "category": "Категория",
         "duration": {
-    "lessThanMonth": "Менее 1 месяца",
-    "lessThan3Months": "1-3 месяца",
-    "moreThan3Months": "Более 3 месяцев"
-  },
+          "lessThanMonth": "Менее 1 месяца",
+          "lessThan3Months": "1-3 месяца",
+          "moreThan3Months": "Более 3 месяцев"
+        },
   "projectDuration": "Продолжительность проекта",
       createPost: 'Создать объявление',
       editPost: 'Редактировать объявление',
@@ -949,9 +953,9 @@ export const translations = {
         "selectRegion": "Ընտրեք տարածաշրջան (ոչ պարտադիր)",
         "regionHint": "Նշեք աշխատանքի վայրը կամ ընտրեք \"Remote\" հեռավար պաշտոնների համար",
         "budgetType": "Բյուջեի տեսակ",
-        "hourlyRate": "Պամային սակագին",
-        "fixedPrice": "Ֆիքսված գին",
-        "monthlyPrice": "Ամսական գին",
+        "hourlyRate": "Ժամավճար",
+        "fixedPrice": "Ֆիքսված",
+        "monthlyPrice": "Ամսական",
         "budgetValue": "Բյուջեի արժեք (֏)",
         "budgetPlaceholder": "օրինակ՝ 50",
         "creating": "Ստեղծում...",
@@ -1050,7 +1054,7 @@ export const translations = {
     },
     "jobDetails": {
         "projectDuration": "Նախագծի տևողություն",
-
+      "category": "Կատեգորիա",
       "loading": "Բեռնվում է աշխատանքի մանրամասները...",
       "jobNotFound": "Աշխատանքը չի գտնվել",
       "backToBrowse": "Վերադառնալ ցանկին",
@@ -1200,10 +1204,11 @@ export const translations = {
     },
     posts: {
         "duration": {
-    "lessThanMonth": "Մինչև 1 ամիս",
-    "lessThan3Months": "1-3 ամիս",
-    "moreThan3Months": "3 ամիսից ավելի"
-  },
+          "lessThanMonth": "Մինչև 1 ամիս",
+          "lessThan3Months": "1-3 ամիս",
+          "moreThan3Months": "3 ամիսից ավելի"
+        },
+        "category": "Կատեգորիա",
   "projectDuration": "Նախագծի տևողություն",
       createPost: 'Ստեղծել հայտարարություն',
       editPost: 'Խմբագրել հայտարարությունը',
@@ -1212,7 +1217,7 @@ export const translations = {
       description: 'Նկարագրություն',
       budget: 'Բյուջե',
       budgetType: 'Բյուջեի տեսակ',
-      hourly: 'Ժամային',
+      hourly: 'Ժամը',
       fixed: 'Ֆիքսված',
       monthly: 'Ամսական',
       skills: 'Պահանջվող հմտություններ',

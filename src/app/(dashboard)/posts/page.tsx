@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Search, TrendingUp, Target, LogIn, UserPlus } from 'lucide-react';
 import { usePosts } from '@/lib/hooks/usePosts';
 import { PostList } from '@/components/posts/PostList';
@@ -10,11 +11,11 @@ import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 import { SearchFilters as SearchFiltersType } from '@/lib/api/api-client';
 import { useAuthStore } from '@/lib/store/authStore';
-import { useRouter } from 'next/navigation';
 import { useI18n } from '@/lib/i18n/i18n-context';
 
 export default function PostsPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { isAuthenticated } = useAuthStore();
   const { t } = useI18n();
   const { 
@@ -27,14 +28,64 @@ export default function PostsPage() {
     isLoading 
   } = usePosts();
   
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isSearchMode, setIsSearchMode] = useState(false);
-  const [sortMode, setSortMode] = useState<'recent' | 'match'>('recent');
+  // Initialize from URL params
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
+  const [isSearchMode, setIsSearchMode] = useState(!!searchParams.get('q'));
+  const [sortMode, setSortMode] = useState<'recent' | 'match'>(
+    searchParams.get('q') ? 'match' : 'recent'
+  );
+
+  // Parse filters from URL
+  const getFiltersFromURL = (): SearchFiltersType => {
+    const filters: SearchFiltersType = {};
+    
+    const region = searchParams.get('region');
+    const duration = searchParams.get('duration');
+    const category = searchParams.get('category');
+    const budgetType = searchParams.get('budgetType');
+    const minBudget = searchParams.get('minBudget');
+    const maxBudget = searchParams.get('maxBudget');
+    
+    if (region) filters.region = region;
+    if (duration) filters.duration = duration as any;
+    if (category) filters.category = category as any;
+    if (budgetType) filters.budgetType = budgetType as any;
+    if (minBudget) filters.minBudget = Number(minBudget);
+    if (maxBudget) filters.maxBudget = Number(maxBudget);
+    
+    return filters;
+  };
+
+  // Update URL with current search state
+  const updateURL = (query: string, filters: SearchFiltersType) => {
+    const params = new URLSearchParams();
+    
+    if (query) params.set('q', query);
+    if (filters.region) params.set('region', filters.region);
+    if (filters.duration) params.set('duration', filters.duration);
+    if (filters.category) params.set('category', filters.category);
+    if (filters.budgetType) params.set('budgetType', filters.budgetType);
+    if (filters.minBudget) params.set('minBudget', filters.minBudget.toString());
+    if (filters.maxBudget) params.set('maxBudget', filters.maxBudget.toString());
+    
+    const queryString = params.toString();
+    router.replace(`/posts${queryString ? `?${queryString}` : ''}`, { scroll: false });
+  };
 
   useEffect(() => {
-    // Load all posts on initial mount
-    loadPosts();
-  }, []);
+    // Load initial data based on URL params
+    const query = searchParams.get('q');
+    const urlFilters = getFiltersFromURL();
+    
+    if (query) {
+      setSearchQuery(query);
+      setIsSearchMode(true);
+      setSortMode('match');
+      searchPosts(query, urlFilters);
+    } else {
+      loadPosts();
+    }
+  }, []); // Only run on mount
 
   const handleSearch = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -42,18 +93,18 @@ export default function PostsPage() {
     if (searchQuery.trim()) {
       setIsSearchMode(true);
       setSortMode('match');
-      // Search with current active filters
-      searchPosts(searchQuery.trim(), activeFilters);
+      const filters = activeFilters;
+      searchPosts(searchQuery.trim(), filters);
+      updateURL(searchQuery.trim(), filters);
     } else {
-      // If search is empty, go back to listing all posts
       handleClearSearch();
     }
   };
 
   const handleApplyFilters = (filters: SearchFiltersType) => {
     if (searchQuery.trim()) {
-      // Only apply filters if there's a search query
       searchPosts(searchQuery.trim(), filters);
+      updateURL(searchQuery.trim(), filters);
     }
   };
 
@@ -63,13 +114,14 @@ export default function PostsPage() {
     setSortMode('recent');
     clearFilters();
     loadPosts();
+    router.replace('/posts', { scroll: false });
   };
 
   const handleClearFilters = () => {
     clearFilters();
     if (searchQuery.trim()) {
-      // Re-search without filters
       searchPosts(searchQuery.trim(), {});
+      updateURL(searchQuery.trim(), {});
     }
   };
 

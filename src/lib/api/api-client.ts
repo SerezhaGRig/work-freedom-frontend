@@ -1,7 +1,7 @@
 // api-client.ts - Fixed with proper response transformation
 
 import axios, { AxiosInstance } from 'axios';
-import { User, Contact, WorkPost, Proposal, Message, EditUser } from '@/types';
+import { Contact, WorkPost, Proposal, Message, EditUser } from '@/types';
 import { API_URL } from '@/config/constants';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || API_URL;
@@ -12,6 +12,8 @@ export interface SearchFilters {
   maxBudget?: number;
   region?: string;
   duration?: 'less_than_month' | 'less_than_3_months' | 'more_than_3_months';
+  category?: 'IT' | 'Other';
+
 }
 
 export interface AvailableFilters {
@@ -20,6 +22,7 @@ export interface AvailableFilters {
   minBudget?: number;
   maxBudget?: number;
   durations?: ('less_than_month' | 'less_than_3_months' | 'more_than_3_months')[];
+  categories?: ('IT' | 'Other')[];
 }
 
 export interface SearchPostsResponse {
@@ -35,6 +38,7 @@ interface ApiSearchResponse {
   filters?: {
     regions?: string[];
     durations?: ('less_than_month' | 'less_than_3_months' | 'more_than_3_months')[];
+    categories?: ('IT' | 'Other')[];
     budget?: {
       type?: ('hourly' | 'fixed' | 'monthly')[];
       value?: {
@@ -99,6 +103,10 @@ class ApiService {
     // Copy durations directly
     if (apiFilters.durations && apiFilters.durations.length > 0) {
       transformed.durations = apiFilters.durations;
+    }
+
+        if (apiFilters.categories && apiFilters.categories.length > 0) {
+      transformed.categories = apiFilters.categories;
     }
 
     // Transform budget structure
@@ -223,6 +231,10 @@ class ApiService {
 
       if (filters.duration) {
         searchFilters.duration = filters.duration;
+      }
+
+        if (filters.category) {
+        searchFilters.category = filters.category;
       }
 
       if (filters.budgetType || filters.minBudget !== undefined || filters.maxBudget !== undefined) {

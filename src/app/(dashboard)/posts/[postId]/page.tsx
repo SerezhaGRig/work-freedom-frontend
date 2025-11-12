@@ -281,6 +281,16 @@ export default function JobDetailsPage() {
                 </div>
               </div>
 
+                           <div>
+                <p className="text-xs text-gray-500 mb-1">{t('jobDetails.category')}</p>
+                <div className="flex items-center text-sm">
+                  <Clock className="w-4 h-4 mr-2 text-gray-600" />
+                  <span className="font-medium text-gray-800">
+                    {post.category}
+                  </span>
+                </div>
+              </div>
+
               <div>
                 <p className="text-xs text-gray-500 mb-1">{t('jobDetails.budgetType')}</p>
                 <div className="flex items-center text-sm">

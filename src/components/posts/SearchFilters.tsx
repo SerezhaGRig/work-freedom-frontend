@@ -72,6 +72,7 @@ export function SearchFilters({
   const hasAvailableFilters = availableFilters && (
     (availableFilters.regions && availableFilters.regions.length > 0) ||
     (availableFilters.durations && availableFilters.durations.length > 0) ||
+        (availableFilters.categories && availableFilters.categories.length > 0) ||
     (availableFilters.budgetTypes && availableFilters.budgetTypes.length > 0) ||
     availableFilters.minBudget !== undefined
   );
@@ -161,7 +162,29 @@ export function SearchFilters({
               </select>
             </div>
           )}
-
+          {availableFilters?.categories && availableFilters.categories.length > 0 && (
+            <div>
+              <div className="flex items-center mb-3">
+                <Clock className="w-4 h-4 mr-2 text-gray-600" />
+                <h3 className="font-semibold text-gray-800">{t('posts.category')}</h3>
+              </div>
+              <select
+                value={localFilters.category || ''}
+                onChange={(e) => setLocalFilters({
+                  ...localFilters,
+                  category: e.target.value as any || undefined
+                })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">{t('posts.category')}</option>
+                {availableFilters.categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
+          )}
           {/* Budget Filter - Only if available from API */}
           {(availableFilters?.budgetTypes || availableFilters?.minBudget !== undefined) && (
             <div>
