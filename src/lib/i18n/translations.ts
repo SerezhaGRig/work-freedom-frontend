@@ -270,6 +270,7 @@ export const translations = {
     profile: {
       myProfile: 'My Profile',
       editProfile: 'Edit Profile',
+      noBioYet: '...',
       name: 'Name',
       surname: 'Surname',
       email: 'Email',

@@ -23,6 +23,12 @@ export default function DashboardPage() {
               <DashboardStats />
 
       </div>
+          <p className="mt-8 text-gray-600">
+        For suggestions and questions, you can contact me at{' '}
+        <a href="mailto:serojjan2000@gmail.com" className="text-blue-600 underline">
+          contact me
+        </a>.
+      </p>
     </div>
   );
 }
