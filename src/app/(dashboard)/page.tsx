@@ -24,7 +24,7 @@ export default function DashboardPage() {
 
       </div>
                 <p className="mt-8 text-gray-600">
-        For suggestions and questions, you can contact me at{' '}
+                  {t('dashboard.contactMe')}{' '}
         <a href="mailto:serojjan2000@gmail.com" className="text-blue-600 underline">
           contact me
         </a>.
