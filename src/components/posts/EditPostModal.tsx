@@ -29,6 +29,8 @@ export function EditPostModal({
   const [skills, setSkills] = useState('');
   const [region, setRegion] = useState('');
   const [budgetType, setBudgetType] = useState<'hourly' | 'fixed' | 'monthly'>('hourly');
+  const [budgetCurrency, setBudgetCurrency] = useState<'dollar' | 'rubl' | 'dram'>('dram');
+
   const [budgetValue, setBudgetValue] = useState('');
   const [duration, setDuration] = useState<'less_than_month' | 'less_than_3_months' | 'more_than_3_months'>('less_than_3_months');
   const [category, setCategory] = useState<'IT' | 'Other'>('IT');
@@ -42,6 +44,7 @@ export function EditPostModal({
       setRegion(post.region || '');
       setBudgetType(post.budget?.type || 'hourly');
       setBudgetValue(post.budget?.value.toString() || '');
+      setBudgetCurrency(post.budget?.currency || 'dram');
       setCategory(post.category || 'IT');
 
       setDuration(post.duration || 'less_than_3_months');
@@ -66,7 +69,8 @@ export function EditPostModal({
         category,
         budget: budgetValue ? {
           type: budgetType,
-          value: parseFloat(budgetValue)
+          value: parseFloat(budgetValue),
+          currency: budgetCurrency
         } : undefined,
       });
       
@@ -116,6 +120,7 @@ export function EditPostModal({
             value={region}
             onChange={(e) => setRegion(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            required
           >
             <option value="">{t('modals.createPost.selectRegion')}</option>
             {REGIONS.map((r) => (
@@ -157,6 +162,24 @@ export function EditPostModal({
             <option value="Other">{'Other'}</option>
           </select>
         </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              {t('modals.createPost.budgetType')}
+            </label>
+            <select
+              value={budgetCurrency}
+              onChange={(e) => setBudgetType(e.target.value as 'hourly' | 'fixed' | 'monthly')}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="dollar">$</option>
+              <option value="dram">$</option>
+              <option value="rubl">$</option>
+            </select>
+          </div>
+  
+        </div>
         
         <div className="grid grid-cols-2 gap-4">
           <div>
@@ -173,7 +196,20 @@ export function EditPostModal({
               <option value="monthly">{t('modals.createPost.monthlyPrice')}</option>
             </select>
           </div>
-          
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              {t('modals.createPost.currency')}
+            </label>
+            <select
+              value={budgetCurrency}
+              onChange={(e) => setBudgetCurrency(e.target.value as 'dram' | 'dollar' | 'rubl')}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="dollar">$</option>
+              <option value="dram">֏</option>
+              <option value="rubl">₽</option>
+            </select>
+          </div>
           <Input
             label={t('modals.createPost.budgetValue')}
             type="number"

@@ -38,6 +38,7 @@ export interface WorkPost {
   budget?: {
     type: 'hourly' | 'fixed' | 'monthly';
     value: number;
+    currency: 'rubl' | 'dollar' | 'dram'
   };
 }
 

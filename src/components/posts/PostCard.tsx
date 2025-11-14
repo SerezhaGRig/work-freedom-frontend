@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/Button';
 import { useAuthStore } from '@/lib/store/authStore';
 import { useI18n } from '@/lib/i18n/i18n-context';
 import { Clock } from 'lucide-react';
-import { getDurationLabel } from '@/config/constants';
+import { getCurrencySign, getDurationLabel } from '@/config/constants';
 
 interface PostCardProps {
   post: WorkPost;
@@ -46,10 +46,10 @@ export function PostCard({ post }: PostCardProps) {
           
           <p className="text-gray-600 mt-2 line-clamp-3">{post.description}</p>
         </div>
-        {post.budget && (
+        {(post.budget && post.budget.value !== 0)&& (
           <div className="text-right ml-4">
             <p className="text-lg font-bold text-green-600">
-              {post.budget.value} ֏
+              {post.budget.value} {getCurrencySign(post.budget.currency)}
             </p>
             <p className="text-sm text-gray-500 capitalize">{t(`posts.${post.budget.type.toLowerCase()}`)}</p>
           </div>

@@ -24,6 +24,7 @@ export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalP
   const [region, setRegion] = useState('');
   const [budgetType, setBudgetType] = useState<'hourly' | 'fixed' | 'monthly'>('hourly');
   const [budgetValue, setBudgetValue] = useState('');
+    const [budgetCurrency, setBudgetCurrency] = useState<'dollar' | 'rubl' | 'dram'>('dram');
   const [duration, setDuration] = useState<'less_than_month' | 'less_than_3_months' | 'more_than_3_months'>('less_than_3_months');
   const [category, setCategory] = useState<'IT' | 'Other'>('IT');
   const [isLoading, setIsLoading] = useState(false);
@@ -46,7 +47,8 @@ export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalP
         duration,
         budget: budgetValue ? {
           type: budgetType,
-          value: parseFloat(budgetValue)
+          value: parseFloat(budgetValue),
+          currency: budgetCurrency,
         } : undefined,
       });
       
@@ -101,8 +103,8 @@ export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalP
             value={region}
             onChange={(e) => setRegion(e.target.value)}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            required
           >
-            <option value="">{t('modals.createPost.selectRegion')}</option>
             {REGIONS.map((r) => (
               <option key={r} value={r}>
                 {r}
@@ -165,6 +167,21 @@ export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalP
               <option value="hourly">{t('modals.createPost.hourlyRate')}</option>
               <option value="fixed">{t('modals.createPost.fixedPrice')}</option>
               <option value="monthly">{t('modals.createPost.monthlyPrice')}</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              {t('modals.createPost.currency')}
+            </label>
+            <select
+              value={budgetCurrency}
+              onChange={(e) => setBudgetCurrency(e.target.value as 'dram' | 'dollar' | 'rubl')}
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="dollar">$</option>
+              <option value="dram">֏</option>
+              <option value="rubl">₽</option>
             </select>
           </div>
           

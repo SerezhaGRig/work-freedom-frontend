@@ -13,7 +13,8 @@ import { apiService } from '@/lib/api/api-client';
 import { Share } from '@/components/ui/Share';
 import { useAuthStore } from '@/lib/store/authStore';
 import { useI18n } from '@/lib/i18n/i18n-context';
-import { getDurationLabel } from '@/config/constants';
+import { getCurrencySign, getDurationLabel } from '@/config/constants';
+import { PostCard } from '@/components/posts/PostCard';
 
 export default function JobDetailsPage() {
   const params = useParams();
@@ -136,15 +137,15 @@ export default function JobDetailsPage() {
                 )}
               </div>
 
-              {post.budget && (
+              {(post.budget && post.budget.value !== 0  ) && (
                 <div className="text-right">
                   <div className="flex items-center text-2xl font-bold text-green-600">   
                     {post.budget.value}
                     <span className="inline-block w-3 h-4 text-center leading-4 text-current ml-2">
-                      ֏
+                      {getCurrencySign(post.budget.currency)}
                     </span>    
                   </div>
-                  <p className="text-sm text-gray-500 capitalize">{t(`posts.${post.budget.type}`)}</p>
+                  <p className="text-sm text-gray-500 capitalize mt-1">{t(`posts.${post.budget.type}`)}</p>
                 </div>
               )}
             </div>
@@ -291,17 +292,6 @@ export default function JobDetailsPage() {
                 </div>
               </div>
 
-              <div>
-                <p className="text-xs text-gray-500 mb-1">{t('jobDetails.budgetType')}</p>
-                <div className="flex items-center text-sm">
-                  <span className="font-medium text-gray-800 capitalize">
-                    {post.budget ? t(`posts.${post.budget.type}`) : t('jobDetails.notSpecified')}
-                  </span>
-                    <span className="inline-block w-3 h-4 text-center leading-4 text-current ml-2">
-                      ֏
-                    </span> 
-                </div>
-              </div>
 
               <div>
                 <p className="text-xs text-gray-500 mb-1">{t('jobDetails.postedOn')}</p>
