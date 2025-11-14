@@ -28,13 +28,6 @@ export default function PostsPage() {
     isLoading 
   } = usePosts();
   
-  // Initialize from URL params
-  const [searchQuery, setSearchQuery] = useState(searchParams.get('q') || '');
-  const [isSearchMode, setIsSearchMode] = useState(!!searchParams.get('q'));
-  const [sortMode, setSortMode] = useState<'recent' | 'match'>(
-    searchParams.get('q') ? 'match' : 'recent'
-  );
-
   // Parse filters from URL
   const getFiltersFromURL = (): SearchFiltersType => {
     const filters: SearchFiltersType = {};
@@ -56,6 +49,17 @@ export default function PostsPage() {
     return filters;
   };
 
+  // Initialize state from URL - this runs every time searchParams changes
+  const queryFromURL = searchParams.get('q') || '';
+  const filtersFromURL = getFiltersFromURL();
+  const isSearchModeFromURL = !!queryFromURL;
+
+  const [searchQuery, setSearchQuery] = useState(queryFromURL);
+  const [isSearchMode, setIsSearchMode] = useState(isSearchModeFromURL);
+  const [sortMode, setSortMode] = useState<'recent' | 'match'>(
+    isSearchModeFromURL ? 'match' : 'recent'
+  );
+
   // Update URL with current search state
   const updateURL = (query: string, filters: SearchFiltersType) => {
     const params = new URLSearchParams();
@@ -72,20 +76,22 @@ export default function PostsPage() {
     router.replace(`/posts${queryString ? `?${queryString}` : ''}`, { scroll: false });
   };
 
+  // Load data based on URL params - runs when URL changes
   useEffect(() => {
-    // Load initial data based on URL params
     const query = searchParams.get('q');
     const urlFilters = getFiltersFromURL();
     
+    // Update local state to match URL
+    setSearchQuery(query || '');
+    setIsSearchMode(!!query);
+    setSortMode(query ? 'match' : 'recent');
+    
     if (query) {
-      setSearchQuery(query);
-      setIsSearchMode(true);
-      setSortMode('match');
       searchPosts(query, urlFilters);
     } else {
       loadPosts();
     }
-  }, []); // Only run on mount
+  }, [searchParams]); // Re-run when searchParams changes
 
   const handleSearch = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
