@@ -240,7 +240,7 @@ export const translations = {
       browseJobs: 'Browse Jobs',
       myPosts: 'My Posts',
       myProposals: 'My Proposals',
-      brandName: 'JobPlatform',
+      brandName: 'AshxatanqKa.am',
     },
     dashboard: {
       title: 'Welcome back, {{name}}!',
@@ -423,7 +423,7 @@ export const translations = {
       searchPlaceholder: 'Search jobs by title, skills, or keywords...',
       searchButton: 'Search',
       joinBanner: {
-        title: 'Join JobPlatform to Apply',
+        title: 'Join AshxatanqKa.am to Apply',
         description: 'Browse jobs freely, but you\'ll need an account to submit proposals and connect with clients.',
         createAccount: 'Create Free Account',
         haveAccount: 'I Have an Account',
@@ -688,7 +688,7 @@ export const translations = {
       browseJobs: 'Поиск работы',
       myPosts: 'Мои объявления',
       myProposals: 'Мои предложения',
-      brandName: 'JobPlatform',
+      brandName: 'AshxatanqKa.am',
     },
     dashboard: {
       title: 'С возвращением, {{name}}!',
@@ -870,7 +870,7 @@ export const translations = {
       searchPlaceholder: 'Поиск работы по названию, навыкам или ключевым словам...',
       searchButton: 'Поиск',
       joinBanner: {
-        title: 'Присоединяйтесь к JobPlatform для подачи заявок',
+        title: 'Присоединяйтесь к AshxatanqKa.am для подачи заявок',
         description: 'Просматривайте вакансии свободно, но для отправки предложений и связи с клиентами вам понадобится аккаунт.',
         createAccount: 'Создать бесплатный аккаунт',
         haveAccount: 'У меня есть аккаунт',
@@ -1134,7 +1134,7 @@ export const translations = {
       browseJobs: 'Աշխատանքի որոնում',
       myPosts: 'Իմ հայտարարությունները',
       myProposals: 'Իմ առաջարկները',
-      brandName: 'JobPlatform',
+      brandName: 'AshxatanqKa.am',
     },
     dashboard: {
       title: 'Բարի վերադարձ, {{name}}!',
@@ -1316,7 +1316,7 @@ export const translations = {
       searchPlaceholder: 'Որոնեք աշխատանք ըստ վերնագրի, հմտությունների կամ բանալի բառերի...',
       searchButton: 'Որոնել',
       joinBanner: {
-        title: 'Միացեք JobPlatform-ին դիմելու համար',
+        title: 'Միացեք AshxatanqKa.am-ին դիմելու համար',
         description: 'Ազատորեն դիտեք աշխատանքները, բայց առաջարկներ ուղարկելու և հաճախորդների հետ կապվելու համար ձեզանից կպահանջվի գրանցվել։',
         createAccount: 'Ստեղծել անվճար հաշիվ',
         haveAccount: 'Ես ունեմ հաշիվ',
