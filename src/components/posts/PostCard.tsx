@@ -1,14 +1,13 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
-import { Eye, MapPin, LogIn } from 'lucide-react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { Eye, MapPin, LogIn, Clock } from 'lucide-react';
 import { WorkPost } from '@/types';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { useAuthStore } from '@/lib/store/authStore';
 import { useI18n } from '@/lib/i18n/i18n-context';
-import { Clock } from 'lucide-react';
 import { getCurrencySign, getDurationLabel } from '@/config/constants';
 
 interface PostCardProps {
@@ -18,10 +17,14 @@ interface PostCardProps {
 export function PostCard({ post }: PostCardProps) {
   const { t } = useI18n();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { isAuthenticated } = useAuthStore();
 
   const handleViewDetails = () => {
-    router.push(`/posts/${post.postId}`);
+    // Preserve current search params for back navigation
+    const currentParams = searchParams.toString();
+    const url = `/posts/${post.postId}${currentParams ? `?from=${encodeURIComponent(currentParams)}` : ''}`;
+    router.push(url);
   };
 
   const handleApplyClick = (e: React.MouseEvent) => {
@@ -29,7 +32,7 @@ export function PostCard({ post }: PostCardProps) {
     if (!isAuthenticated) {
       router.push('/login');
     } else {
-      router.push(`/posts/${post.postId}`);
+      handleViewDetails();
     }
   };
 
@@ -46,7 +49,7 @@ export function PostCard({ post }: PostCardProps) {
           
           <p className="text-gray-600 mt-2 line-clamp-3">{post.description}</p>
         </div>
-        {(post.budget && post.budget.value !== 0)&& (
+        {(post.budget && post.budget.value !== 0) && (
           <div className="text-right ml-4">
             <p className="text-lg font-bold text-green-600">
               {post.budget.value} {getCurrencySign(post.budget.currency)}
@@ -68,12 +71,13 @@ export function PostCard({ post }: PostCardProps) {
         {(post.skills && post.skills.length > 5) && (
           <Badge variant="default">+{post.skills.length - 5} {t('myPosts.more')}</Badge>
         )}
-        
       </div>
+
       <div className="flex items-center text-sm text-gray-600 ml-2 mb-2">
         <Clock className="w-4 h-4 mr-1" />
         <span>{getDurationLabel(post.duration, t)}</span>
       </div>
+
       <div className="flex justify-between items-center pt-4 border-t border-gray-200">
         <p className="text-sm text-gray-500">
           {t('myPosts.posted')} {new Date(post.date).toLocaleDateString()}
