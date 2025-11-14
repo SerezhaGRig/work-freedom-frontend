@@ -1031,7 +1031,7 @@ export const translations = {
         "allDurations": "Բոլոր ժամկետները",
 
       "filtersActive": "Ֆիլտրները ակտիվ են",
-      "refineResults": "Փշգրտել արդյունքները",
+      "refineResults": "Ֆիլտրել արդյունքները",
       "allRegions": "Բոլոր տարածաշրջանները",
       "budgetRange": "Բյուջեի միջակայք",
       "minBudget": "Նվազագույն բյուջե",
