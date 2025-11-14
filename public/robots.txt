@@ -1,0 +1,12 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+
+# Host
+Host: https://www.ashxatanqka.am
+
+# Sitemaps
+Sitemap: https://www.ashxatanqka.am/sitemap.xml
