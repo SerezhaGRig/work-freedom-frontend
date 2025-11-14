@@ -14,6 +14,7 @@ import { Share } from '../ui/Share';
 import { useI18n } from '@/lib/i18n/i18n-context';
 import path from 'path';
 import { UpdatePostStatusModal } from './UpdatePostStatusModal';
+import { getCurrencySign } from '@/config/constants';
 
 interface MyPostCardProps {
   post: WorkPost;
@@ -109,13 +110,13 @@ export function MyPostCard({ post, onUpdate }: MyPostCardProps) {
         </div>
 
         <div className="space-y-2 mb-4 text-sm">
-          {post.budget && (
+          {(post.budget && post.budget.value !== 0) && (
             <div className="flex items-center text-gray-600">
               <span className="font-semibold text-green-600">
-                ${post.budget.value}
+                {post.budget.value}
               </span>
               <span className="inline-block w-3 h-4 text-center leading-4 text-current ml-2">
-                      ֏
+                      {getCurrencySign(post.budget.currency)}
               </span> 
               <span className="ml-1 text-gray-500">/ {post.budget.type}</span>
             </div>

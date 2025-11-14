@@ -17,5 +17,15 @@ export const getDurationLabel = (duration: string, t: any) => {
   return labels[duration] || duration;
 };
 
+export const getCurrencySign = (currency: string,) => {
+  const labels: Record<string, string> = {
+    'dollar':'$',
+    'dram': '֏',
+    'rubl': '₽'
+  };
+  return labels[currency] || currency;
+};
+
+
 
 export const API_URL = 'https://ag1lcrnsga.execute-api.us-east-1.amazonaws.com/dev/api'

@@ -188,12 +188,12 @@ export function SearchFilters({
           {/* Budget Filter - Only if available from API */}
           {(availableFilters?.budgetTypes || availableFilters?.minBudget !== undefined) && (
             <div>
-              <div className="flex items-center mb-3">
+              {/* <div className="flex items-center mb-3">
                 <h3 className="font-semibold text-gray-800">{t('posts.budget')}</h3>
                     <span className="inline-block w-3 h-4 text-center leading-4 text-current ml-2">
                       ֏
                     </span> 
-              </div>
+              </div> */}
               
               <div className="space-y-4">
                 {/* Budget Type - Only if available */}

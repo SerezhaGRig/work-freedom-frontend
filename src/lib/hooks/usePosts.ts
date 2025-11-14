@@ -91,7 +91,7 @@ export function usePosts() {
     region?: string;
     category: 'IT' | 'Other';
     duration: 'less_than_month' | 'less_than_3_months' | 'more_than_3_months';
-    budget?: { type: 'hourly' | 'fixed' | 'monthly'; value: number };
+    budget?: { type: 'hourly' | 'fixed' | 'monthly'; value: number, currency:  'dram' | 'dollar' | 'rubl'  };
   }) => {
     const newPost = await apiService.createPost(data);
     setMyPosts([newPost, ...myPosts]);

@@ -181,7 +181,7 @@ class ApiService {
     description: string;
     skills?: string[];
     region?: string;
-    budget?: { type: 'hourly' | 'fixed' | 'monthly'; value: number };
+    budget?: { type: 'hourly' | 'fixed' | 'monthly'; value: number, currency: 'dollar' | 'dram' | 'rubl' };
     duration: 'less_than_month' | 'less_than_3_months' | 'more_than_3_months';
   }) {
     const response = await this.client.post('/posts', data);
