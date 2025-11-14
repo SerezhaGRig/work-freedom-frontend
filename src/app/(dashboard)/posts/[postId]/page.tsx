@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { ArrowLeft, Calendar, Briefcase, User, Send, MapPin, LogIn, Clock } from 'lucide-react';
 import { WorkPost } from '@/types';
 import { Card } from '@/components/ui/Card';
@@ -14,11 +14,11 @@ import { Share } from '@/components/ui/Share';
 import { useAuthStore } from '@/lib/store/authStore';
 import { useI18n } from '@/lib/i18n/i18n-context';
 import { getCurrencySign, getDurationLabel } from '@/config/constants';
-import { PostCard } from '@/components/posts/PostCard';
 
 export default function JobDetailsPage() {
   const params = useParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const postId = params.postId as string;
   const { isAuthenticated } = useAuthStore();
   const { t, locale } = useI18n();
@@ -74,7 +74,19 @@ export default function JobDetailsPage() {
   };
 
   const handleBackClick = () => {
-    router.push('/posts');
+    // Check if we came from a search by looking at the referrer or search params
+    const previousSearch = searchParams.get('from');
+    
+    if (previousSearch) {
+      // Navigate back with the search query preserved
+      router.push(`/posts?${previousSearch}`);
+    } else if (window.history.length > 1) {
+      // Try to go back in history
+      router.back();
+    } else {
+      // Fallback to posts page
+      router.push('/posts');
+    }
   };
 
   if (isLoading) {
@@ -209,7 +221,7 @@ export default function JobDetailsPage() {
                 <div className="flex justify-end space-x-3 pt-4">
                   <Button
                     variant="secondary"
-                    onClick={() => router.push('/posts')}
+                    onClick={handleBackClick}
                   >
                     {t('common.cancel')}
                   </Button>
@@ -282,7 +294,7 @@ export default function JobDetailsPage() {
                 </div>
               </div>
 
-                           <div>
+              <div>
                 <p className="text-xs text-gray-500 mb-1">{t('jobDetails.category')}</p>
                 <div className="flex items-center text-sm">
                   <Clock className="w-4 h-4 mr-2 text-gray-600" />
@@ -291,7 +303,6 @@ export default function JobDetailsPage() {
                   </span>
                 </div>
               </div>
-
 
               <div>
                 <p className="text-xs text-gray-500 mb-1">{t('jobDetails.postedOn')}</p>

@@ -89,6 +89,8 @@ export default function PostsPage() {
     if (query) {
       searchPosts(query, urlFilters);
     } else {
+      // Clear filters and load fresh posts when no query
+      clearFilters();
       loadPosts();
     }
   }, [searchParams]); // Re-run when searchParams changes

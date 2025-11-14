@@ -5,6 +5,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { Navbar } from '@/components/layout/Navbar';
 import { useAuthStore } from '@/lib/store/authStore';
 import { useI18n } from '@/lib/i18n/i18n-context';
+import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 
 export default function DashboardLayout({
   children,
@@ -49,8 +50,9 @@ export default function DashboardLayout({
                   <span className="text-xl font-bold text-gray-800">{t('nav.brandName')}</span>
                 </div>
               </div>
-              
+            
               <div className="flex items-center space-x-3">
+                <LanguageSwitcher />
                 <button
                   onClick={() => router.push('/login')}
                   className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
