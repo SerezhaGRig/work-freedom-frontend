@@ -386,6 +386,8 @@ export const translations = {
       "sendMessageFailed": "Failed to send message. Please try again."
     },
     auth: {
+      minCharecters: '8-20',
+      creatingAccount: '...',
       signingIn: "Signing In",
       welcomeBack: "Welcome Back",
       createAccount: "Create Account",
