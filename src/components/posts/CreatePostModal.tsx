@@ -21,9 +21,9 @@ export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalP
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [skills, setSkills] = useState('');
-  const [region, setRegion] = useState('');
+  const [region, setRegion] = useState('Remote');
   const [budgetType, setBudgetType] = useState<'hourly' | 'fixed' | 'monthly'>('hourly');
-  const [budgetValue, setBudgetValue] = useState('');
+  const [budgetValue, setBudgetValue] = useState('0');
     const [budgetCurrency, setBudgetCurrency] = useState<'dollar' | 'rubl' | 'dram'>('dram');
   const [duration, setDuration] = useState<'less_than_month' | 'less_than_3_months' | 'more_than_3_months'>('less_than_3_months');
   const [category, setCategory] = useState<'IT' | 'Other'>('IT');
@@ -42,7 +42,7 @@ export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalP
         title,
         description,
         skills: skillsArray,
-        region: region || undefined,
+        region: region,
         category,
         duration,
         budget: budgetValue ? {
@@ -55,8 +55,8 @@ export function CreatePostModal({ isOpen, onClose, onSuccess }: CreatePostModalP
       setTitle('');
       setDescription('');
       setSkills('');
-      setRegion('');
-      setBudgetValue('');
+      setRegion('Remote');
+      setBudgetValue('0');
       setDuration('less_than_3_months');
       setCategory('IT');
       onSuccess();

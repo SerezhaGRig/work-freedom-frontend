@@ -27,11 +27,11 @@ export function EditPostModal({
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [skills, setSkills] = useState('');
-  const [region, setRegion] = useState('');
+  const [region, setRegion] = useState('Remote');
   const [budgetType, setBudgetType] = useState<'hourly' | 'fixed' | 'monthly'>('hourly');
   const [budgetCurrency, setBudgetCurrency] = useState<'dollar' | 'rubl' | 'dram'>('dram');
 
-  const [budgetValue, setBudgetValue] = useState('');
+  const [budgetValue, setBudgetValue] = useState('0');
   const [duration, setDuration] = useState<'less_than_month' | 'less_than_3_months' | 'more_than_3_months'>('less_than_3_months');
   const [category, setCategory] = useState<'IT' | 'Other'>('IT');
   const [isLoading, setIsLoading] = useState(false);
@@ -41,9 +41,9 @@ export function EditPostModal({
       setTitle(post.title);
       setDescription(post.description);
       setSkills(post.skills?.join(', ') || '');
-      setRegion(post.region || '');
+      setRegion(post.region || 'Remote');
       setBudgetType(post.budget?.type || 'hourly');
-      setBudgetValue(post.budget?.value.toString() || '');
+      setBudgetValue(post.budget?.value.toString() || '0');
       setBudgetCurrency(post.budget?.currency || 'dram');
       setCategory(post.category || 'IT');
 
@@ -122,7 +122,6 @@ export function EditPostModal({
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             required
           >
-            <option value="">{t('modals.createPost.selectRegion')}</option>
             {REGIONS.map((r) => (
               <option key={r} value={r}>
                 {r}
@@ -166,16 +165,16 @@ export function EditPostModal({
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              {t('modals.createPost.budgetType')}
+              {t('modals.createPost.currency')}
             </label>
             <select
               value={budgetCurrency}
-              onChange={(e) => setBudgetType(e.target.value as 'hourly' | 'fixed' | 'monthly')}
+              onChange={(e) => setBudgetCurrency(e.target.value as 'dollar' | 'dram' | 'rubl')}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             >
               <option value="dollar">$</option>
-              <option value="dram">$</option>
-              <option value="rubl">$</option>
+              <option value="dram">֏</option>
+              <option value="rubl">₽</option>
             </select>
           </div>
   
