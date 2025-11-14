@@ -246,6 +246,7 @@ export const translations = {
     },
     dashboard: {
       title: 'Welcome back, {{name}}!',
+      contactMe: 'For suggestions and questions, you can contact me at',
       stats: {
         myJobPosts: 'My Job Posts',
         proposalsSent: 'Proposals Sent',
@@ -698,6 +699,7 @@ export const translations = {
     },
     dashboard: {
       title: 'С возвращением, {{name}}!',
+      contactMe: 'С предложениями и вопросами вы можете связаться со мной по адресу',
       stats: {
         myJobPosts: 'Мои объявления',
         proposalsSent: 'Отправлено предложений',
@@ -1145,6 +1147,7 @@ export const translations = {
     },
     dashboard: {
       title: 'Բարի վերադարձ, {{name}}!',
+      contactMe: 'Հարցերի և առաջարկությունների համար կարող եք կապվել ինձ հետ հետևյալ հասցեով՝',
       stats: {
         myJobPosts: 'Իմ հայտարարությունները',
         proposalsSent: 'Ուղարկված առաջարկներ',
