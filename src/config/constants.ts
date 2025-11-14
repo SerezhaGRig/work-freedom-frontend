@@ -18,4 +18,4 @@ export const getDurationLabel = (duration: string, t: any) => {
 };
 
 
-export const API_URL = 'https://ag1lcrnsga.execute-api.us-east-1.amazonaws.com/dev/api'
+export const API_URL = 'https://g11k8inlca.execute-api.us-east-1.amazonaws.com/prod/api'
