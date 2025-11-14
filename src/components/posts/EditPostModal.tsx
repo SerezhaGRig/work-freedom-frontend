@@ -161,24 +161,6 @@ export function EditPostModal({
             <option value="Other">{'Other'}</option>
           </select>
         </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              {t('modals.createPost.currency')}
-            </label>
-            <select
-              value={budgetCurrency}
-              onChange={(e) => setBudgetCurrency(e.target.value as 'dollar' | 'dram' | 'rubl')}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="dollar">$</option>
-              <option value="dram">֏</option>
-              <option value="rubl">₽</option>
-            </select>
-          </div>
-  
-        </div>
         
         <div className="grid grid-cols-2 gap-4">
           <div>
