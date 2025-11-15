@@ -194,13 +194,14 @@ class ApiService {
   }
 
   // PUBLIC ENDPOINT - No authentication required
-  async listPosts(limit = 20, nextToken?: string): Promise<{
+   async listPosts(limit = 20, nextToken?: string, listCategory?: 'IT' | 'Other'): Promise<{
     posts: WorkPost[];
     nextToken?: string;
   }> {
     const params = new URLSearchParams();
     params.append('limit', limit.toString());
     if (nextToken) params.append('nextToken', nextToken);
+    if (listCategory) params.append('category', listCategory);
     
     const response = await this.client.get(`/posts/list?${params}`);
     return response.data;

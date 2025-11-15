@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Search, TrendingUp, Target, LogIn, UserPlus } from 'lucide-react';
+import { Search, TrendingUp, Target, LogIn, UserPlus, Briefcase, Code } from 'lucide-react';
 import { usePosts } from '@/lib/hooks/usePosts';
 import { PostList } from '@/components/posts/PostList';
 import { SearchFilters } from '@/components/posts/SearchFilters';
@@ -25,6 +25,7 @@ export default function PostsPage() {
     clearFilters, 
     activeFilters, 
     availableFilters,
+    listCategory,
     isLoading 
   } = usePosts();
   
@@ -51,6 +52,7 @@ export default function PostsPage() {
 
   // Initialize state from URL - this runs every time searchParams changes
   const queryFromURL = searchParams.get('q') || '';
+  const listCategoryFromURL = searchParams.get('listCategory') as 'IT' | 'Other' | null;
   const filtersFromURL = getFiltersFromURL();
   const isSearchModeFromURL = !!queryFromURL;
 
@@ -61,10 +63,11 @@ export default function PostsPage() {
   );
 
   // Update URL with current search state
-  const updateURL = (query: string, filters: SearchFiltersType) => {
+  const updateURL = (query: string, filters: SearchFiltersType, category?: 'IT' | 'Other') => {
     const params = new URLSearchParams();
     
     if (query) params.set('q', query);
+    if (category) params.set('listCategory', category);
     if (filters.region) params.set('region', filters.region);
     if (filters.duration) params.set('duration', filters.duration);
     if (filters.category) params.set('category', filters.category);
@@ -79,6 +82,7 @@ export default function PostsPage() {
   // Load data based on URL params - runs when URL changes
   useEffect(() => {
     const query = searchParams.get('q');
+    const category = searchParams.get('listCategory') as 'IT' | 'Other' | null;
     const urlFilters = getFiltersFromURL();
     
     // Update local state to match URL
@@ -89,9 +93,9 @@ export default function PostsPage() {
     if (query) {
       searchPosts(query, urlFilters);
     } else {
-      // Clear filters and load fresh posts when no query
+      // Clear filters and load posts with optional category
       clearFilters();
-      loadPosts();
+      loadPosts(false, category || undefined);
     }
   }, [searchParams]); // Re-run when searchParams changes
 
@@ -109,6 +113,13 @@ export default function PostsPage() {
     }
   };
 
+  const handleCategoryFilter = (category: 'IT' | 'Other') => {
+    // Toggle category filter
+    const newCategory = listCategory === category ? undefined : category;
+    loadPosts(false, newCategory);
+    updateURL('', {}, newCategory);
+  };
+
   const handleApplyFilters = (filters: SearchFiltersType) => {
     if (searchQuery.trim()) {
       searchPosts(searchQuery.trim(), filters);
@@ -121,8 +132,8 @@ export default function PostsPage() {
     setIsSearchMode(false);
     setSortMode('recent');
     clearFilters();
-    loadPosts();
-    router.replace('/posts', { scroll: false });
+    loadPosts(false, listCategory);
+    router.replace('/posts' + (listCategory ? `?listCategory=${listCategory}` : ''), { scroll: false });
   };
 
   const handleClearFilters = () => {
@@ -224,6 +235,44 @@ export default function PostsPage() {
         </div>
       </form>
 
+      {/* Category Filter Buttons - Only shown when not in search mode */}
+      {!isSearchMode && (
+        <div className="mb-6">
+          <div className="flex flex-wrap gap-2 sm:gap-3">
+            <Button
+              variant={!listCategory ? 'primary' : 'secondary'}
+              size="sm"
+              onClick={() => {
+                loadPosts(false, undefined);
+                updateURL('', {}, undefined);
+              }}
+              className="flex-1 sm:flex-none min-w-0"
+            >
+              <Briefcase className="w-4 h-4 flex-shrink-0" />
+              <span className="truncate">{t('jobsPage.categories.all')}</span>
+            </Button>
+            <Button
+              variant={listCategory === 'IT' ? 'primary' : 'secondary'}
+              size="sm"
+              onClick={() => handleCategoryFilter('IT')}
+              className="flex-1 sm:flex-none min-w-0"
+            >
+              <Code className="w-4 h-4 flex-shrink-0" />
+              <span className="truncate">IT</span>
+            </Button>
+            <Button
+              variant={listCategory === 'Other' ? 'primary' : 'secondary'}
+              size="sm"
+              onClick={() => handleCategoryFilter('Other')}
+              className="flex-1 sm:flex-none min-w-0"
+            >
+              <Briefcase className="w-4 h-4 flex-shrink-0" />
+              <span className="truncate">{t('jobsPage.categories.other')}</span>
+            </Button>
+          </div>
+        </div>
+      )}
+
       {/* Dynamic Filters Component - Only shown after search */}
       <SearchFilters
         onApplyFilters={handleApplyFilters}
@@ -239,7 +288,9 @@ export default function PostsPage() {
           <div className="flex items-center gap-2 text-sm text-gray-700 bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
             <TrendingUp className="w-4 h-4" />
             <span>
-              {t('jobsPage.sorting.showingRecent')}
+              {listCategory 
+                ? `${t('jobsPage.sorting.showing')} ${listCategory} ${t('jobsPage.sorting.jobs')}`
+                : t('jobsPage.sorting.showingRecent')}
             </span>
           </div>
         ) : (

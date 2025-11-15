@@ -80,15 +80,18 @@ export function LoginForm() {
           </button>
         </p>
         
-        <div className="pt-3 border-t border-gray-200">
-          <button
-            onClick={() => router.push('/posts')}
-            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 font-medium transition-colors"
-          >
-            <FileText className="w-4 h-4" />
-            {t('nav.browseJobsWithout')}
-          </button>
-        </div>
+      <div className="pt-3 border-t border-gray-200">
+      <button
+        onClick={() => router.push('/posts')}
+        className="w-full inline-flex items-center justify-center gap-2 py-2.5 
+                    border border-gray-300 rounded-lg text-gray-700 
+                    bg-gray-50
+                    hover:bg-white-80 font-semibold transition"
+        >
+        <FileText className="w-4 h-4" />
+        {t('nav.browseJobsWithout')}
+      </button>
+      </div>
       </div>
     </Card>
   );
