@@ -6,7 +6,7 @@ import { Locale } from '@/lib/i18n/translations';
 import { useI18n } from '@/lib/i18n/i18n-context';
 
 const languages = [
-  { code: 'en' as Locale, name: 'English', flag: '🇬🇧' },
+  { code: 'en' as Locale, name: 'English', flag: '🇺🇸' },
   { code: 'ru' as Locale, name: 'Русский', flag: '🇷🇺' },
   { code: 'hy' as Locale, name: 'Հայերեն', flag: '🇦🇲' },
 ];

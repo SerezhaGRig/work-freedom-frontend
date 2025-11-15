@@ -88,7 +88,6 @@ export function LoginForm() {
                     bg-gray-50
                     hover:bg-white-80 font-semibold transition"
         >
-        <FileText className="w-4 h-4" />
         {t('nav.browseJobsWithout')}
       </button>
       </div>
