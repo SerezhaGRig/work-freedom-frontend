@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Mail, Users, Plus, X } from 'lucide-react';
+import { Mail, Users, Plus, X, FileText } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { Modal } from '@/components/ui/Modal';
@@ -11,6 +11,7 @@ import { useAuth } from '@/lib/hooks/useAuth';
 import { Contact } from '@/types';
 import { Button } from '@/components/ui/Button';
 import { useI18n } from '@/lib/i18n/i18n-context';
+import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 
 export function RegisterForm() {
   const [email, setEmail] = useState('');
@@ -52,6 +53,11 @@ export function RegisterForm() {
   return (
     <>
       <Card className="w-full max-w-md p-8">
+        {/* Language Switcher */}
+        <div className="flex justify-end mb-4">
+          <LanguageSwitcher />
+        </div>
+
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-green-600 to-blue-600 rounded-full mb-4">
             <Users className="w-8 h-8 text-white" />
@@ -137,7 +143,7 @@ export function RegisterForm() {
           </Button>
         </form>
         
-        <div className="mt-6 text-center">
+        <div className="mt-6 space-y-3 text-center">
           <p className="text-gray-600">
             {t('auth.alreadyHaveAccount')}{' '}
             <button
@@ -147,6 +153,16 @@ export function RegisterForm() {
               {t('auth.signIn')}
             </button>
           </p>
+          
+          <div className="pt-3 border-t border-gray-200">
+            <button
+              onClick={() => router.push('/posts')}
+              className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 font-medium transition-colors"
+            >
+              <FileText className="w-4 h-4" />
+              {t('nav.browseJobsWithout')}
+            </button>
+          </div>
         </div>
       </Card>
 

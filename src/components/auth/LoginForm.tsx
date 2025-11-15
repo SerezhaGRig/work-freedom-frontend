@@ -2,12 +2,13 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Mail, Briefcase, User } from 'lucide-react';
+import { Mail, Briefcase, User, FileText } from 'lucide-react';
 import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { Button } from '@/components/ui/Button';
 import { useI18n } from '@/lib/i18n/i18n-context';
+import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 
 export function LoginForm() {
   const [email, setEmail] = useState('');
@@ -23,6 +24,11 @@ export function LoginForm() {
 
   return (
     <Card className="w-full max-w-md p-8">
+      {/* Language Switcher */}
+      <div className="flex justify-end mb-4">
+        <LanguageSwitcher />
+      </div>
+
       <div className="text-center mb-8">
         <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full mb-4">
           <Briefcase className="w-8 h-8 text-white" />
@@ -63,7 +69,7 @@ export function LoginForm() {
         </Button>
       </form>
       
-      <div className="mt-6 text-center">
+      <div className="mt-6 space-y-3 text-center">
         <p className="text-gray-600">
           {t('auth.dontHaveAccount')}{' '}
           <button
@@ -73,6 +79,16 @@ export function LoginForm() {
             {t('auth.register')}
           </button>
         </p>
+        
+        <div className="pt-3 border-t border-gray-200">
+          <button
+            onClick={() => router.push('/posts')}
+            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-800 font-medium transition-colors"
+          >
+            <FileText className="w-4 h-4" />
+            {t('nav.browseJobsWithout')}
+          </button>
+        </div>
       </div>
     </Card>
   );

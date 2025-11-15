@@ -90,14 +90,6 @@ export function PostCard({ post }: PostCardProps) {
           >
             <Eye className="w-4 h-4" /> {t('postCard.viewDetails')}
           </Button>
-          {!isAuthenticated && (
-            <Button
-              size="sm"
-              onClick={handleApplyClick}
-            >
-              <LogIn className="w-4 h-4" /> {t('postCard.loginToApply')}
-            </Button>
-          )}
         </div>
       </div>
     </Card>

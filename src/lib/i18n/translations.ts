@@ -240,6 +240,7 @@ export const translations = {
     nav: {
       dashboard: 'Dashboard',
       browseJobs: 'Browse Jobs',
+      browseJobsWithout: 'Browse jobs without registration',
       myPosts: 'My Posts',
       myProposals: 'My Proposals',
       brandName: 'AshxatanqKa.am',
@@ -388,9 +389,18 @@ export const translations = {
       "sendMessageFailed": "Failed to send message. Please try again."
     },
     auth: {
+        minCharacters: '8-20 characters',
+  creatingAccount: 'Creating Account...',
+  signingIn: 'Signing In...',
+  addContact: 'Add Contact',
+  contactType: 'Contact Type',
+  contactValue: 'Contact Value',
+  enterContactInfo: 'Enter contact information',
+  phone: 'Phone',
+  whatsapp: 'WhatsApp',
+  viber: 'Viber',
+  website: 'Website',
       minCharecters: '8-20',
-      creatingAccount: '...',
-      signingIn: "Signing In",
       welcomeBack: "Welcome Back",
       createAccount: "Create Account",
       joinPlatform: "Join Platform",
@@ -431,7 +441,7 @@ export const translations = {
       joinBanner: {
         title: 'Join AshxatanqKa.am to Apply',
         description: 'Browse jobs freely, but you\'ll need an account to submit proposals and connect with clients.',
-        createAccount: 'Create Free Account',
+        createAccount: 'Create Account',
         haveAccount: 'I Have an Account',
       },
       sorting: {
@@ -693,6 +703,7 @@ export const translations = {
     nav: {
       dashboard: 'Панель управления',
       browseJobs: 'Поиск работы',
+      browseJobsWithout: 'Поиск работы без регистрации',
       myPosts: 'Мои объявления',
       myProposals: 'Мои предложения',
       brandName: 'AshxatanqKa.am',
@@ -840,6 +851,17 @@ export const translations = {
       "sendMessageFailed": "Не удалось отправить сообщение. Попробуйте снова."
     },
     auth: {
+        minCharacters: '8-20 символов',
+  creatingAccount: 'Создание аккаунта...',
+  signingIn: 'Вход...',
+  addContact: 'Добавить контакт',
+  contactType: 'Тип контакта',
+  contactValue: 'Контактная информация',
+  enterContactInfo: 'Введите контактную информацию',
+  phone: 'Телефон',
+  whatsapp: 'WhatsApp',
+  viber: 'Viber',
+  website: 'Веб-сайт',
       "welcomeBack": "С возвращением",
       loginTitle: 'Войти в аккаунт',
       registerTitle: 'Создать новый аккаунт',
@@ -880,7 +902,7 @@ export const translations = {
       joinBanner: {
         title: 'Присоединяйтесь к AshxatanqKa.am для подачи заявок',
         description: 'Просматривайте вакансии свободно, но для отправки предложений и связи с клиентами вам понадобится аккаунт.',
-        createAccount: 'Создать бесплатный аккаунт',
+        createAccount: 'Создать аккаунт',
         haveAccount: 'У меня есть аккаунт',
       },
       sorting: {
@@ -1141,6 +1163,8 @@ export const translations = {
     nav: {
       dashboard: 'Վահանակ',
       browseJobs: 'Աշխատանքի որոնում',
+      browseJobsWithout: 'Աշխատանքի որոնում առանց գրանցման',
+
       myPosts: 'Իմ հայտարարությունները',
       myProposals: 'Իմ առաջարկները',
       brandName: 'AshxatanqKa.am',
@@ -1288,6 +1312,17 @@ export const translations = {
       "sendMessageFailed": "Չհաջողվեց ուղարկել հաղորդագրությունը: Փորձեք կրկին:"
     },
     auth: {
+        minCharacters: '8-20 նիշ',
+  creatingAccount: 'Հաշիվ ստեղծվում է...',
+  signingIn: 'Մուտք է գործվում...',
+  addContact: 'Ավելացնել կոնտակտ',
+  contactType: 'Կոնտակտի տեսակ',
+  contactValue: 'Կոնտակտային տեղեկություն',
+  enterContactInfo: 'Մուտքագրեք կոնտակտային տեղեկությունը',
+  phone: 'Հեռախոս',
+  whatsapp: 'WhatsApp',
+  viber: 'Viber',
+  website: 'Վեբ կայք',
       "welcomeBack": "Բարի վերադարձ",
       loginTitle: 'Մուտք գործել հաշիվ',
       registerTitle: 'Ստեղծել նոր հաշիվ',
@@ -1328,7 +1363,7 @@ export const translations = {
       joinBanner: {
         title: 'Միացեք AshxatanqKa.am-ին դիմելու համար',
         description: 'Ազատորեն դիտեք աշխատանքները, բայց առաջարկներ ուղարկելու և հաճախորդների հետ կապվելու համար ձեզանից կպահանջվի գրանցվել։',
-        createAccount: 'Ստեղծել անվճար հաշիվ',
+        createAccount: 'Ստեղծել հաշիվ',
         haveAccount: 'Ես ունեմ հաշիվ',
       },
       sorting: {
