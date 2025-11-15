@@ -1,4 +1,4 @@
-// usePosts.ts - Updated with duration support
+// usePosts.ts - Updated with listCategory support
 
 'use client';
 
@@ -14,14 +14,15 @@ export function usePosts() {
   const [error, setError] = useState<string | null>(null);
   const [activeFilters, setActiveFilters] = useState<SearchFilters>({});
   const [availableFilters, setAvailableFilters] = useState<AvailableFilters | undefined>();
+  const [listCategory, setListCategory] = useState<'IT' | 'Other' | undefined>();
 
   // List posts with pagination (browse all posts)
-  const loadPosts = async (loadMore = false) => {
+  const loadPosts = async (loadMore = false, category?: 'IT' | 'Other') => {
     setIsLoading(true);
     setError(null);
     setAvailableFilters(undefined); // Clear available filters when browsing
     try {
-      const result = await apiService.listPosts(20, loadMore ? nextToken : undefined);
+      const result = await apiService.listPosts(20, loadMore ? nextToken : undefined, category);
       
       if (loadMore) {
         setPosts([...posts, ...result.posts]);
@@ -30,6 +31,7 @@ export function usePosts() {
       }
       
       setNextToken(result.nextToken);
+      setListCategory(category);
     } catch (error) {
       console.error('Failed to load posts:', error);
       setError('Failed to load posts');
@@ -43,6 +45,7 @@ export function usePosts() {
   const searchPosts = async (query: string, filters?: SearchFilters) => {
     setIsLoading(true);
     setError(null);
+    setListCategory(undefined); // Clear list category when searching
     try {
       const result = await apiService.searchPosts(query, filters);
       setPosts(result.posts || []);
@@ -67,6 +70,7 @@ export function usePosts() {
   // Clear all filters and reload
   const clearFilters = () => {
     setActiveFilters({});
+    setListCategory(undefined);
   };
 
   const loadMyPosts = async () => {
@@ -123,6 +127,7 @@ export function usePosts() {
     hasMore: !!nextToken,
     activeFilters,
     availableFilters, // Expose available filters from API
+    listCategory, // Expose active list category
     loadPosts,
     searchPosts,
     clearFilters,

@@ -438,6 +438,10 @@ export const translations = {
       subtitle: 'Find your next opportunity from available job postings',
       searchPlaceholder: 'Search jobs by title, skills, or keywords...',
       searchButton: 'Search',
+      categories: {
+        all: 'All Categories',
+        other: 'Other'
+      },
       joinBanner: {
         title: 'Join AshxatanqKa.am to Apply',
         description: 'Browse jobs freely, but you\'ll need an account to submit proposals and connect with clients.',
@@ -446,6 +450,8 @@ export const translations = {
       },
       sorting: {
         showingRecent: 'Showing most recent job postings',
+        showing: 'Showing',
+        jobs: 'jobs',
         showingMatches: 'best matches',
         showingFiltered: 'filtered results',
         for: 'for',
@@ -899,6 +905,10 @@ export const translations = {
       subtitle: 'Найдите свою следующую возможность среди доступных вакансий',
       searchPlaceholder: 'Поиск работы по названию, навыкам или ключевым словам...',
       searchButton: 'Поиск',
+      categories: {
+        all: 'Все категории',
+        other: 'Другое'
+      },
       joinBanner: {
         title: 'Присоединяйтесь к AshxatanqKa.am для подачи заявок',
         description: 'Просматривайте вакансии свободно, но для отправки предложений и связи с клиентами вам понадобится аккаунт.',
@@ -907,6 +917,8 @@ export const translations = {
       },
       sorting: {
         showingRecent: 'Показаны самые последние вакансии',
+        showing: 'Показано',
+        jobs: 'вакансий',
         showingMatches: 'лучшие совпадения',
         showingFiltered: 'отфильтрованные результаты',
         for: 'для',
@@ -1360,6 +1372,10 @@ export const translations = {
       subtitle: 'Գտեք ձեր հաջորդ հնարավորությունը հասանելի աշխատանքներից',
       searchPlaceholder: 'Որոնեք աշխատանք ըստ վերնագրի, հմտությունների կամ բանալի բառերի...',
       searchButton: 'Որոնել',
+      categories: {
+        all: 'Բոլոր կատեգորիաները',
+        other: 'Այլ'
+      },
       joinBanner: {
         title: 'Միացեք AshxatanqKa.am-ին դիմելու համար',
         description: 'Ազատորեն դիտեք աշխատանքները, բայց առաջարկներ ուղարկելու և հաճախորդների հետ կապվելու համար ձեզանից կպահանջվի գրանցվել։',
@@ -1368,7 +1384,9 @@ export const translations = {
       },
       sorting: {
         showingRecent: 'Ցուցադրվում են վերջին աշխատանքները',
-        showingMatches: 'լավագույն համնկնումները',
+        showing: 'Ցուցադրվում է',
+        jobs: 'աշխատանքներ',
+        showingMatches: 'լավագույն համընկնումները',
         showingFiltered: 'ֆիլտրված արդյունքներ',
         for: 'համար',
         backToRecent: 'Վերադառնալ վերջիններին',
@@ -1377,7 +1395,7 @@ export const translations = {
         searching: 'Որոնում...',
         loadingJobs: 'Աշխատանքների բեռնում...',
         searchResults: 'Որոնման արդյունքներ',
-        availableJobs: 'Հասանելի աշխատանք',
+        availableJobs: 'Հասանելի աշխատանքներ',
         noJobsFound: 'Աշխատանք չի գտնվել',
         tryDifferentKeywords: 'Փորձեք այլ բանալի բառեր կամ մաքրեք ֆիլտրները',
         clearFilters: 'Մաքրել ֆիլտրները',
