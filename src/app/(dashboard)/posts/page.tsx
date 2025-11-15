@@ -184,7 +184,7 @@ export default function PostsPage() {
         </div>
 
         {/* Public User Banner */}
-        {!isAuthenticated && (
+        {/* {!isAuthenticated && (
           <Card className="mt-6 p-6 bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200">
             <div className="flex items-start gap-4">
               <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
@@ -215,7 +215,7 @@ export default function PostsPage() {
               </div>
             </div>
           </Card>
-        )}
+        )} */}
       </div>
 
       {/* Search Bar */}
