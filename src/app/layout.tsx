@@ -20,8 +20,13 @@ export const metadata: Metadata = {
     "jobs Armenia", "jobs in Armenia", "Armenia jobs", "Yerevan jobs", "IT jobs Armenia",
   ],
   icons: {
-    icon: "/favicon.svg",
-  },
+      icon: [
+        { url: "/favicon.png", sizes: "32x32", type: "image/png" },
+        { url: "/favicon.ico" },
+      ],
+      shortcut: "/favicon.svg",
+    },
+
   openGraph: {
     title: "AshxatanqKa.am — Jobs in Armenia",
     description:
