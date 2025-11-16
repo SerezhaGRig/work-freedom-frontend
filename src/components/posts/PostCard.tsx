@@ -21,6 +21,11 @@ export function PostCard({ post }: PostCardProps) {
   const { isAuthenticated } = useAuthStore();
 
   const handleViewDetails = () => {
+    // Save current scroll position before navigating
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem('postsScrollPosition', window.scrollY.toString());
+    }
+    
     // Preserve current search params for back navigation
     const currentParams = searchParams.toString();
     const url = `/posts/${post.postId}${currentParams ? `?from=${encodeURIComponent(currentParams)}` : ''}`;

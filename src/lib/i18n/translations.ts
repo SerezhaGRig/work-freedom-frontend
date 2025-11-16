@@ -202,6 +202,7 @@ export const translations = {
     common: {
       "warning": "Warning",
       loading: 'Loading...',
+      loadMore: 'Load More',
       error: 'Error',
       success: 'Success',
       cancel: 'Cancel',
@@ -670,6 +671,7 @@ export const translations = {
     },
     common: {
             "warning": "Предупреждение",
+            loadMore: 'Показать еще',
       loading: 'Загрузка...',
       error: 'Ошибка',
       success: 'Успешно',
@@ -1137,6 +1139,7 @@ export const translations = {
     common: {
       "warning": "Զգուշացում",
       loading: 'Բեռնվում է...',
+      loadMore: 'Ցուցադրել ավելին',
       error: 'Սխալ',
       success: 'Հաջողված է',
       cancel: 'Չեղարկել',

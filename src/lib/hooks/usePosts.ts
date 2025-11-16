@@ -1,10 +1,20 @@
-// usePosts.ts - Updated with listCategory support
+// usePosts.ts - Enhanced with caching and pagination support
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { WorkPost } from '@/types';
 import { apiService, SearchFilters, AvailableFilters } from '../api/api-client';
+
+const CACHE_KEY = 'posts_cache';
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+interface CachedData {
+  posts: WorkPost[];
+  timestamp: number;
+  listCategory?: 'IT' | 'Other';
+  nextToken?: string;
+}
 
 export function usePosts() {
   const [posts, setPosts] = useState<WorkPost[]>([]);
@@ -16,6 +26,42 @@ export function usePosts() {
   const [availableFilters, setAvailableFilters] = useState<AvailableFilters | undefined>();
   const [listCategory, setListCategory] = useState<'IT' | 'Other' | undefined>();
 
+  // Load cached posts on mount
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const cached = sessionStorage.getItem(CACHE_KEY);
+      if (cached) {
+        try {
+          const cachedData: CachedData = JSON.parse(cached);
+          const isExpired = Date.now() - cachedData.timestamp > CACHE_DURATION;
+          
+          if (!isExpired) {
+            setPosts(cachedData.posts);
+            setListCategory(cachedData.listCategory);
+            setNextToken(cachedData.nextToken);
+          } else {
+            sessionStorage.removeItem(CACHE_KEY);
+          }
+        } catch (e) {
+          sessionStorage.removeItem(CACHE_KEY);
+        }
+      }
+    }
+  }, []);
+
+  // Cache posts when they change
+  const cachePosts = (newPosts: WorkPost[], category?: 'IT' | 'Other', token?: string) => {
+    if (typeof window !== 'undefined') {
+      const cacheData: CachedData = {
+        posts: newPosts,
+        timestamp: Date.now(),
+        listCategory: category,
+        nextToken: token,
+      };
+      sessionStorage.setItem(CACHE_KEY, JSON.stringify(cacheData));
+    }
+  };
+
   // List posts with pagination (browse all posts)
   const loadPosts = async (loadMore = false, category?: 'IT' | 'Other') => {
     setIsLoading(true);
@@ -24,14 +70,20 @@ export function usePosts() {
     try {
       const result = await apiService.listPosts(20, loadMore ? nextToken : undefined, category);
       
+      let updatedPosts: WorkPost[];
       if (loadMore) {
-        setPosts([...posts, ...result.posts]);
+        updatedPosts = [...posts, ...result.posts];
+        setPosts(updatedPosts);
       } else {
-        setPosts(result.posts || []);
+        updatedPosts = result.posts || [];
+        setPosts(updatedPosts);
       }
       
       setNextToken(result.nextToken);
       setListCategory(category);
+      
+      // Cache the results
+      cachePosts(updatedPosts, category, result.nextToken);
     } catch (error) {
       console.error('Failed to load posts:', error);
       setError('Failed to load posts');
@@ -45,7 +97,7 @@ export function usePosts() {
   const searchPosts = async (query: string, filters?: SearchFilters) => {
     setIsLoading(true);
     setError(null);
-    setListCategory(undefined); // Clear list category when searching
+    
     try {
       const result = await apiService.searchPosts(query, filters);
       setPosts(result.posts || []);
@@ -71,6 +123,13 @@ export function usePosts() {
   const clearFilters = () => {
     setActiveFilters({});
     setListCategory(undefined);
+  };
+
+  // Clear cache manually
+  const clearCache = () => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem(CACHE_KEY);
+    }
   };
 
   const loadMyPosts = async () => {
@@ -99,12 +158,14 @@ export function usePosts() {
   }) => {
     const newPost = await apiService.createPost(data);
     setMyPosts([newPost, ...myPosts]);
+    clearCache(); // Clear cache since new post was created
     return newPost;
   };
 
   const deletePost = async (postId: string) => {
     await apiService.deletePost(postId);
     setMyPosts(myPosts.filter(post => post.postId !== postId));
+    clearCache(); // Clear cache since post was deleted
   };
 
   const updatePostStatus = async (
@@ -117,6 +178,7 @@ export function usePosts() {
         post.postId === postId ? { ...post, status: [status] } : post
       )
     );
+    clearCache(); // Clear cache since post status changed
   };
 
   return {
@@ -128,9 +190,11 @@ export function usePosts() {
     activeFilters,
     availableFilters, // Expose available filters from API
     listCategory, // Expose active list category
+    setListCategory,
     loadPosts,
     searchPosts,
     clearFilters,
+    clearCache,
     loadMyPosts,
     createPost,
     deletePost,
