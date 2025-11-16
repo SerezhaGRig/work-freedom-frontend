@@ -336,7 +336,7 @@ export default function PostsPage() {
             <h2 className="text-xl font-semibold text-gray-700">
               {isSearchMode || hasActiveFilters 
                 ? t('jobsPage.results.searchResults') 
-                : t('jobsPage.results.availableJobs')} ({posts?.length || 0})
+                : t('jobsPage.results.availableJobs')}
             </h2>
           </div>
           
