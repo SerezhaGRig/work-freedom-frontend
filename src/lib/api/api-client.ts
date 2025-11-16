@@ -211,7 +211,7 @@ class ApiService {
   async searchPosts(
     query: string,
     filters?: SearchFilters,
-    limit = 20,
+    limit = 60,
     nextToken?: string
   ): Promise<SearchPostsResponse> {
     const body: Record<string, unknown> = {
