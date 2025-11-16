@@ -5,7 +5,7 @@ import { Eye, MapPin, LogIn, Clock } from 'lucide-react';
 import { WorkPost } from '@/types';
 import { Card } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
-import { Button } from '@/components/ui/Button';
+import Link from 'next/link';
 import { useAuthStore } from '@/lib/store/authStore';
 import { useI18n } from '@/lib/i18n/i18n-context';
 import { getCurrencySign, getDurationLabel } from '@/config/constants';
@@ -20,24 +20,19 @@ export function PostCard({ post }: PostCardProps) {
   const searchParams = useSearchParams();
   const { isAuthenticated } = useAuthStore();
 
-  const handleViewDetails = () => {
-    // Preserve current search params for back navigation
-    const currentParams = searchParams.toString();
-    const url = `/posts/${post.postId}${currentParams ? `?from=${encodeURIComponent(currentParams)}` : ''}`;
-    router.push(url);
-  };
+  const currentParams = searchParams.toString();
+  const encodedFrom = currentParams ? `?from=${encodeURIComponent(currentParams)}` : '';
 
-  const handleApplyClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!isAuthenticated) {
-      router.push('/login');
-    } else {
-      handleViewDetails();
-    }
+  const detailsUrl = `/posts/${post.postId}${encodedFrom}`;
+
+  const handleViewDetails = () => {
+    router.push(detailsUrl);
   };
 
   return (
-    <Card className="p-6 hover:shadow-lg transition-shadow">
+    <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer"
+    onClick={handleViewDetails}
+    >
       <div className="flex justify-between items-start mb-4">
         <div className="flex-1">
           <h3 
@@ -83,13 +78,15 @@ export function PostCard({ post }: PostCardProps) {
           {t('myPosts.posted')} {new Date(post.date).toLocaleDateString()}
         </p>
         <div className="flex gap-2">
-          <Button
-            size="sm"
-            variant="secondary"
-            onClick={handleViewDetails}
+          <Link
+            // target="_blank"
+            // rel="noopener noreferrer"
+            href={detailsUrl}
+            className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
           >
-            <Eye className="w-4 h-4" /> {t('postCard.viewDetails')}
-          </Button>
+            <Eye className="w-4 h-4" /> 
+            <span>{t('postCard.viewDetails')}</span>
+          </Link>
         </div>
       </div>
     </Card>

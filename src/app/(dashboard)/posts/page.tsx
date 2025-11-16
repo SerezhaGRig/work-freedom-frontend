@@ -26,7 +26,9 @@ export default function PostsPage() {
     activeFilters, 
     availableFilters,
     listCategory,
-    isLoading 
+    isLoading,
+    hasMore,
+    setListCategory,
   } = usePosts();
   
   // Parse filters from URL
@@ -52,8 +54,6 @@ export default function PostsPage() {
 
   // Initialize state from URL - this runs every time searchParams changes
   const queryFromURL = searchParams.get('q') || '';
-  const listCategoryFromURL = searchParams.get('listCategory') as 'IT' | 'Other' | null;
-  const filtersFromURL = getFiltersFromURL();
   const isSearchModeFromURL = !!queryFromURL;
 
   const [searchQuery, setSearchQuery] = useState(queryFromURL);
@@ -63,7 +63,7 @@ export default function PostsPage() {
   );
 
   // Update URL with current search state
-  const updateURL = (query: string, filters: SearchFiltersType, category?: 'IT' | 'Other') => {
+  const updateURL = (query: string, filters: SearchFiltersType, category?: 'IT' | 'Other', preserveScroll = false) => {
     const params = new URLSearchParams();
     
     if (query) params.set('q', query);
@@ -74,6 +74,11 @@ export default function PostsPage() {
     if (filters.budgetType) params.set('budgetType', filters.budgetType);
     if (filters.minBudget) params.set('minBudget', filters.minBudget.toString());
     if (filters.maxBudget) params.set('maxBudget', filters.maxBudget.toString());
+    
+    // Store scroll position in sessionStorage when navigating away
+    if (!preserveScroll && typeof window !== 'undefined') {
+      sessionStorage.setItem('postsScrollPosition', window.scrollY.toString());
+    }
     
     const queryString = params.toString();
     router.replace(`/posts${queryString ? `?${queryString}` : ''}`, { scroll: false });
@@ -91,6 +96,9 @@ export default function PostsPage() {
     setSortMode(query ? 'match' : 'recent');
     
     if (query) {
+      if (category) {
+        setListCategory(category);
+      }
       searchPosts(query, urlFilters);
     } else {
       // Clear filters and load posts with optional category
@@ -98,6 +106,21 @@ export default function PostsPage() {
       loadPosts(false, category || undefined);
     }
   }, [searchParams]); // Re-run when searchParams changes
+
+  // Restore scroll position when returning to page
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedScrollPosition = sessionStorage.getItem('postsScrollPosition');
+      if (savedScrollPosition) {
+        // Wait for content to load before scrolling
+        const timeoutId = setTimeout(() => {
+          window.scrollTo(0, parseInt(savedScrollPosition));
+          sessionStorage.removeItem('postsScrollPosition');
+        }, 100);
+        return () => clearTimeout(timeoutId);
+      }
+    }
+  }, [posts]); // Run after posts are loaded
 
   const handleSearch = (e?: React.FormEvent) => {
     if (e) e.preventDefault();
@@ -107,7 +130,7 @@ export default function PostsPage() {
       setSortMode('match');
       const filters = activeFilters;
       searchPosts(searchQuery.trim(), filters);
-      updateURL(searchQuery.trim(), filters);
+      updateURL(searchQuery.trim(), filters, listCategory); // ✅ Preserve category in URL
     } else {
       handleClearSearch();
     }
@@ -123,7 +146,7 @@ export default function PostsPage() {
   const handleApplyFilters = (filters: SearchFiltersType) => {
     if (searchQuery.trim()) {
       searchPosts(searchQuery.trim(), filters);
-      updateURL(searchQuery.trim(), filters);
+      updateURL(searchQuery.trim(), filters, listCategory); // ✅ Preserve category in URL
     }
   };
 
@@ -132,6 +155,8 @@ export default function PostsPage() {
     setIsSearchMode(false);
     setSortMode('recent');
     clearFilters();
+    
+    // Reload posts with the preserved category filter
     loadPosts(false, listCategory);
     router.replace('/posts' + (listCategory ? `?listCategory=${listCategory}` : ''), { scroll: false });
   };
@@ -141,6 +166,16 @@ export default function PostsPage() {
     if (searchQuery.trim()) {
       searchPosts(searchQuery.trim(), {});
       updateURL(searchQuery.trim(), {});
+    }
+  };
+
+  const handleLoadMore = () => {
+    if (isSearchMode) {
+      // For search mode, you'd need to implement search pagination
+      // This would require updating the searchPosts function to support loadMore
+      console.log('Search pagination not implemented yet');
+    } else {
+      loadPosts(true, listCategory);
     }
   };
 
@@ -162,60 +197,29 @@ export default function PostsPage() {
           </div>
           
           {/* Auth Buttons for Public Users */}
-          {!isAuthenticated && (
-            <div className="flex gap-3">
-              <Button
-                variant="secondary"
-                size="sm"
-                onClick={() => router.push('/login')}
-              >
-                <LogIn className="w-4 h-4" />
-                {t('common.login')}
-              </Button>
-              <Button
-                size="sm"
-                onClick={() => router.push('/register')}
-              >
-                <UserPlus className="w-4 h-4" />
-                {t('common.signUp')}
-              </Button>
-            </div>
-          )}
         </div>
 
         {/* Public User Banner */}
-        {/* {!isAuthenticated && (
+        {!isAuthenticated && (
           <Card className="mt-6 p-6 bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+            <div className="flex items-center justify-center gap-4">
+              <div
+                onClick={() => router.push('/register')}
+                className="
+                  w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0
+                  cursor-pointer hover:bg-blue-700 transition
+                "
+              >
                 <UserPlus className="w-6 h-6 text-white" />
               </div>
               <div className="flex-1">
-                <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                  {t('jobsPage.joinBanner.title')}
-                </h3>
-                <p className="text-gray-600 mb-3">
+                <p className="text-gray-600">
                   {t('jobsPage.joinBanner.description')}
                 </p>
-                <div className="flex gap-3">
-                  <Button
-                    size="sm"
-                    onClick={() => router.push('/register')}
-                  >
-                    {t('jobsPage.joinBanner.createAccount')}
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => router.push('/login')}
-                  >
-                    {t('jobsPage.joinBanner.haveAccount')}
-                  </Button>
-                </div>
               </div>
             </div>
           </Card>
-        )} */}
+        )}
       </div>
 
       {/* Search Bar */}
@@ -319,7 +323,7 @@ export default function PostsPage() {
         )}
       </div>
 
-      {isLoading ? (
+      {isLoading && posts.length === 0 ? (
         <div className="text-center py-12">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
           <p className="text-gray-600 mt-4">
@@ -332,7 +336,7 @@ export default function PostsPage() {
             <h2 className="text-xl font-semibold text-gray-700">
               {isSearchMode || hasActiveFilters 
                 ? t('jobsPage.results.searchResults') 
-                : t('jobsPage.results.availableJobs')} ({posts?.length || 0})
+                : t('jobsPage.results.availableJobs')}
             </h2>
           </div>
           
@@ -355,6 +359,27 @@ export default function PostsPage() {
           )}
           
           <PostList posts={posts || []} />
+
+          {/* Load More Button */}
+          {hasMore && posts.length > 0 && !isSearchMode && (
+            <div className="mt-8 text-center">
+              <Button
+                variant="secondary"
+                onClick={handleLoadMore}
+                disabled={isLoading}
+                className="min-w-[200px]"
+              >
+                {isLoading ? (
+                  <>
+                    <div className="inline-block animate-spin rounded-full h-4 w-4 border-b-2 border-gray-600 mr-2"></div>
+                    {t('common.loading')}
+                  </>
+                ) : (
+                  <>t('common.loadMore')Load More Posts</>
+                )}
+              </Button>
+            </div>
+          )}
         </div>
       )}
     </div>

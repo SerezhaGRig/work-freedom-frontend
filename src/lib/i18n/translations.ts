@@ -202,6 +202,7 @@ export const translations = {
     common: {
       "warning": "Warning",
       loading: 'Loading...',
+      loadMore: 'Load More',
       error: 'Error',
       success: 'Success',
       cancel: 'Cancel',
@@ -444,8 +445,8 @@ export const translations = {
       },
       joinBanner: {
         title: 'Join AshxatanqKa.am to Apply',
-        description: 'Browse jobs freely, but you\'ll need an account to submit proposals and connect with clients.',
-        createAccount: 'Create Account',
+        description: 'Create an account to add posts.',
+        createAccount: 'Create',
         haveAccount: 'I Have an Account',
       },
       sorting: {
@@ -670,6 +671,7 @@ export const translations = {
     },
     common: {
             "warning": "Предупреждение",
+            loadMore: 'Показать еще',
       loading: 'Загрузка...',
       error: 'Ошибка',
       success: 'Успешно',
@@ -911,8 +913,8 @@ export const translations = {
       },
       joinBanner: {
         title: 'Присоединяйтесь к AshxatanqKa.am для подачи заявок',
-        description: 'Просматривайте вакансии свободно, но для отправки предложений и связи с клиентами вам понадобится аккаунт.',
-        createAccount: 'Создать аккаунт',
+        description: 'Создайте учетную запись, чтобы разместить объявление.',
+        createAccount: 'Создать',
         haveAccount: 'У меня есть аккаунт',
       },
       sorting: {
@@ -1137,6 +1139,7 @@ export const translations = {
     common: {
       "warning": "Զգուշացում",
       loading: 'Բեռնվում է...',
+      loadMore: 'Ցուցադրել ավելին',
       error: 'Սխալ',
       success: 'Հաջողված է',
       cancel: 'Չեղարկել',
@@ -1378,8 +1381,8 @@ export const translations = {
       },
       joinBanner: {
         title: 'Միացեք AshxatanqKa.am-ին դիմելու համար',
-        description: 'Ազատորեն դիտեք աշխատանքները, բայց առաջարկներ ուղարկելու և հաճախորդների հետ կապվելու համար ձեզանից կպահանջվի գրանցվել։',
-        createAccount: 'Ստեղծել հաշիվ',
+        description: 'Ստեղծեք հաշիվ, որպեսի կարողանաք տեղադրել հայտարարություններ։',
+        createAccount: 'Գրանցվել',
         haveAccount: 'Ես ունեմ հաշիվ',
       },
       sorting: {
