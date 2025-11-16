@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title:
-    "AshxatanqKa.am — Jobs in Armenia | Работа в Армении | Աշխատանք Հայաստանում",
+    "AshxatanqKa.am — Jobs in Armenia | Ashxatanq | Աշխատանք Հայաստանում",
   description:
     "Job search platform for Armenia. Աշխատանք Հայաստանում. Работа в Армении. Find jobs, hire talent, and explore opportunities. Supports Armenian, Russian, and English.",
   metadataBase: new URL("https://www.ashxatanqka.am"),
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   },
   keywords: [
     "աշխատանք", "աշխատանք Երևանում", "աշխատանք Հայաստանում", "աշխատանք IT",
-    "работа Армения", "вакансии Армения", "работа Ереван", "работа IT Армения",
+    "работа Армения", "вакансии Армения", "работа Ереван", "ashxatanq hayastanum",
     "jobs Armenia", "jobs in Armenia", "Armenia jobs", "Yerevan jobs", "IT jobs Armenia",
   ],
   icons: {
