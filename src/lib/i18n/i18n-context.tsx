@@ -14,21 +14,29 @@ const I18nContext = createContext<I18nContextType | undefined>(undefined);
 
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>('en');
+  const [locale, setLocaleState] = useState<Locale>('hy');
 
-  useEffect(() => {
-    // Load saved locale from localStorage
-    const savedLocale = localStorage.getItem(LOCALE_KEY);
-    if (savedLocale && ['en', 'ru', 'hy'].includes(savedLocale)) {
-      setLocaleState(savedLocale as Locale);
-    } else {
-      // Detect browser language
-      const browserLang = navigator.language.slice(0, 2);
-      if (browserLang === 'hy') setLocaleState('hy');
-      else if (browserLang === 'ru') setLocaleState('ru');
-      else setLocaleState('en');
-    }
-  }, []);
+useEffect(() => {
+  // Load saved locale
+  const savedLocale = localStorage.getItem(LOCALE_KEY) as Locale | null;
+
+  if (savedLocale && ['en', 'ru', 'hy'].includes(savedLocale)) {
+    setLocaleState(savedLocale);
+    return;
+  }
+
+  // Detect browser language (full list)
+  const browserLanguages = navigator.languages?.length
+  ? navigator.languages
+  : [navigator.language];
+  const primaryLang = browserLanguages[0]?.slice(0, 2).toLowerCase();
+
+  if (primaryLang === 'hy') setLocaleState('hy');
+  else if (primaryLang === 'ru') setLocaleState('ru');
+  else if (primaryLang === 'en') setLocaleState('en');
+  else setLocaleState('hy'); // default Armenian
+}, []);
+
 
   const setLocale = (newLocale: Locale) => {
     setLocaleState(newLocale);
