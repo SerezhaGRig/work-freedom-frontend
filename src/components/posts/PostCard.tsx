@@ -27,17 +27,10 @@ export function PostCard({ post }: PostCardProps) {
     router.push(url);
   };
 
-  const handleApplyClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!isAuthenticated) {
-      router.push('/login');
-    } else {
-      handleViewDetails();
-    }
-  };
-
   return (
-    <Card className="p-6 hover:shadow-lg transition-shadow">
+    <Card className="p-6 hover:shadow-lg transition-shadow cursor-pointer"
+    onClick={handleViewDetails}
+    >
       <div className="flex justify-between items-start mb-4">
         <div className="flex-1">
           <h3 
@@ -86,7 +79,10 @@ export function PostCard({ post }: PostCardProps) {
           <Button
             size="sm"
             variant="secondary"
-            onClick={handleViewDetails}
+            onClick={(e) => {
+                e.stopPropagation();
+                handleViewDetails();
+              }}
           >
             <Eye className="w-4 h-4" /> {t('postCard.viewDetails')}
           </Button>

@@ -162,60 +162,29 @@ export default function PostsPage() {
           </div>
           
           {/* Auth Buttons for Public Users */}
-          {!isAuthenticated && (
-            <div className="flex gap-3">
-              <Button
-                variant="secondary"
-                size="sm"
-                onClick={() => router.push('/login')}
-              >
-                <LogIn className="w-4 h-4" />
-                {t('common.login')}
-              </Button>
-              <Button
-                size="sm"
-                onClick={() => router.push('/register')}
-              >
-                <UserPlus className="w-4 h-4" />
-                {t('common.signUp')}
-              </Button>
-            </div>
-          )}
         </div>
 
         {/* Public User Banner */}
-        {/* {!isAuthenticated && (
+        {!isAuthenticated && (
           <Card className="mt-6 p-6 bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-200">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
+            <div className="flex items-center justify-center gap-4">
+                           <div
+                onClick={() => router.push('/register')}
+                className="
+                  w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0
+                  cursor-pointer hover:bg-blue-700 transition
+                "
+              >
                 <UserPlus className="w-6 h-6 text-white" />
               </div>
               <div className="flex-1">
-                <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                  {t('jobsPage.joinBanner.title')}
-                </h3>
-                <p className="text-gray-600 mb-3">
+                <p className="text-gray-600">
                   {t('jobsPage.joinBanner.description')}
                 </p>
-                <div className="flex gap-3">
-                  <Button
-                    size="sm"
-                    onClick={() => router.push('/register')}
-                  >
-                    {t('jobsPage.joinBanner.createAccount')}
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => router.push('/login')}
-                  >
-                    {t('jobsPage.joinBanner.haveAccount')}
-                  </Button>
-                </div>
               </div>
             </div>
           </Card>
-        )} */}
+        )}
       </div>
 
       {/* Search Bar */}
