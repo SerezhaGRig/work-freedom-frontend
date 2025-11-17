@@ -14,6 +14,8 @@ import { Share } from '@/components/ui/Share';
 import { useAuthStore } from '@/lib/store/authStore';
 import { useI18n } from '@/lib/i18n/i18n-context';
 import { getCurrencySign, getDurationLabel } from '@/config/constants';
+import { convertLinksToClickable } from '@/lib/utils/convertLinksToClickable';
+
 
 export default function JobDetailsPage() {
   const params = useParams();
@@ -179,7 +181,7 @@ export default function JobDetailsPage() {
               <h3 className="text-sm font-semibold text-gray-700 mb-3">{t('jobDetails.jobDescription')}</h3>
               <div className="prose max-w-none">
                 <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
-                  {post.description}
+                  {convertLinksToClickable(post.description)}
                 </p>
               </div>
             </div>

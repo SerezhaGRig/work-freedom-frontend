@@ -245,7 +245,7 @@ export function SearchFilters({
                 {availableFilters?.minBudget !== undefined && availableFilters?.maxBudget !== undefined && (
                   <div>
                     <label className="text-sm text-gray-600 mb-2 block">
-                      {t('searchFilters.budgetRange')}: ${availableFilters.minBudget} - ${availableFilters.maxBudget}
+                      {t('searchFilters.budgetRange')}: {availableFilters.minBudget} - {availableFilters.maxBudget}
                     </label>
                     <div className="grid grid-cols-2 gap-4">
                       <div>
