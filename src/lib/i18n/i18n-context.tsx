@@ -26,16 +26,16 @@ useEffect(() => {
   }
 
   // Detect browser language (full list)
-  // const browserLanguages = navigator.languages?.length
-  // ? navigator.languages
-  // : [navigator.language];
-  // const primaryLang = browserLanguages[0]?.slice(0, 2).toLowerCase();
+  const browserLanguages = navigator.languages?.length
+  ? navigator.languages
+  : [navigator.language];
+  const primaryLang = browserLanguages[0]?.slice(0, 2).toLowerCase();
 
-  // if (primaryLang === 'hy') setLocaleState('hy');
-  // else if (primaryLang === 'ru') setLocaleState('ru');
-  // else if (primaryLang === 'en') setLocaleState('en');
-  // else setLocaleState('hy'); // default Armenian
-  setLocaleState('hy')
+  if (primaryLang === 'hy') setLocaleState('hy');
+  else if (primaryLang === 'ru') setLocaleState('ru');
+  else if (primaryLang === 'en') setLocaleState('en');
+  else setLocaleState('hy'); // default Armenian
+  // setLocaleState('hy')
 }, []);
 
 
