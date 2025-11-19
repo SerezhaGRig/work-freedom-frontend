@@ -958,7 +958,7 @@ export const translations = {
     },
     "modals": {
           "updateStatus": {
-            "title": "Թարմացնել հայտարարության կարգավիճակը",
+            "title": "Թարմացնել կարգավիճակը",
             "currentStatus": "Ընթացիկ կարգավիճակ",
             "selectNewStatus": "Ընտրեք նոր կարգավիճակ",
             "publishedDesc": "Հայտարարությունը տեսանելի է բոլոր օգտատերերի համար և ընդունում է առաջարկներ",
@@ -1011,7 +1011,7 @@ export const translations = {
       "editPost": {
         "title": "Խմբագրել հայտարարությունը",
         "updating": "Թարմացում...",
-        "updateButton": "Թարմացնել հայտարարությունը",
+        "updateButton": "Թարմացնել",
         "updateSuccess": "Հայտարարությունը հաջողությամբ թարմացվեց!",
         "updateFailed": "Չհաջողվեց թարմացնել հայտարարությունը"
       },
