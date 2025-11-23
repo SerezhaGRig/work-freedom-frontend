@@ -273,6 +273,7 @@ export const translations = {
     profile: {
       myProfile: 'My Profile',
       editProfile: 'Edit Profile',
+      noContactsYet: 'No contacts yet',
       noBioYet: '...',
       name: 'Name',
       surname: 'Surname',
@@ -743,6 +744,7 @@ export const translations = {
     profile: {
       myProfile: 'Мой профиль',
       editProfile: 'Редактировать профиль',
+      noContactsYet: 'Пока нет контактов',
       name: 'Имя',
       surname: 'Фамилия',
       email: 'Электронная почта',
@@ -1210,6 +1212,7 @@ export const translations = {
     },
     profile: {
       myProfile: 'Իմ պրոֆիլը',
+      noContactsYet: 'Կոնտակտներ դեռ չկան',
       editProfile: 'Խմբագրել պրոֆիլը',
       name: 'Անուն',
       surname: 'Ազգանուն',

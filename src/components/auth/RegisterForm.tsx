@@ -80,6 +80,7 @@ export function RegisterForm() {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@example.com"
             required
+            maxLength={100}
             icon={<Mail className="w-5 h-5" />}
           />
           
@@ -89,6 +90,8 @@ export function RegisterForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder={t('auth.minCharacters')}
+            minLength={8}
+            maxLength={20}
             required
           />
           
@@ -97,6 +100,7 @@ export function RegisterForm() {
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="John"
+            maxLength={100}
             required
           />
           
@@ -105,6 +109,8 @@ export function RegisterForm() {
             value={surname}
             onChange={(e) => setSurname(e.target.value)}
             placeholder="Doe"
+            maxLength={100}
+            required
           />
           
           <div className="space-y-2">

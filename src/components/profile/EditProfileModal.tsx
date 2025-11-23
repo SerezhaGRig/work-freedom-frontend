@@ -110,6 +110,7 @@ export function EditProfileModal({ isOpen, onClose, user }: EditProfileModalProp
           value={surname}
           onChange={(e) => setSurname(e.target.value)}
           placeholder="Doe"
+          required
         />
 
         <div>
