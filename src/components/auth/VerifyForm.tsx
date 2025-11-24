@@ -6,12 +6,15 @@ import { Card } from '@/components/ui/Card';
 import { Input } from '@/components/ui/Input';
 import { useAuth } from '@/lib/hooks/useAuth';
 import { Button } from '../ui/Button';
+import { useI18n } from '@/lib/i18n/i18n-context';
+import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher';
 
 export function VerifyForm() {
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
   const [resendLoading, setResendLoading] = useState(false);
   const { verify, resendCode, isLoading, error } = useAuth();
+  const { t } = useI18n();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,7 +23,7 @@ export function VerifyForm() {
 
   const handleResend = async () => {
     if (!email) {
-      alert('Please enter your email first');
+      alert(t('auth.enterEmailFirst'));
       return;
     }
     
@@ -37,13 +40,18 @@ export function VerifyForm() {
 
   return (
     <Card className="w-full max-w-md p-8">
+      {/* Language Switcher */}
+      <div className="flex justify-end mb-4">
+        <LanguageSwitcher />
+      </div>
+
       <div className="text-center mb-8">
         <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full mb-4">
           <Mail className="w-8 h-8 text-white" />
         </div>
-        <h1 className="text-3xl font-bold text-gray-800">Verify Your Email</h1>
+        <h1 className="text-3xl font-bold text-gray-800">{t('auth.verifyEmail')}</h1>
         <p className="text-gray-600 mt-2">
-          Enter the 6-digit code sent to your email
+          {t('auth.verifyEmailDescription')}
         </p>
       </div>
       
@@ -55,7 +63,7 @@ export function VerifyForm() {
         )}
         
         <Input
-          label="Email"
+          label={t('auth.email')}
           type="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -64,15 +72,15 @@ export function VerifyForm() {
         />
         
         <Input
-          label="Verification Code"
+          label={t('auth.verificationCode')}
           value={code}
           onChange={(e) => setCode(e.target.value)}
-          placeholder="123456"
+          placeholder={t('auth.verificationCodePlaceholder')}
           required
         />
         
         <Button className="w-full" disabled={isLoading}>
-          {isLoading ? 'Verifying...' : 'Verify Email'}
+          {isLoading ? t('auth.verifying') : t('auth.verifyEmailButton')}
         </Button>
       </form>
       
@@ -83,7 +91,7 @@ export function VerifyForm() {
           disabled={resendLoading}
           className="text-blue-600 hover:text-blue-700 font-semibold disabled:opacity-50"
         >
-          {resendLoading ? 'Sending...' : 'Resend Code'}
+          {resendLoading ? t('auth.sending') : t('auth.resendCode')}
         </button>
       </div>
     </Card>

@@ -391,6 +391,15 @@ export const translations = {
       "sendMessageFailed": "Failed to send message. Please try again."
     },
     auth: {
+        verifyEmail: 'Verify Your Email',
+  verifyEmailDescription: 'Enter the 6-digit code sent to your email',
+  verificationCode: 'Verification Code',
+  verificationCodePlaceholder: '123456',
+  verifying: 'Verifying...',
+  verifyEmailButton: 'Verify Email',
+  resendCode: 'Resend Code',
+  sending: 'Sending...',
+  enterEmailFirst: 'Please enter your email first',
         minCharacters: '8-20 characters',
   creatingAccount: 'Creating Account...',
   signingIn: 'Signing In...',
@@ -861,6 +870,15 @@ export const translations = {
       "sendMessageFailed": "Не удалось отправить сообщение. Попробуйте снова."
     },
     auth: {
+        verifyEmail: 'Подтвердите вашу электронную почту',
+  verifyEmailDescription: 'Введите 6-значный код, отправленный на вашу почту',
+  verificationCode: 'Код подтверждения',
+  verificationCodePlaceholder: '123456',
+  verifying: 'Проверка...',
+  verifyEmailButton: 'Подтвердить почту',
+  resendCode: 'Отправить код повторно',
+  sending: 'Отправка...',
+  enterEmailFirst: 'Пожалуйста, сначала введите ваш email',
         minCharacters: '8-20 символов',
   creatingAccount: 'Создание аккаунта...',
   signingIn: 'Вход...',
@@ -1330,6 +1348,15 @@ export const translations = {
       "sendMessageFailed": "Չհաջողվեց ուղարկել հաղորդագրությունը: Փորձեք կրկին:"
     },
     auth: {
+        verifyEmail: 'Հաստատեք ձեր էլ. փոստը',
+  verifyEmailDescription: 'Մուտքագրեք ձեր էլ. փոստին ուղարկված 6-նիշ կոդը',
+  verificationCode: 'Հաստատման կոդ',
+  verificationCodePlaceholder: '123456',
+  verifying: 'Հաստատում...',
+  verifyEmailButton: 'Հաստատել էլ. փոստը',
+  resendCode: 'Վերաուղարկել կոդը',
+  sending: 'Ուղարկում...',
+  enterEmailFirst: 'Խնդրում ենք նախ մուտքագրել ձեր էլ. փոստը',
         minCharacters: '8-20 նիշ',
   creatingAccount: 'Հաշիվ ստեղծվում է...',
   signingIn: 'Մուտք է գործվում...',
