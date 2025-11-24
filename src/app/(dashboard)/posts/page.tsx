@@ -375,7 +375,7 @@ export default function PostsPage() {
                     {t('common.loading')}
                   </>
                 ) : (
-                  <>t('common.loadMore')Load More Posts</>
+                  <>{t('common.loadMore')}</>
                 )}
               </Button>
             </div>
