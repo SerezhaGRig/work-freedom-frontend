@@ -101,8 +101,7 @@ export default function PostsPage() {
       }
       searchPosts(query, urlFilters);
     } else {
-      // Clear filters and load posts with optional category
-      clearFilters();
+      setListCategory(category || undefined);
       loadPosts(false, category || undefined);
     }
   }, [searchParams]); // Re-run when searchParams changes
@@ -136,10 +135,9 @@ export default function PostsPage() {
     }
   };
 
-  const handleCategoryFilter = (category: 'IT' | 'Other') => {
+  const handleCategoryFilter = (category: 'IT' | 'Other' | undefined) => {
     // Toggle category filter
     const newCategory = listCategory === category ? undefined : category;
-    loadPosts(false, newCategory);
     updateURL('', {}, newCategory);
   };
 
@@ -247,8 +245,7 @@ export default function PostsPage() {
               variant={!listCategory ? 'primary' : 'secondary'}
               size="sm"
               onClick={() => {
-                loadPosts(false, undefined);
-                updateURL('', {}, undefined);
+                handleCategoryFilter(undefined);
               }}
               className="flex-1 sm:flex-none min-w-0"
             >
@@ -341,7 +338,7 @@ export default function PostsPage() {
           </div>
           
           {/* Show message if search returned no results */}
-          {isSearchMode && posts?.length === 0 && (
+          {/* {isSearchMode && posts?.length === 0 && (
             <div className="text-center py-8 bg-gray-50 rounded-lg">
               <div className="text-5xl mb-3">🔍</div>
               <h3 className="text-lg font-semibold text-gray-800 mb-2">
@@ -356,7 +353,7 @@ export default function PostsPage() {
                 </Button>
               )}
             </div>
-          )}
+          )} */}
           
           <PostList posts={posts || []} />
 
